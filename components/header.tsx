@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useEffect, useRef } from "react"
 import { useTheme } from "next-themes"
+import { LoginModal } from "@/components/login-modal"
 
 export function Header() {
   const searchInputRef = useRef<HTMLInputElement>(null)
@@ -45,6 +46,8 @@ export function Header() {
             </kbd>
           </div>
         </div>
+
+        <LoginModal />
 
         <Button variant="ghost" size="icon" onClick={toggleTheme}>
           <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
