@@ -173,20 +173,4 @@ export const tools: Tool[] = [
     href: "/case-converter",
     category: CategoryId.Text,
   },
-  {
-    name: "URL Parser",
-    description: "Parse and analyze URLs",
-    icon: Zap,
-    color: "bg-sky-500",
-    href: "/url-parser",
-    category: CategoryId.Developer,
-  },
-  {
-    name: "Lorem Ipsum",
-    description: "Generate placeholder text",
-    icon: FileText,
-    color: "bg-fuchsia-500",
-    href: "/lorem-ipsum",
-    category: CategoryId.Text,
-  },
 ]
