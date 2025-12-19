@@ -43,7 +43,6 @@ export default function UUIDGeneratorPage() {
       title="UUID Generator"
       description="Generate universally unique identifiers (UUIDs)"
       icon={Key}
-      category={category}
     >
       <div className="space-y-6">
         <Card className="border-2 overflow-hidden">

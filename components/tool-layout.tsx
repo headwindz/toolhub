@@ -5,32 +5,33 @@ interface ToolLayoutProps {
   title: string
   description: string
   icon: LucideIcon
-  category: string
+  // category: string
   badges?: { label: string; icon?: LucideIcon }[]
   children: React.ReactNode
 }
 
-export function ToolLayout({ title, description, icon: Icon, category, badges = [], children }: ToolLayoutProps) {
+export function ToolLayout({ title, description, icon: Icon, badges = [], children }: ToolLayoutProps) {
   return (
     <div className="space-y-8">
       <div className="flex items-start justify-between">
-        <div className="flex items-start gap-4">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/60 text-primary-foreground shadow-lg">
+        <div className="flex gap-4 items-start">
+          <div className="bg-gradient-to-br from-primary flex to-primary/60 rounded-2xl h-14 shadow-lg text-primary-foreground w-14 items-center justify-center">
             <Icon className="h-7 w-7" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-4xl font-bold tracking-tight">{title}</h1>
-              <Badge variant="secondary" className="mt-1">
+            <div className="flex gap-2 items-center">
+              <h1 className="font-bold tracking-tight text-4xl">{title}</h1>
+              {/* reserved for tag */}
+              {/* <Badge variant="secondary" className="mt-1">
                 {category}
-              </Badge>
+              </Badge> */}
             </div>
             <p className="mt-2 text-lg text-muted-foreground">{description}</p>
             {badges.length > 0 && (
-              <div className="mt-3 flex gap-2">
+              <div className="flex mt-3 gap-2">
                 {badges.map((badge, index) => (
                   <Badge key={index} variant="outline" className="font-normal">
-                    {badge.icon && <badge.icon className="mr-1 h-3 w-3" />}
+                    {badge.icon && <badge.icon className="h-3 mr-1 w-3" />}
                     {badge.label}
                   </Badge>
                 ))}

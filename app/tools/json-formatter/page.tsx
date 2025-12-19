@@ -7,9 +7,6 @@ import { Textarea } from "@/components/ui/textarea"
 import { Copy, Check, FileJson, Sparkles, Minimize2 } from "lucide-react"
 import { CommonCollapsible } from "@/components/common-collapsible"
 import { ToolLayout } from "@/components/tool-layout"
-import { CategoryId } from "@/constants/categories"
-
-const category = CategoryId.Developer
 
 export default function JSONFormatterPage() {
   const [input, setInput] = useState("")
@@ -52,7 +49,6 @@ export default function JSONFormatterPage() {
       title="JSON Formatter"
       description="Format, validate, and beautify your JSON data instantly"
       icon={FileJson}
-      category={category}
       badges={[
         { label: "Auto Validation", icon: Sparkles },
         { label: "Fast" },
