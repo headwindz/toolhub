@@ -8,9 +8,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { CommonCollapsible } from "@/components/common-collapsible"
 import { ToolLayout } from "@/components/tool-layout"
-import { CategoryId } from "@/constants/categories"
-
-const category = CategoryId.Developer;
 
 export default function UUIDGeneratorPage() {
   const [uuids, setUuids] = useState<string[]>([])

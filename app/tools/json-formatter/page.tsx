@@ -140,11 +140,10 @@ export default function JSONFormatterPage() {
               placeholder='{"name": "John", "age": 30}'
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              className={`font-mono border-2 shadow-inner text-sm min-h-[450px] transition-colors ${
-                error
-                  ? "border-destructive focus:border-destructive focus:ring-2 focus:ring-destructive/40"
-                  : "focus:border-primary"
-              }`}
+              className={`font-mono border-2 shadow-inner text-sm min-h-[450px] transition-colors ${error
+                ? "border-destructive focus:border-destructive focus:ring-2 focus:ring-destructive/40"
+                : "focus:border-primary"
+                }`}
             />
             <div className="flex mt-4 gap-2">
               <Button onClick={formatJSON} size="lg" className="flex-1 shadow-lg">
