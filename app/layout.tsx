@@ -10,6 +10,7 @@ import { Sidebar } from "@/components/sidebar"
 import { MagicCursor } from "@/components/magic-cursor"
 import { useRouter, usePathname } from "next/navigation"
 import { CategoryId } from "@/constants/categories"
+import { tools } from "@/constants/tools"
 import "./globals.css"
 
 const _geist = Geist({ subsets: ["latin"] })
@@ -34,6 +35,12 @@ export default function RootLayout({
       const category = pathname.split("/category/")[1] as CategoryId
       if (Object.values(CategoryId).includes(category)) {
         setActiveCategory(category)
+      }
+    } else if (pathname.startsWith("/tools/")) {
+      const slug = pathname.replace("/tools", "") // tools hrefs begin with "/"
+      const match = tools.find((t) => t.href === slug)
+      if (match) {
+        setActiveCategory(match.category)
       }
     }
   }, [pathname])

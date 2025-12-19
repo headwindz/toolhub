@@ -92,7 +92,7 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
   }
 
   const handleToolSelect = (href: string) => {
-    router.push(href)
+    router.push(`/tools/${href}`)
     setIsSearchOpen(false)
     setSearchQuery("")
     setSelectedIndex(0)
