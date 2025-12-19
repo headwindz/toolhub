@@ -1,33 +1,32 @@
-import type { LucideIcon } from "lucide-react"
+import { CategoryId } from "@/constants/categories";
+import type { LucideIcon } from "lucide-react";
 import {
-  FileText,
-  Hash,
-  FileJson,
-  ImageIcon,
-  Palette,
-  QrCode,
   Calculator,
   Clock,
   Code,
   Database,
+  FileCode,
+  FileJson,
+  FileText,
+  Globe,
+  Hash,
+  ImageIcon,
   Key,
   Lock,
-  FileCode,
+  Palette,
+  QrCode,
   Sparkles,
-  Zap,
-  Globe,
-} from "lucide-react"
-import { CategoryId } from "@/constants/categories"
+} from "lucide-react";
 
 export type Tool = {
-  name: string
-  description: string
-  icon: LucideIcon
-  color: string
-  href: string
-  badge?: string
-  category: CategoryId
-}
+  name: string;
+  description: string;
+  icon: LucideIcon;
+  color: string;
+  href: string;
+  badge?: string;
+  category: CategoryId;
+};
 
 export const tools: Tool[] = [
   {
@@ -65,15 +64,6 @@ export const tools: Tool[] = [
     category: CategoryId.Security,
   },
   {
-    name: "MD5 Generator",
-    description: "Generate MD5 hash from text",
-    icon: Hash,
-    color: "bg-orange-600",
-    badge: "Security",
-    href: "/md5",
-    category: CategoryId.Security,
-  },
-  {
     name: "Color Picker",
     description: "Pick colors and generate palettes",
     icon: Palette,
@@ -96,7 +86,7 @@ export const tools: Tool[] = [
     icon: Key,
     color: "bg-cyan-500",
     href: "/uuid-generator",
-    category: CategoryId.Developer,
+    category: CategoryId.Security,
   },
   {
     name: "IP Lookup",
@@ -173,4 +163,4 @@ export const tools: Tool[] = [
     href: "/case-converter",
     category: CategoryId.Text,
   },
-]
+];
