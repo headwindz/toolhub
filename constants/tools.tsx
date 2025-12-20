@@ -1,5 +1,5 @@
-import { CategoryId } from "@/constants/categories";
-import type { LucideIcon } from "lucide-react";
+import { CategoryId } from "@/constants/categories"
+import type { LucideIcon } from "lucide-react"
 import {
   Calculator,
   Clock,
@@ -17,17 +17,17 @@ import {
   Palette,
   QrCode,
   Sparkles,
-} from "lucide-react";
+} from "lucide-react"
 
 export type Tool = {
-  name: string;
-  description: string;
-  icon: LucideIcon;
-  color: string;
-  href: string;
-  badge?: string;
-  category: CategoryId;
-};
+  name: string
+  description: string
+  icon: LucideIcon
+  color: string
+  href: string
+  badge?: string
+  category: CategoryId
+}
 
 export const tools: Tool[] = [
   {
@@ -172,4 +172,13 @@ export const tools: Tool[] = [
     href: "/case-converter",
     category: CategoryId.Text,
   },
-];
+  {
+    name: "Math Quiz Generator",
+    description: "Generate custom math practice quizzes",
+    icon: Calculator,
+    color: "bg-blue-600",
+    badge: "New",
+    href: "/math-quiz",
+    category: CategoryId.Converter,
+  },
+]
