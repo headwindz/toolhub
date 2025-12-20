@@ -4,6 +4,7 @@ import {
   Calculator,
   Clock,
   Code,
+  Contrast,
   Database,
   FileCode,
   FileJson,
@@ -70,6 +71,14 @@ export const tools: Tool[] = [
     color: "bg-pink-500",
     badge: "Popular",
     href: "/color-picker",
+    category: CategoryId.Design,
+  },
+  {
+    name: "Color Contrast",
+    description: "Check WCAG AA/AAA contrast ratios",
+    icon: Contrast,
+    color: "bg-emerald-500",
+    href: "/color-contrast",
     category: CategoryId.Design,
   },
   {
