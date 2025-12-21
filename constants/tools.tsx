@@ -1,5 +1,5 @@
-import { CategoryId } from "@/constants/categories"
-import type { LucideIcon } from "lucide-react"
+import { CategoryId } from "@/constants/categories";
+import type { LucideIcon } from "lucide-react";
 import {
   Calculator,
   Clock,
@@ -17,17 +17,17 @@ import {
   Palette,
   QrCode,
   Sparkles,
-} from "lucide-react"
+} from "lucide-react";
 
 export type Tool = {
-  name: string
-  description: string
-  icon: LucideIcon
-  color: string
-  href: string
-  badge?: string
-  category: CategoryId
-}
+  name: string;
+  description: string;
+  icon: LucideIcon;
+  color: string;
+  href: string;
+  badge?: string;
+  category: CategoryId;
+};
 
 export const tools: Tool[] = [
   {
@@ -87,7 +87,7 @@ export const tools: Tool[] = [
     icon: Code,
     color: "bg-indigo-500",
     href: "/base64",
-    category: CategoryId.Converter,
+    category: CategoryId.Developer,
   },
   {
     name: "UUID Generator",
@@ -181,4 +181,4 @@ export const tools: Tool[] = [
     href: "/math-quiz",
     category: CategoryId.Converter,
   },
-]
+];
