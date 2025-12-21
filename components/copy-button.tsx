@@ -8,6 +8,7 @@ interface CopyButtonProps {
   size?: "default" | "sm" | "lg" | "icon";
   className?: string;
   showText?: boolean;
+  disabled?: boolean;
 }
 
 export function CopyButton({
@@ -16,6 +17,7 @@ export function CopyButton({
   size = "sm",
   className = "",
   showText = true,
+  disabled = false,
 }: CopyButtonProps) {
   const [copied, setCopied] = useState(false);
 
@@ -29,6 +31,7 @@ export function CopyButton({
     <Button
       variant={variant}
       size={size}
+      disabled={disabled}
       onClick={handleCopy}
       className={`gap-2 ${copied ? "text-green-600 dark:text-green-500" : ""} ${className}`}
     >

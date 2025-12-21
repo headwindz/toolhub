@@ -5,7 +5,6 @@ import {
   Clock,
   Code,
   Contrast,
-  Database,
   FileCode,
   FileJson,
   FileText,
@@ -16,7 +15,6 @@ import {
   Lock,
   Palette,
   QrCode,
-  Sparkles,
 } from "lucide-react";
 
 export type Tool = {
@@ -149,28 +147,12 @@ export const tools: Tool[] = [
     category: CategoryId.Converter,
   },
   {
-    name: "SQL Formatter",
-    description: "Format and beautify SQL queries",
-    icon: Database,
-    color: "bg-violet-500",
-    href: "/sql-formatter",
-    category: CategoryId.Developer,
-  },
-  {
     name: "Timestamp Converter",
     description: "Convert Unix timestamps",
     icon: Clock,
     color: "bg-amber-500",
     href: "/timestamp",
     category: CategoryId.Converter,
-  },
-  {
-    name: "Text Case Converter",
-    description: "Convert text to different cases",
-    icon: Sparkles,
-    color: "bg-rose-500",
-    href: "/case-converter",
-    category: CategoryId.Text,
   },
   {
     name: "Math Quiz Generator",
