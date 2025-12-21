@@ -1,55 +1,68 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Download, QrCode, Sparkles, LinkIcon } from "lucide-react"
-import { ToolLayout } from "@/components/tool-layout"
+import { CommonCollapsible } from "@/components/common-collapsible";
+import { ToolLayout } from "@/components/tool-layout";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Download, QrCode, Sparkles } from "lucide-react";
+import { useState } from "react";
+import { QRKnowledge } from "./qr-knowledge";
 
 export default function QRGeneratorPage() {
-  const [text, setText] = useState("")
+  const [text, setText] = useState("");
 
   return (
     <ToolLayout
       title="QR Code Generator"
       description="Transform any text or URL into a scannable QR code"
       icon={QrCode}
-      category="Image"
       badges={[
         { label: "Instant Generation", icon: Sparkles },
         { label: "High Quality" },
         { label: "Free Download" },
       ]}
     >
-      <Card className="overflow-hidden border-2 shadow-xl">
-          <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent p-6">
-            <h2 className="text-xl font-semibold">Create Your QR Code</h2>
-            <p className="text-sm text-muted-foreground">Enter text or URL to generate</p>
+      <div className="space-y-6">
+        <Card className="border-2 overflow-hidden">
+          <CommonCollapsible
+            title="Learn about QR codes"
+            description="Understanding QR code technology and applications"
+          >
+            <QRKnowledge />
+          </CommonCollapsible>
+        </Card>
+
+        <Card className="border-2 shadow-xl overflow-hidden">
+          <div className="bg-gradient-to-r to-transparent from-primary/10 via-primary/5 p-6">
+            <h2 className="font-semibold text-xl">Create Your QR Code</h2>
+            <p className="text-sm text-muted-foreground">
+              Enter text or URL to generate
+            </p>
           </div>
 
-          <div className="p-6 pt-4">
+          <div className="px-6">
             <div className="space-y-6">
               <div className="space-y-2">
-                <Label className="text-base">Text or URL</Label>
-                <div className="relative">
-                  <LinkIcon className="absolute left-3 top-3.5 h-5 w-5 text-muted-foreground" />
-                  <Input
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
-                    placeholder="https://example.com or any text..."
-                    className="border-2 pl-10 text-base shadow-inner transition-colors focus:border-primary"
-                  />
-                </div>
+                <Label htmlFor="qr-input" className="font-semibold text-base">
+                  Text or URL
+                </Label>
+                <Input
+                  id="qr-input"
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  placeholder="https://example.com or any text..."
+                  className="border-2 shadow-inner text-base transition-colors focus:border-primary"
+                />
               </div>
 
               {text && (
-                <Card className="overflow-hidden border-2 bg-gradient-to-br from-muted/50 to-muted/30 shadow-inner">
-                  <div className="flex flex-col items-center gap-6 p-10">
+                <Card className="bg-gradient-to-br from-muted/50 to-muted/30 border-2 shadow-inner overflow-hidden">
+                  <div className="flex flex-col p-10 gap-6 items-center">
                     <div className="relative">
-                      <div className="absolute inset-0 -z-10 animate-pulse rounded-2xl bg-gradient-to-br from-primary/30 to-primary/10 blur-xl" />
-                      <div className="rounded-2xl border-4 border-background bg-white p-6 shadow-2xl">
+                      <div className="bg-gradient-to-br from-primary/30 to-primary/10 rounded-2xl inset-0 animate-pulse -z-10 absolute blur-xl" />
+                      <div className="bg-white border-background border-4 rounded-2xl p-6 shadow-2xl">
                         <img
                           src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(text)}`}
                           alt="QR Code"
@@ -63,7 +76,7 @@ export default function QRGeneratorPage() {
                           href={`https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=${encodeURIComponent(text)}`}
                           download="qrcode.png"
                         >
-                          <Download className="mr-2 h-5 w-5" />
+                          <Download className="h-5 mr-2 w-5" />
                           Download High Quality
                         </a>
                       </Button>
@@ -76,18 +89,28 @@ export default function QRGeneratorPage() {
               )}
 
               {!text && (
-                <Card className="border-2 border-dashed bg-muted/30 p-6">
-                  <h3 className="mb-3 font-semibold">💡 Quick Tips</h3>
+                <Card className="border-dashed bg-muted/30 border-2 p-6">
+                  <h3 className="font-semibold mb-3">💡 Quick Tips</h3>
                   <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li>• Perfect for sharing website links, WiFi passwords, or contact info</li>
-                    <li>• Generated QR codes work with any standard QR code scanner</li>
-                    <li>• Download in high resolution for printing on business cards or posters</li>
+                    <li>
+                      • Perfect for sharing website links, WiFi passwords, or
+                      contact info
+                    </li>
+                    <li>
+                      • Generated QR codes work with any standard QR code
+                      scanner
+                    </li>
+                    <li>
+                      • Download in high resolution for printing on business
+                      cards or posters
+                    </li>
                   </ul>
                 </Card>
               )}
             </div>
           </div>
         </Card>
+      </div>
     </ToolLayout>
-  )
+  );
 }
