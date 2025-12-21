@@ -1,21 +1,27 @@
-import type { LucideIcon } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badge";
+import type { LucideIcon } from "lucide-react";
 
 interface ToolLayoutProps {
-  title: string
-  description: string
-  icon: LucideIcon
+  title: string;
+  description: string;
+  icon: LucideIcon;
   // category: string
-  badges?: { label: string; icon?: LucideIcon }[]
-  children: React.ReactNode
+  badges?: { label: string; icon?: LucideIcon }[];
+  children: React.ReactNode;
 }
 
-export function ToolLayout({ title, description, icon: Icon, badges = [], children }: ToolLayoutProps) {
+export function ToolLayout({
+  title,
+  description,
+  icon: Icon,
+  badges = [],
+  children,
+}: ToolLayoutProps) {
   return (
     <div className="space-y-8">
       <div className="flex items-start justify-between">
         <div className="flex gap-4 items-start">
-          <div className="bg-gradient-to-br from-primary flex to-primary/60 rounded-2xl h-14 shadow-lg text-primary-foreground w-14 items-center justify-center">
+          <div className="bg-gradient-to-br from-primary flex to-primary/60 rounded-2xl flex-shrink-0 h-14 shadow-lg text-primary-foreground w-14 items-center justify-center">
             <Icon className="h-7 w-7" />
           </div>
           <div>
@@ -43,5 +49,5 @@ export function ToolLayout({ title, description, icon: Icon, badges = [], childr
 
       {children}
     </div>
-  )
+  );
 }

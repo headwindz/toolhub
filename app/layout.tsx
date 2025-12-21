@@ -1,74 +1,94 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState, useEffect } from "react"
-import { Geist, Geist_Mono } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
-import { ThemeProvider } from "@/components/theme-provider"
-import { Header } from "@/components/header"
-import { Sidebar } from "@/components/sidebar"
-import { MagicCursor } from "@/components/magic-cursor"
-import { useRouter, usePathname } from "next/navigation"
-import { CategoryId } from "@/constants/categories"
-import { tools } from "@/constants/tools"
-import "./globals.css"
+import { Header } from "@/components/header";
+import { MagicCursor } from "@/components/magic-cursor";
+import { Sidebar } from "@/components/sidebar";
+import { ThemeProvider } from "@/components/theme-provider";
+import { CategoryId } from "@/constants/categories";
+import { tools } from "@/constants/tools";
+import { Analytics } from "@vercel/analytics/next";
+import { Geist, Geist_Mono } from "next/font/google";
+import { usePathname, useRouter } from "next/navigation";
+import type React from "react";
+import { useEffect, useState } from "react";
+import "./globals.css";
 
-const _geist = Geist({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
+const _geist = Geist({ subsets: ["latin"] });
+const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [activeCategory, setActiveCategory] = useState<CategoryId>(CategoryId.All)
-  const router = useRouter()
-  const pathname = usePathname()
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<CategoryId>(
+    CategoryId.All,
+  );
+  const router = useRouter();
+  const pathname = usePathname();
 
   // Update active category based on pathname
   useEffect(() => {
     if (pathname === "/") {
-      setActiveCategory(CategoryId.All)
+      setActiveCategory(CategoryId.All);
     } else if (pathname.startsWith("/category/")) {
-      const category = pathname.split("/category/")[1] as CategoryId
+      const category = pathname.split("/category/")[1] as CategoryId;
       if (Object.values(CategoryId).includes(category)) {
-        setActiveCategory(category)
+        setActiveCategory(category);
       }
     } else if (pathname.startsWith("/tools/")) {
-      const slug = pathname.replace("/tools", "") // tools hrefs begin with "/"
-      const match = tools.find((t) => t.href === slug)
+      const slug = pathname.replace("/tools", ""); // tools hrefs begin with "/"
+      const match = tools.find((t) => t.href === slug);
       if (match) {
-        setActiveCategory(match.category)
+        setActiveCategory(match.category);
       }
     }
-  }, [pathname])
+  }, [pathname]);
 
   const handleCategoryChange = (category: CategoryId) => {
-    setActiveCategory(category)
+    setActiveCategory(category);
     if (category === CategoryId.All) {
-      router.push("/")
+      router.push("/");
     } else {
-      router.push(`/category/${category}`)
+      router.push(`/category/${category}`);
     }
-  }
+  };
 
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <title>ToolBox - Free Online Utility Tools</title>
-        <meta name="description" content="Collection of free online utility tools for developers and creators" />
+        <meta
+          name="description"
+          content="Collection of free online utility tools for developers and creators"
+        />
         <meta name="generator" content="v0.app" />
-        <link rel="icon" href="/icon-light-32x32.png" media="(prefers-color-scheme: light)" />
-        <link rel="icon" href="/icon-dark-32x32.png" media="(prefers-color-scheme: dark)" />
+        <link
+          rel="icon"
+          href="/icon-light-32x32.png"
+          media="(prefers-color-scheme: light)"
+        />
+        <link
+          rel="icon"
+          href="/icon-dark-32x32.png"
+          media="(prefers-color-scheme: dark)"
+        />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-icon.png" />
       </head>
       <body className={`font-sans antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem storageKey="toolbox-theme">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          storageKey="toolbox-theme"
+        >
           <div className="flex flex-col min-h-screen">
-            <Header onMobileMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)} />
+            <Header
+              onMobileMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            />
             <div className="flex flex-1 min-h-0">
               <Sidebar
                 isCollapsed={isSidebarCollapsed}
@@ -88,9 +108,5 @@ export default function RootLayout({
         <Analytics />
       </body>
     </html>
-  )
+  );
 }
-
-export const metadata = {
-      generator: 'v0.app'
-    };
