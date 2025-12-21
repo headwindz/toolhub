@@ -1,17 +1,29 @@
 "use client";
 
+import { CommonCollapsible } from "@/components/common-collapsible";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Globe, Loader2, MapPin } from "lucide-react";
-import { useState } from "react";
+import { Label } from "@/components/ui/label";
+import {
+  Building2,
+  Clock,
+  Globe,
+  Loader2,
+  MapPin,
+  Network,
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import { InfoCard } from "./info-card";
+import { IpKnowledge } from "./ip-knowledge";
 
 export default function IpLookupPage() {
   const [ipAddress, setIpAddress] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState("");
+  const [currentTime, setCurrentTime] = useState("");
 
   const lookupIp = async () => {
     if (!ipAddress.trim()) {
@@ -56,134 +68,148 @@ export default function IpLookupPage() {
     }
   };
 
+  useEffect(() => {
+    if (result?.timezone) {
+      const updateTime = () => {
+        const time = new Date().toLocaleString("en-US", {
+          timeZone: result.timezone,
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+        });
+        setCurrentTime(time);
+      };
+
+      updateTime();
+      const interval = setInterval(updateTime, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [result?.timezone]);
+
   return (
     <ToolLayout
       title="IP Lookup"
       description="Get geolocation information for any IP address"
       icon={Globe}
+      badges={[{ label: "Real-time" }, { label: "Accurate" }]}
     >
-      <div className="mx-auto space-y-6 max-w-3xl">
-        <p className="text-muted-foreground">
-          Get geolocation information for any IP address
-        </p>
-      </div>
+      <div className="space-y-6">
+        <Card className="border-2 overflow-hidden">
+          <CommonCollapsible
+            title="Learn about IP addresses"
+            description="Understand IP geolocation and internet addresses"
+          >
+            <IpKnowledge />
+          </CommonCollapsible>
+        </Card>
 
-      <Card className="overflow-hidden">
-        <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 p-6">
-          <div className="space-y-4">
-            <div className="flex gap-2">
-              <Input
-                placeholder="Enter IP address (e.g., 8.8.8.8)"
-                value={ipAddress}
-                onChange={(e) => setIpAddress(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && lookupIp()}
-                className="flex-1"
-              />
-              <Button onClick={lookupIp} disabled={loading}>
-                {loading ? (
-                  <Loader2 className="h-4 animate-spin w-4" />
-                ) : (
-                  "Lookup"
-                )}
-              </Button>
+        <Card className="border-2 overflow-hidden">
+          <div className="space-y-4 p-6">
+            <div>
+              <Label htmlFor="ip-input" className="font-semibold mb-2 block">
+                IP Address to Lookup
+              </Label>
+              <div className="flex gap-2">
+                <Input
+                  id="ip-input"
+                  placeholder="Enter IP address (e.g., 8.8.8.8)"
+                  value={ipAddress}
+                  onChange={(e) => setIpAddress(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && lookupIp()}
+                  className="flex-1"
+                />
+                <Button onClick={lookupIp} disabled={loading} className="gap-2">
+                  {loading && <Loader2 className="h-4 animate-spin w-4" />}
+                  {loading ? "Looking up..." : "Lookup"}
+                </Button>
+              </div>
             </div>
             <Button
               variant="outline"
               onClick={getCurrentIp}
               disabled={loading}
-              className="bg-transparent w-full"
+              className="w-full gap-2"
             >
-              <Globe className="h-4 mr-2 w-4" />
-              Get My IP
+              <Globe className="h-4 w-4" />
+              Detect My IP
             </Button>
           </div>
-        </div>
 
-        {error && (
-          <div className="border-t bg-red-500/10 p-4">
-            <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
-          </div>
-        )}
-
-        {result && (
-          <div className="border-t p-6">
-            <div className="space-y-4">
-              <div className="flex gap-3 items-start">
-                <MapPin className="h-5 mt-1 text-primary w-5" />
-                <div className="space-y-3 flex-1">
-                  <div>
-                    <div className="font-medium text-sm text-muted-foreground">
-                      IP Address
-                    </div>
-                    <div className="font-semibold text-lg">{result.ip}</div>
-                  </div>
-
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    <div>
-                      <div className="font-medium text-sm text-muted-foreground">
-                        Country
-                      </div>
-                      <div className="font-medium">
-                        {result.country_flag} {result.country_name}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="font-medium text-sm text-muted-foreground">
-                        City
-                      </div>
-                      <div className="font-medium">{result.city || "N/A"}</div>
-                    </div>
-                    <div>
-                      <div className="font-medium text-sm text-muted-foreground">
-                        Region
-                      </div>
-                      <div className="font-medium">
-                        {result.region || "N/A"}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="font-medium text-sm text-muted-foreground">
-                        Postal Code
-                      </div>
-                      <div className="font-medium">
-                        {result.postal || "N/A"}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="font-medium text-sm text-muted-foreground">
-                        Coordinates
-                      </div>
-                      <div className="font-medium">
-                        {result.latitude}, {result.longitude}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="font-medium text-sm text-muted-foreground">
-                        Timezone
-                      </div>
-                      <div className="font-medium">
-                        {result.timezone || "N/A"}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="font-medium text-sm text-muted-foreground">
-                        ISP
-                      </div>
-                      <div className="font-medium">{result.org || "N/A"}</div>
-                    </div>
-                    <div>
-                      <div className="font-medium text-sm text-muted-foreground">
-                        ASN
-                      </div>
-                      <div className="font-medium">{result.asn || "N/A"}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          {error && (
+            <div className="border-t bg-red-500/10 p-4">
+              <p className="font-medium text-sm text-red-600 dark:text-red-400">
+                {error}
+              </p>
             </div>
-          </div>
-        )}
-      </Card>
+          )}
+
+          {result && (
+            <div className="border-t space-y-6 p-6">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <InfoCard
+                  icon={Globe}
+                  label="Location"
+                  value={result.country_name}
+                  subtitle={
+                    result.city &&
+                    `${result.city}${result.region ? `, ${result.region}` : ""}`
+                  }
+                />
+
+                <InfoCard
+                  icon={MapPin}
+                  label="Coordinates"
+                  value={`${result.latitude}, ${result.longitude}`}
+                  valueClassName="font-mono"
+                  subtitle={result.postal && `Postal: ${result.postal}`}
+                />
+
+                <InfoCard
+                  icon={Clock}
+                  label="Timezone"
+                  value={result.timezone || "N/A"}
+                  subtitle={
+                    currentTime && (
+                      <span className="font-mono">{currentTime}</span>
+                    )
+                  }
+                />
+
+                <InfoCard
+                  icon={Building2}
+                  label="ISP"
+                  value={result.org || "N/A"}
+                  valueClassName="break-words"
+                />
+
+                <InfoCard
+                  icon={Network}
+                  label="ASN"
+                  value={result.asn || "N/A"}
+                  valueClassName="font-mono"
+                />
+              </div>
+
+              <Card className="bg-secondary/50 border-0 p-4 overflow-hidden">
+                <div className="flex mb-3 gap-3 items-start">
+                  <MapPin className="h-5 text-primary w-5" />
+                  <div className="font-semibold text-sm">Location Map</div>
+                </div>
+                <div className="border rounded-lg overflow-hidden">
+                  <iframe
+                    width="100%"
+                    height="300"
+                    style={{ border: 0 }}
+                    src={`https://www.openstreetmap.org/export/embed.html?bbox=${result.longitude - 0.1},${result.latitude - 0.1},${result.longitude + 0.1},${result.latitude + 0.1}&layer=mapnik&marker=${result.latitude},${result.longitude}`}
+                    allowFullScreen
+                  />
+                </div>
+              </Card>
+            </div>
+          )}
+        </Card>
+      </div>
     </ToolLayout>
   );
 }
