@@ -16,7 +16,7 @@ export enum CategoryId {
   Developer = "developer",
   Design = "design",
   Security = "security",
-  Network = "network",
+  Utility = "utility",
 }
 
 export type Category = {
@@ -32,5 +32,5 @@ export const categories: Category[] = [
   { id: CategoryId.Developer, name: "Developer", icon: Code },
   { id: CategoryId.Design, name: "Design", icon: Palette },
   { id: CategoryId.Security, name: "Security", icon: Lock },
-  { id: CategoryId.Network, name: "Network", icon: Globe },
+  { id: CategoryId.Utility, name: "Utility", icon: Globe },
 ];

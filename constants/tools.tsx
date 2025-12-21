@@ -13,6 +13,7 @@ import {
   Lock,
   Palette,
   QrCode,
+  ScanText,
 } from "lucide-react";
 
 export type Tool = {
@@ -45,12 +46,21 @@ export const tools: Tool[] = [
     category: CategoryId.Image,
   },
   {
+    name: "Text Extractor (OCR)",
+    description: "Extract text from images using OCR",
+    icon: ScanText,
+    color: "bg-violet-500",
+    badge: "AI",
+    href: "/text-extractor",
+    category: CategoryId.Image,
+  },
+  {
     name: "QR Code Generator",
     description: "Generate QR codes for any text or URL",
     icon: QrCode,
     color: "bg-green-500",
     href: "/qr-generator",
-    category: CategoryId.Education,
+    category: CategoryId.Utility,
   },
   {
     name: "Hash Generator",
@@ -100,7 +110,7 @@ export const tools: Tool[] = [
     color: "bg-blue-600",
     badge: "Network",
     href: "/ip-lookup",
-    category: CategoryId.Network,
+    category: CategoryId.Utility,
   },
   {
     name: "World Clock",
@@ -119,14 +129,6 @@ export const tools: Tool[] = [
     badge: "Popular",
     href: "/password-generator",
     category: CategoryId.Security,
-  },
-  {
-    name: "Unit Converter",
-    description: "Convert between different units",
-    icon: Calculator,
-    color: "bg-lime-500",
-    href: "/unit-converter",
-    category: CategoryId.Education,
   },
   {
     name: "Timestamp Converter",
