@@ -2,6 +2,7 @@ import { CategoryId } from "@/constants/categories";
 import type { LucideIcon } from "lucide-react";
 import {
   Calculator,
+  Chrome,
   Clock,
   Code,
   Contrast,
@@ -111,6 +112,15 @@ export const tools: Tool[] = [
     badge: "Network",
     href: "/ip-lookup",
     category: CategoryId.Utility,
+  },
+  {
+    name: "User Agent Detector",
+    description: "Detect and analyze browser user agent",
+    icon: Chrome,
+    color: "bg-cyan-600",
+    badge: "New",
+    href: "/user-agent",
+    category: CategoryId.Developer,
   },
   {
     name: "World Clock",
