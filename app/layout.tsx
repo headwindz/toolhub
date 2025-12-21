@@ -23,28 +23,35 @@ export default function RootLayout({
 }>) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeCategory, setActiveCategory] = useState<CategoryId>(
-    CategoryId.All,
-  );
   const router = useRouter();
   const pathname = usePathname();
 
-  // Update active category based on pathname
-  useEffect(() => {
+  // Calculate initial active category based on pathname
+  const getInitialCategory = (): CategoryId => {
     if (pathname === "/") {
-      setActiveCategory(CategoryId.All);
+      return CategoryId.All;
     } else if (pathname.startsWith("/category/")) {
       const category = pathname.split("/category/")[1] as CategoryId;
       if (Object.values(CategoryId).includes(category)) {
-        setActiveCategory(category);
+        return category;
       }
     } else if (pathname.startsWith("/tools/")) {
       const slug = pathname.replace("/tools", ""); // tools hrefs begin with "/"
       const match = tools.find((t) => t.href === slug);
       if (match) {
-        setActiveCategory(match.category);
+        return match.category;
       }
     }
+    return CategoryId.All;
+  };
+
+  const [activeCategory, setActiveCategory] =
+    useState<CategoryId>(getInitialCategory());
+
+  // Update active category based on pathname changes
+  useEffect(() => {
+    const newCategory = getInitialCategory();
+    setActiveCategory(newCategory);
   }, [pathname]);
 
   const handleCategoryChange = (category: CategoryId) => {
