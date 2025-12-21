@@ -11,6 +11,7 @@ import {
   Hash,
   ImageIcon,
   Key,
+  Keyboard,
   Lock,
   Palette,
   QrCode,
@@ -155,6 +156,15 @@ export const tools: Tool[] = [
     color: "bg-blue-600",
     badge: "New",
     href: "/math-quiz",
+    category: CategoryId.Education,
+  },
+  {
+    name: "Typing Exercise",
+    description: "Practice and improve typing speed",
+    icon: Keyboard,
+    color: "bg-teal-500",
+    badge: "Practice",
+    href: "/typing-exercise",
     category: CategoryId.Education,
   },
 ];
