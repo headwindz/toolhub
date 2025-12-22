@@ -6,18 +6,9 @@ import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  AlertCircle,
-  Building,
-  Coins,
-  Flag,
-  Globe,
-  Languages,
-  Loader2,
-  Phone,
-  Search,
-} from "lucide-react";
+import { AlertCircle, Globe, Loader2, Search } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { CountryCard } from "./country-card";
 import { CountryCodeKnowledge } from "./country-code-knowledge";
 
 interface Country {
@@ -36,10 +27,20 @@ interface Country {
 
 export default function CountryCodePage() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
   const [codeOnly, setCodeOnly] = useState(false);
   const [countries, setCountries] = useState<Country[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Debounce search query
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -105,9 +106,9 @@ export default function CountryCodePage() {
   }, []);
 
   const filteredCountries = useMemo(() => {
-    if (!searchQuery.trim()) return countries;
+    if (!debouncedQuery.trim()) return countries;
 
-    const query = searchQuery.toLowerCase();
+    const query = debouncedQuery.toLowerCase();
     return countries.filter((country) => {
       if (codeOnly) {
         return (
@@ -121,16 +122,11 @@ export default function CountryCodePage() {
         country.alpha3.toLowerCase().includes(query)
       );
     });
-  }, [searchQuery, countries, codeOnly]);
+  }, [debouncedQuery, countries, codeOnly]);
 
-  if (loading) {
-    return (
-      <ToolLayout
-        title="Country/Region Code Lookup"
-        description="Search country/region codes"
-        icon={Globe}
-        badges={[{ label: "Reference" }, { label: "International" }]}
-      >
+  const renderContent = () => {
+    if (loading) {
+      return (
         <Card className="border-2 text-center p-12">
           <Loader2 className="mx-auto h-12 text-primary mb-4 animate-spin w-12" />
           <h3 className="font-semibold text-lg mb-2">Loading countries...</h3>
@@ -138,53 +134,10 @@ export default function CountryCodePage() {
             Fetching data from REST Countries API
           </p>
         </Card>
-      </ToolLayout>
-    );
-  }
-
-  if (error) {
+      );
+    }
     return (
-      <ToolLayout
-        title="Country Code Lookup"
-        description="Search country codes, calling codes, and country information"
-        icon={Globe}
-        badges={[{ label: "Reference" }, { label: "International" }]}
-      >
-        <Card className="border-2 border-destructive/50 text-center p-12">
-          <AlertCircle className="mx-auto h-12 text-destructive mb-4 w-12" />
-          <h3 className="font-semibold text-lg mb-2">
-            Failed to load countries
-          </h3>
-          <p className="text-sm text-muted-foreground mb-4">{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="text-sm text-primary hover:underline"
-          >
-            Try again
-          </button>
-        </Card>
-      </ToolLayout>
-    );
-  }
-
-  return (
-    <ToolLayout
-      title="Country/Region Code Lookup"
-      description="Search country/regions codes"
-      icon={Globe}
-      badges={[{ label: "Reference" }, { label: "International" }]}
-    >
-      <div className="space-y-6">
-        <Card className="border-2 overflow-hidden">
-          <CommonCollapsible
-            title="Learn About Country Codes"
-            description="Understanding ISO codes and international standards"
-          >
-            <CountryCodeKnowledge />
-          </CommonCollapsible>
-        </Card>
-
-        {/* Search */}
+      <>
         <Card className="border-2 p-6">
           <div className="space-y-4">
             <div className="space-y-2">
@@ -237,137 +190,30 @@ export default function CountryCodePage() {
 
         <div className="grid gap-4">
           {filteredCountries.map((country) => (
-            <Card key={country.alpha2} className="border-2 overflow-hidden">
-              <div className="bg-gradient-to-r border-b from-blue-500/5 to-purple-500/5 p-4">
-                <div className="flex gap-3 items-center">
-                  <span className="text-4xl">{country.flag}</span>
-                  <div>
-                    <h3 className="font-bold text-lg">{country.name}</h3>
-                    <p className="text-sm text-muted-foreground">
-                      {country.continent}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-4">
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                  {/* ISO Codes */}
-                  <div className="space-y-3">
-                    <div className="flex font-semibold text-sm gap-2 items-center">
-                      <Flag className="h-4 text-primary w-4" />
-                      <span>ISO Codes</span>
-                    </div>
-                    <div className="space-y-2">
-                      <div>
-                        <div className="text-xs text-muted-foreground">
-                          Alpha-2
-                        </div>
-                        <div className="bg-secondary rounded p-2">
-                          <code className="font-mono font-semibold text-sm">
-                            {country.alpha2}
-                          </code>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="text-xs text-muted-foreground">
-                          Alpha-3
-                        </div>
-                        <div className="bg-secondary rounded p-2">
-                          <code className="font-mono font-semibold text-sm">
-                            {country.alpha3}
-                          </code>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="text-xs text-muted-foreground">
-                          Numeric
-                        </div>
-                        <div className="bg-secondary rounded p-2">
-                          <code className="font-mono font-semibold text-sm">
-                            {country.numeric}
-                          </code>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Contact Info */}
-                  <div className="space-y-3">
-                    <div className="flex font-semibold text-sm gap-2 items-center">
-                      <Phone className="h-4 text-primary w-4" />
-                      <span>Contact</span>
-                    </div>
-                    <div className="space-y-2">
-                      <div>
-                        <div className="text-xs text-muted-foreground">
-                          Calling Code
-                        </div>
-                        <div className="bg-secondary rounded p-2">
-                          <code className="font-mono font-semibold text-sm">
-                            {country.calling}
-                          </code>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="text-xs text-muted-foreground">
-                          Capital
-                        </div>
-                        <div className="bg-secondary rounded p-2">
-                          <div className="flex gap-2 items-center">
-                            <Building className="h-3 text-muted-foreground w-3" />
-                            <span className="text-sm">{country.capital}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Currency */}
-                  <div className="space-y-3">
-                    <div className="flex font-semibold text-sm gap-2 items-center">
-                      <Coins className="h-4 text-primary w-4" />
-                      <span>Currency</span>
-                    </div>
-                    <div className="space-y-2">
-                      <div>
-                        <div className="text-xs text-muted-foreground">
-                          Code
-                        </div>
-                        <div className="bg-secondary rounded p-2">
-                          <code className="font-mono font-semibold text-sm">
-                            {country.currency}
-                          </code>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="text-xs text-muted-foreground">
-                          Symbol
-                        </div>
-                        <div className="bg-secondary rounded p-2">
-                          <span className="font-semibold text-lg">
-                            {country.currencySymbol}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Languages */}
-                  <div className="space-y-3">
-                    <div className="flex font-semibold text-sm gap-2 items-center">
-                      <Languages className="h-4 text-primary w-4" />
-                      <span>Languages</span>
-                    </div>
-                    <div className="bg-secondary rounded p-2">
-                      <p className="text-sm">{country.languages}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Card>
+            <CountryCard key={country.alpha2} country={country} />
           ))}
         </div>
+      </>
+    );
+  };
+
+  return (
+    <ToolLayout
+      title="Country/Region Code Lookup"
+      description="Search country/regions codes"
+      icon={Globe}
+      badges={[{ label: "Reference" }, { label: "International" }]}
+    >
+      <div className="space-y-6">
+        <Card className="border-2 overflow-hidden">
+          <CommonCollapsible
+            title="Learn About Country Codes"
+            description="Understanding ISO codes and international standards"
+          >
+            <CountryCodeKnowledge />
+          </CommonCollapsible>
+        </Card>
+        {renderContent()}
       </div>
     </ToolLayout>
   );
