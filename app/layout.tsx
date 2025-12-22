@@ -66,7 +66,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <title>ToolBox - Free Online Utility Tools</title>
+        <title>Toolboxz - Free Online Utility Tools</title>
         <meta
           name="description"
           content="Collection of free online utility tools for developers and creators"

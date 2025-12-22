@@ -12,6 +12,7 @@ import {
   Key,
   Keyboard,
   Lock,
+  MapPin,
   Palette,
   QrCode,
   ScanText,
@@ -165,5 +166,14 @@ export const tools: Tool[] = [
     badge: "Practice",
     href: "/typing-exercise",
     category: CategoryId.Education,
+  },
+  {
+    name: "Country/Region Code Lookup",
+    description: "Search ISO country/region codes and info",
+    icon: MapPin,
+    color: "bg-indigo-500",
+    badge: "Reference",
+    href: "/country-region-code",
+    category: CategoryId.Utility,
   },
 ];
