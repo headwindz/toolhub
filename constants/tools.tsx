@@ -6,6 +6,7 @@ import {
   Code,
   Contrast,
   FileJson,
+  FileText,
   Globe,
   Hash,
   ImageIcon,
@@ -174,6 +175,15 @@ export const tools: Tool[] = [
     color: "bg-indigo-500",
     badge: "Reference",
     href: "/country-region-code",
+    category: CategoryId.Utility,
+  },
+  {
+    name: "Word Counter",
+    description: "Count words, characters, and analyze text",
+    icon: FileText,
+    color: "bg-slate-500",
+    badge: "New",
+    href: "/word-count",
     category: CategoryId.Utility,
   },
 ];

@@ -1,18 +1,22 @@
-import { useMemo, useState } from "react"
-import type { ReactNode } from "react"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { BookOpen, ChevronDown } from "lucide-react"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { BookOpen, ChevronDown } from "lucide-react";
+import type { ReactNode } from "react";
+import { useMemo, useState } from "react";
 
 interface CommonCollapsibleProps {
   // Controlled state (optional). If omitted, the component manages its own open state.
-  open?: boolean
-  onOpenChange?: (open: boolean) => void
-  defaultOpen?: boolean
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  defaultOpen?: boolean;
   // Provide either a custom trigger node or simple title/description for a built-in trigger.
-  trigger?: ReactNode
-  title?: string
-  description?: string
-  children: ReactNode // collapsibleContent
+  trigger?: ReactNode;
+  title?: string;
+  description?: string;
+  children: ReactNode; // collapsibleContent
 }
 
 export function CommonCollapsible({
@@ -24,20 +28,20 @@ export function CommonCollapsible({
   description,
   children,
 }: CommonCollapsibleProps) {
-  const isControlled = open !== undefined
-  const [internalOpen, setInternalOpen] = useState(defaultOpen)
-  const currentOpen = isControlled ? open : internalOpen
+  const isControlled = open !== undefined;
+  const [internalOpen, setInternalOpen] = useState(defaultOpen);
+  const currentOpen = isControlled ? open : internalOpen;
 
   const handleOpenChange = (next: boolean) => {
     if (!isControlled) {
-      setInternalOpen(next)
+      setInternalOpen(next);
     }
-    onOpenChange?.(next)
-  }
+    onOpenChange?.(next);
+  };
 
   const triggerContent = useMemo(() => {
-    if (trigger) return trigger
-    if (!title && !description) return null
+    if (trigger) return trigger;
+    if (!title && !description) return null;
     return (
       <div className="bg-gradient-to-r flex from-blue-500/10 to-purple-500/10 p-4 transition-colors items-center justify-between hover:from-blue-500/15 hover:to-purple-500/15">
         <div className="flex gap-3 items-center">
@@ -47,15 +51,21 @@ export function CommonCollapsible({
             <p className="text-xs text-muted-foreground">{description}</p>
           </div>
         </div>
-        <ChevronDown className={`h-5 w-5 transition-transform ${open ? "rotate-180" : ""}`} />
+        <ChevronDown
+          className={`h-5 w-5 cursor-pointer transition-transform duration-300 ${currentOpen ? "rotate-180" : ""}`}
+        />
       </div>
-    )
-  }, [trigger, title, description])
+    );
+  }, [trigger, title, description, currentOpen]);
 
   return (
     <Collapsible open={currentOpen} onOpenChange={handleOpenChange}>
-      {triggerContent && <CollapsibleTrigger className="text-left w-full">{triggerContent}</CollapsibleTrigger>}
+      {triggerContent && (
+        <CollapsibleTrigger className="text-left w-full">
+          {triggerContent}
+        </CollapsibleTrigger>
+      )}
       <CollapsibleContent>{children}</CollapsibleContent>
     </Collapsible>
-  )
+  );
 }
