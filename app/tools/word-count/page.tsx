@@ -13,36 +13,35 @@ export default function WordCountPage() {
 
   const stats = useMemo(() => {
     const trimmedText = text.trim();
-    
+
     // Character count (with and without spaces)
     const characters = text.length;
     const charactersNoSpaces = text.replace(/\s/g, "").length;
-    
+
     // Word count
     const words = trimmedText === "" ? 0 : trimmedText.split(/\s+/).length;
-    
+
     // Sentence count (count periods, question marks, exclamation points)
-    const sentences = trimmedText === "" 
-      ? 0 
-      : (trimmedText.match(/[.!?]+/g) || []).length;
-    
+    const sentences =
+      trimmedText === "" ? 0 : (trimmedText.match(/[.!?]+/g) || []).length;
+
     // Paragraph count (split by double newlines)
-    const paragraphs = trimmedText === "" 
-      ? 0 
-      : trimmedText.split(/\n\s*\n/).filter(p => p.trim().length > 0).length;
-    
+    const paragraphs =
+      trimmedText === ""
+        ? 0
+        : trimmedText.split(/\n\s*\n/).filter((p) => p.trim().length > 0)
+            .length;
+
     // Line count
-    const lines = trimmedText === "" 
-      ? 0 
-      : trimmedText.split(/\n/).length;
-    
+    const lines = trimmedText === "" ? 0 : trimmedText.split(/\n/).length;
+
     // Average word length
     const totalChars = trimmedText.replace(/\s/g, "").length;
     const avgWordLength = words > 0 ? (totalChars / words).toFixed(1) : "0";
-    
+
     // Reading time (average reading speed: 200 words per minute)
     const readingTimeMinutes = Math.ceil(words / 200);
-    
+
     // Speaking time (average speaking speed: 130 words per minute)
     const speakingTimeMinutes = Math.ceil(words / 130);
 
@@ -91,18 +90,24 @@ export default function WordCountPage() {
           <div className="gap-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             <StatCard label="Words" value={stats.words} />
             <StatCard label="Characters" value={stats.characters} />
-            <StatCard label="Characters (no spaces)" value={stats.charactersNoSpaces} />
+            <StatCard
+              label="Characters (no spaces)"
+              value={stats.charactersNoSpaces}
+            />
             <StatCard label="Sentences" value={stats.sentences} />
             <StatCard label="Paragraphs" value={stats.paragraphs} />
             <StatCard label="Lines" value={stats.lines} />
-            <StatCard label="Avg. Word Length" value={`${stats.avgWordLength} chars`} />
-            <StatCard 
-              label="Reading Time" 
-              value={`${stats.readingTimeMinutes} min`} 
+            <StatCard
+              label="Avg. Word Length"
+              value={`${stats.avgWordLength} chars`}
             />
-            <StatCard 
-              label="Speaking Time" 
-              value={`${stats.speakingTimeMinutes} min`} 
+            <StatCard
+              label="Reading Time"
+              value={`${stats.readingTimeMinutes} min`}
+            />
+            <StatCard
+              label="Speaking Time"
+              value={`${stats.speakingTimeMinutes} min`}
             />
           </div>
         </div>

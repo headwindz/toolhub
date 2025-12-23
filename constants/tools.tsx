@@ -17,6 +17,7 @@ import {
   Palette,
   QrCode,
   ScanText,
+  Shield,
 } from "lucide-react";
 
 export type Tool = {
@@ -96,6 +97,15 @@ export const tools: Tool[] = [
     icon: Code,
     color: "bg-indigo-500",
     href: "/base64",
+    category: CategoryId.Developer,
+  },
+  {
+    name: "JWT Decoder",
+    description: "Decode and analyze JSON Web Tokens",
+    icon: Shield,
+    color: "bg-violet-600",
+    badge: "New",
+    href: "/jwt-decoder",
     category: CategoryId.Developer,
   },
   {
