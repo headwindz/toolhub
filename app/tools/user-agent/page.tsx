@@ -1,7 +1,6 @@
 "use client";
 
 import { InfoCard } from "@/app/tools/ip-lookup/info-card";
-import { CommonCollapsible } from "@/components/common-collapsible";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -182,131 +181,122 @@ export default function UserAgentPage() {
       icon={Chrome}
       badges={[{ label: "Browser Info" }, { label: "Device Detection" }]}
     >
-      <div className="space-y-6">
-        <Card className="border-2 overflow-hidden">
-          <CommonCollapsible
-            title="Learn about User Agents"
-            description="Understanding browser identification and user agent strings"
-          >
-            <UserAgentKnowledge />
-          </CommonCollapsible>
-        </Card>
+      <UserAgentKnowledge />
 
-        {/* Custom User Agent Input */}
-        <Card className="border-2 p-6">
-          <div className="space-y-4">
-            <div className="flex flex-col gap-2 sm:flex-row sm:gap-3 sm:items-end">
-              <div className="space-y-2 flex-1">
-                <Label htmlFor="custom-ua">Custom User Agent</Label>
-                <Input
-                  id="custom-ua"
-                  placeholder="Enter a custom user agent string to analyze..."
-                  value={customUA}
-                  onChange={(e) => {
-                    setCustomUA(e.target.value);
-                    setError(""); // Clear error on input change
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") analyzeCustomUA();
-                  }}
-                  className="font-mono text-sm"
-                />
-              </div>
-              <div className="flex gap-2">
-                <Button
-                  onClick={analyzeCustomUA}
-                  disabled={!customUA.trim()}
-                  className="gap-2"
-                >
-                  <Search className="h-4 w-4" />
-                  Analyze
-                </Button>
-              </div>
+      {/* Custom User Agent Input */}
+      <Card className="border-2 p-6">
+        <div className="space-y-4">
+          <div className="flex flex-col gap-2 sm:flex-row sm:gap-3 sm:items-end">
+            <div className="space-y-2 flex-1">
+              <Label htmlFor="custom-ua">Custom User Agent</Label>
+              <Input
+                id="custom-ua"
+                placeholder="Enter a custom user agent string to analyze..."
+                value={customUA}
+                onChange={(e) => {
+                  setCustomUA(e.target.value);
+                  setError(""); // Clear error on input change
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") analyzeCustomUA();
+                }}
+                className="font-mono text-sm"
+              />
             </div>
-            {error && (
-              <div className="border rounded-md bg-destructive/10 border-destructive/20 text-sm text-destructive p-3">
-                {error}
-              </div>
-            )}
-            <Button
-              onClick={loadMyUserAgent}
-              variant="secondary"
-              className="w-full gap-2 sm:w-auto"
-            >
-              <Chrome className="h-4 w-4" />
-              Test My User Agent
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                onClick={analyzeCustomUA}
+                disabled={!customUA.trim()}
+                className="gap-2"
+              >
+                <Search className="h-4 w-4" />
+                Analyze
+              </Button>
+            </div>
           </div>
-        </Card>
+          {error && (
+            <div className="border rounded-md bg-destructive/10 border-destructive/20 text-sm text-destructive p-3">
+              {error}
+            </div>
+          )}
+          <Button
+            onClick={loadMyUserAgent}
+            variant="secondary"
+            className="w-full gap-2 sm:w-auto"
+          >
+            <Chrome className="h-4 w-4" />
+            Test My User Agent
+          </Button>
+        </div>
+      </Card>
 
-        {showResults && (
-          <Card className="border-2 overflow-hidden">
-            <div className="bg-gradient-to-r border-b from-blue-500/5 to-cyan-500/5 p-6">
-              <div className="flex items-center justify-between">
-                <div className="flex gap-3 items-center">
-                  <div className="rounded-lg bg-primary/20 p-3">
-                    <DeviceIcon className="h-6 text-primary w-6" />
+      {showResults && (
+        <Card className="border-2 overflow-hidden">
+          <div className="bg-gradient-to-r border-b from-blue-500/5 to-cyan-500/5 p-6">
+            <div className="flex items-center justify-between">
+              <div className="flex gap-3 items-center">
+                <div className="rounded-lg bg-primary/20 p-3">
+                  <DeviceIcon className="h-6 text-primary w-6" />
+                </div>
+                <div>
+                  <div className="text-sm text-muted-foreground">
+                    Your Device
                   </div>
-                  <div>
-                    <div className="text-sm text-muted-foreground">
-                      Your Device
-                    </div>
-                    <div className="font-bold text-xl">
-                      {uaInfo?.browser} on {uaInfo?.os}
-                    </div>
+                  <div className="font-bold text-xl">
+                    {uaInfo?.browser} on {uaInfo?.os}
                   </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            <div className="space-y-6 p-6">
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <InfoCard
-                  icon={Chrome}
-                  label="Browser"
-                  value={uaInfo?.browser}
-                  subtitle={`Version ${uaInfo?.browserVersion}`}
-                />
+          <div className="space-y-6 p-6">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <InfoCard
+                icon={Chrome}
+                label="Browser"
+                value={uaInfo?.browser}
+                subtitle={`Version ${uaInfo?.browserVersion}`}
+              />
 
-                <InfoCard
-                  icon={Globe}
-                  label="Operating System"
-                  value={uaInfo?.os}
-                  subtitle={`Platform: ${uaInfo?.platform}`}
-                />
+              <InfoCard
+                icon={Globe}
+                label="Operating System"
+                value={uaInfo?.os}
+                subtitle={`Platform: ${uaInfo?.platform}`}
+              />
 
-                <InfoCard
-                  icon={DeviceIcon}
-                  label="Device Type"
-                  value={uaInfo?.device}
-                  subtitle={`Resolution: ${uaInfo?.screenResolution}`}
-                />
+              <InfoCard
+                icon={DeviceIcon}
+                label="Device Type"
+                value={uaInfo?.device}
+                subtitle={`Resolution: ${uaInfo?.screenResolution}`}
+              />
 
-                <InfoCard
-                  icon={Code}
-                  label="Rendering Engine"
-                  value={uaInfo?.engine}
-                />
+              <InfoCard
+                icon={Code}
+                label="Rendering Engine"
+                value={uaInfo?.engine}
+              />
 
-                <InfoCard
-                  icon={Globe}
-                  label="Language"
-                  value={uaInfo?.language}
-                  subtitle={`Cookies: ${uaInfo?.cookiesEnabled ? "Enabled" : "Disabled"}`}
-                />
+              <InfoCard
+                icon={Globe}
+                label="Language"
+                value={uaInfo?.language}
+                subtitle={`Cookies: ${uaInfo?.cookiesEnabled ? "Enabled" : "Disabled"}`}
+              />
 
-                <InfoCard
-                  icon={Monitor}
-                  label="Viewport"
-                  value={uaInfo?.viewport}
-                  subtitle={`DNT: ${uaInfo?.doNotTrack}`}
-                  valueClassName="font-mono"
-                />
-              </div>
+              <InfoCard
+                icon={Monitor}
+                label="Viewport"
+                value={uaInfo?.viewport}
+                subtitle={`DNT: ${uaInfo?.doNotTrack}`}
+                valueClassName="font-mono"
+              />
             </div>
-          </Card>
-        )}
-      </div>
+          </div>
+        </Card>
+      )}
     </ToolLayout>
   );
 }

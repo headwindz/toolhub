@@ -1,8 +1,13 @@
+import { KnowledgeSection } from "@/components/knowledge-section";
+
 export function IpKnowledge() {
   return (
-    <div className="space-y-4 text-sm leading-relaxed p-6">
-      <div>
-        <h4 className="font-semibold text-base mb-2">What is an IP Address?</h4>
+    <KnowledgeSection
+      title="Learn about IP addresses"
+      description="Understand IP geolocation and internet addresses"
+    >
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">What is an IP Address?</h4>
         <p className="text-muted-foreground">
           An Internet Protocol (IP) address is a unique numerical label assigned
           to each device connected to a network. It serves two main functions:
@@ -10,8 +15,8 @@ export function IpKnowledge() {
           versions: IPv4 (e.g., 192.168.1.1) and IPv6 (e.g., 2001:0db8::1).
         </p>
       </div>
-      <div>
-        <h4 className="font-semibold text-base mb-2">IP Geolocation</h4>
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">IP Geolocation</h4>
         <p className="text-muted-foreground">
           IP geolocation is the process of identifying the physical location of
           a device using its IP address. Databases map IP address ranges to
@@ -20,8 +25,8 @@ export function IpKnowledge() {
           city, coordinates, and ISP information.
         </p>
       </div>
-      <div>
-        <h4 className="font-semibold text-base mb-2">Common Uses</h4>
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">Common Uses</h4>
         <ul className="list-disc space-y-1 text-muted-foreground pl-5">
           <li>
             <strong>Content Localization:</strong> Serve content in the user's
@@ -41,10 +46,8 @@ export function IpKnowledge() {
           </li>
         </ul>
       </div>
-      <div>
-        <h4 className="font-semibold text-base mb-2">
-          Important Considerations
-        </h4>
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">Important Considerations</h4>
         <p className="text-muted-foreground">
           IP geolocation is not 100% accurate, especially for mobile devices and
           VPN/proxy users. VPNs and proxies mask the actual IP, showing only the
@@ -52,6 +55,6 @@ export function IpKnowledge() {
           typically have better data coverage than remote areas.
         </p>
       </div>
-    </div>
+    </KnowledgeSection>
   );
 }

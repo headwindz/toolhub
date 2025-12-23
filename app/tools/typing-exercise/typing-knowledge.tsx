@@ -1,8 +1,13 @@
+import { KnowledgeSection } from "@/components/knowledge-section";
+
 export function TypingKnowledge() {
   return (
-    <div className="space-y-4 text-sm leading-relaxed p-6">
-      <section>
-        <h3 className="font-semibold text-lg mb-3">Why Practice Typing?</h3>
+    <KnowledgeSection
+      title="Learn About Typing Practice"
+      description="Improve your typing skills and productivity"
+    >
+      <section className="space-y-2">
+        <h3 className="font-semibold text-lg">Why Practice Typing?</h3>
         <p className="text-muted-foreground">
           Touch typing is an essential skill in the digital age. Improving your
           typing speed and accuracy can significantly boost your productivity,
@@ -11,8 +16,8 @@ export function TypingKnowledge() {
         </p>
       </section>
 
-      <section>
-        <h3 className="font-semibold text-lg mb-3">Key Metrics</h3>
+      <section className="space-y-2">
+        <h3 className="font-semibold text-lg">Key Metrics</h3>
         <div className="space-y-3">
           <div>
             <strong className="text-foreground">WPM (Words Per Minute)</strong>
@@ -38,8 +43,8 @@ export function TypingKnowledge() {
         </div>
       </section>
 
-      <section>
-        <h3 className="font-semibold text-lg mb-3">Tips for Improvement</h3>
+      <section className="space-y-2">
+        <h3 className="font-semibold text-lg">Tips for Improvement</h3>
         <ul className="space-y-2 text-muted-foreground">
           <li>
             <strong className="text-foreground">Proper Posture:</strong> Sit
@@ -76,8 +81,8 @@ export function TypingKnowledge() {
         </ul>
       </section>
 
-      <section>
-        <h3 className="font-semibold text-lg mb-3">Difficulty Levels</h3>
+      <section className="space-y-2">
+        <h3 className="font-semibold text-lg">Difficulty Levels</h3>
         <div className="space-y-3">
           <div>
             <strong className="text-foreground">Easy</strong>
@@ -110,8 +115,8 @@ export function TypingKnowledge() {
         </div>
       </section>
 
-      <section>
-        <h3 className="font-semibold text-lg mb-3">Common Mistakes</h3>
+      <section className="space-y-2">
+        <h3 className="font-semibold text-lg">Common Mistakes</h3>
         <ul className="space-y-2 text-muted-foreground">
           <li>
             Looking at the keyboard instead of the screen - breaks muscle memory
@@ -135,8 +140,8 @@ export function TypingKnowledge() {
         </ul>
       </section>
 
-      <section>
-        <h3 className="font-semibold text-lg mb-3">Setting Goals</h3>
+      <section className="space-y-2">
+        <h3 className="font-semibold text-lg">Setting Goals</h3>
         <p className="text-muted-foreground">
           Start with achievable targets and gradually increase difficulty:
         </p>
@@ -147,6 +152,6 @@ export function TypingKnowledge() {
           <li>Expert: 90+ WPM with 98%+ accuracy</li>
         </ul>
       </section>
-    </div>
+    </KnowledgeSection>
   );
 }

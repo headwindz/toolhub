@@ -1,8 +1,13 @@
+import { KnowledgeSection } from "@/components/knowledge-section";
+
 export function UserAgentKnowledge() {
   return (
-    <div className="space-y-4 text-sm leading-relaxed p-6">
-      <div>
-        <h4 className="font-semibold text-base mb-2">What is a User Agent?</h4>
+    <KnowledgeSection
+      title="Learn about User Agents"
+      description="Understanding browser identification and user agent strings"
+    >
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">What is a User Agent?</h4>
         <p className="text-muted-foreground">
           A User Agent is a text string that web browsers send to web servers to
           identify themselves. It contains information about the browser type,
@@ -11,8 +16,8 @@ export function UserAgentKnowledge() {
           experiences, and gather analytics.
         </p>
       </div>
-      <div>
-        <h4 className="font-semibold text-base mb-2">
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">
           User Agent String Components
         </h4>
         <ul className="list-disc space-y-1 text-muted-foreground pl-5">
@@ -36,8 +41,8 @@ export function UserAgentKnowledge() {
           </li>
         </ul>
       </div>
-      <div>
-        <h4 className="font-semibold text-base mb-2">Common Use Cases</h4>
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">Common Use Cases</h4>
         <ul className="list-disc space-y-1 text-muted-foreground pl-5">
           <li>
             <strong>Responsive Design:</strong> Serve mobile-optimized content
@@ -61,8 +66,8 @@ export function UserAgentKnowledge() {
           </li>
         </ul>
       </div>
-      <div>
-        <h4 className="font-semibold text-base mb-2">Privacy Considerations</h4>
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">Privacy Considerations</h4>
         <p className="text-muted-foreground">
           User agent strings can be used for browser fingerprinting, raising
           privacy concerns. Modern browsers are moving toward User-Agent Client
@@ -84,6 +89,6 @@ export function UserAgentKnowledge() {
           <li>Test across real devices, not just user agent spoofing tools</li>
         </ul>
       </div>
-    </div>
+    </KnowledgeSection>
   );
 }

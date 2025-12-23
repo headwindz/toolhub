@@ -1,6 +1,5 @@
 "use client";
 
-import { CommonCollapsible } from "@/components/common-collapsible";
 import { ToolLayout } from "@/components/tool-layout";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -204,17 +203,8 @@ export default function CountryCodePage() {
       icon={Globe}
       badges={[{ label: "Reference" }, { label: "International" }]}
     >
-      <div className="space-y-6">
-        <Card className="border-2 overflow-hidden">
-          <CommonCollapsible
-            title="Learn About Country Codes"
-            description="Understanding ISO codes and international standards"
-          >
-            <CountryCodeKnowledge />
-          </CommonCollapsible>
-        </Card>
-        {renderContent()}
-      </div>
+      <CountryCodeKnowledge />
+      {renderContent()}
     </ToolLayout>
   );
 }

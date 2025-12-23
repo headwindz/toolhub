@@ -2,7 +2,6 @@
 
 import type React from "react";
 
-import { CommonCollapsible } from "@/components/common-collapsible";
 import { CopyButton } from "@/components/copy-button";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
@@ -60,7 +59,6 @@ export default function TextExtractorPage() {
 
       // Configure Tesseract for better accuracy
       await worker.setParameters({
-        tessedit_pageseg_mode: "1", // Automatic page segmentation with OSD
         tessedit_char_whitelist: "", // Allow all characters
         preserve_interword_spaces: "1",
       });
@@ -141,124 +139,115 @@ export default function TextExtractorPage() {
       icon={ScanText}
       badges={[{ label: "AI-Powered" }, { label: "Offline" }]}
     >
-      <div className="space-y-6">
+      <TextExtractorKnowledge />
+
+      <div className="grid gap-6 lg:grid-cols-2">
         <Card className="border-2 overflow-hidden">
-          <CommonCollapsible
-            title="Learn about OCR"
-            description="Understanding optical character recognition technology"
-          >
-            <TextExtractorKnowledge />
-          </CommonCollapsible>
-        </Card>
-
-        <div className="grid gap-6 lg:grid-cols-2">
-          <Card className="border-2 overflow-hidden">
-            <div className="space-y-4 p-6">
-              <div>
-                <Label className="font-semibold mb-2 block">Upload Image</Label>
-                <div className="border-dashed rounded-lg flex bg-muted/5 border-2 border-muted-foreground/25 min-h-[300px] p-8 transition-colors items-center justify-center hover:border-muted-foreground/50">
-                  {image ? (
-                    <div className="space-y-4 text-center w-full">
-                      <img
-                        src={image}
-                        alt="Uploaded"
-                        className="rounded-lg mx-auto object-contain max-h-[250px]"
-                      />
-                      <p className="font-medium text-sm text-muted-foreground">
-                        {fileName}
-                      </p>
-                    </div>
-                  ) : (
-                    <label className="cursor-pointer text-center">
-                      <Upload className="mx-auto h-12 text-muted-foreground mb-4 w-12" />
-                      <p className="font-medium text-sm mb-2">
-                        Click to upload an image
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        PNG, JPG, JPEG - Images with clear text work best
-                      </p>
-                      <input
-                        type="file"
-                        className="hidden"
-                        accept="image/*"
-                        onChange={handleFileUpload}
-                      />
-                    </label>
-                  )}
-                </div>
-              </div>
-
-              {image && (
-                <div className="flex gap-2">
-                  <Button
-                    onClick={extractText}
-                    disabled={isProcessing}
-                    className="flex-1"
-                    size="lg"
-                  >
-                    {isProcessing ? (
-                      <>
-                        <Loader2 className="h-4 mr-2 animate-spin w-4" />
-                        Extracting Text...
-                      </>
-                    ) : (
-                      <>
-                        <ScanText className="h-4 mr-2 w-4" />
-                        Extract Text
-                      </>
-                    )}
-                  </Button>
-
-                  <Button onClick={clearImage} variant="outline" size="lg">
-                    <X className="h-4 w-4" />
-                  </Button>
-                </div>
-              )}
-
-              {error && (
-                <div className="border rounded-lg bg-red-500/10 border-red-500/50 p-3">
-                  <p className="font-medium text-sm text-red-600 dark:text-red-400">
-                    {error}
-                  </p>
-                </div>
-              )}
-            </div>
-          </Card>
-
-          <Card className="border-2 overflow-hidden">
-            <div className="space-y-4 p-6">
-              <div className="flex items-center justify-between">
-                <Label className="font-semibold">Extracted Text</Label>
-                {extractedText && <CopyButton text={extractedText} />}
-              </div>
-              <div className="rounded-lg flex bg-muted/5 border-2 border-muted-foreground/25 min-h-[300px] transition-colors">
-                {extractedText ? (
-                  <Textarea
-                    value={extractedText}
-                    onChange={(e) => setExtractedText(e.target.value)}
-                    className="bg-transparent font-mono border-0 text-sm min-h-[300px]"
-                    placeholder="Extracted text will appear here..."
-                  />
-                ) : (
-                  <div className="flex flex-1 text-center text-muted-foreground p-8 items-center justify-center">
-                    <div>
-                      <FileImage className="mx-auto h-12 mb-4 opacity-50 w-12" />
-                      <p className="text-sm">
-                        Upload an image and click Extract Text
-                      </p>
-                    </div>
+          <div className="space-y-4 p-6">
+            <div>
+              <Label className="font-semibold mb-2 block">Upload Image</Label>
+              <div className="border-dashed rounded-lg flex bg-muted/5 border-2 border-muted-foreground/25 min-h-[300px] p-8 transition-colors items-center justify-center hover:border-muted-foreground/50">
+                {image ? (
+                  <div className="space-y-4 text-center w-full">
+                    <img
+                      src={image}
+                      alt="Uploaded"
+                      className="rounded-lg mx-auto object-contain max-h-[250px]"
+                    />
+                    <p className="font-medium text-sm text-muted-foreground">
+                      {fileName}
+                    </p>
                   </div>
+                ) : (
+                  <label className="cursor-pointer text-center">
+                    <Upload className="mx-auto h-12 text-muted-foreground mb-4 w-12" />
+                    <p className="font-medium text-sm mb-2">
+                      Click to upload an image
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      PNG, JPG, JPEG - Images with clear text work best
+                    </p>
+                    <input
+                      type="file"
+                      className="hidden"
+                      accept="image/*"
+                      onChange={handleFileUpload}
+                    />
+                  </label>
                 )}
               </div>
-              {extractedText && (
-                <p className="text-xs text-muted-foreground">
-                  {extractedText.split(/\s+/).length} words •{" "}
-                  {extractedText.length} characters
+            </div>
+
+            {image && (
+              <div className="flex gap-2">
+                <Button
+                  onClick={extractText}
+                  disabled={isProcessing}
+                  className="flex-1"
+                  size="lg"
+                >
+                  {isProcessing ? (
+                    <>
+                      <Loader2 className="h-4 mr-2 animate-spin w-4" />
+                      Extracting Text...
+                    </>
+                  ) : (
+                    <>
+                      <ScanText className="h-4 mr-2 w-4" />
+                      Extract Text
+                    </>
+                  )}
+                </Button>
+
+                <Button onClick={clearImage} variant="outline" size="lg">
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+            )}
+
+            {error && (
+              <div className="border rounded-lg bg-red-500/10 border-red-500/50 p-3">
+                <p className="font-medium text-sm text-red-600 dark:text-red-400">
+                  {error}
                 </p>
+              </div>
+            )}
+          </div>
+        </Card>
+
+        <Card className="border-2 overflow-hidden">
+          <div className="space-y-4 p-6">
+            <div className="flex items-center justify-between">
+              <Label className="font-semibold">Extracted Text</Label>
+              {extractedText && <CopyButton text={extractedText} />}
+            </div>
+            <div className="rounded-lg flex bg-muted/5 border-2 border-muted-foreground/25 min-h-[300px] transition-colors">
+              {extractedText ? (
+                <Textarea
+                  value={extractedText}
+                  onChange={(e) => setExtractedText(e.target.value)}
+                  className="bg-transparent font-mono border-0 text-sm min-h-[300px]"
+                  placeholder="Extracted text will appear here..."
+                />
+              ) : (
+                <div className="flex flex-1 text-center text-muted-foreground p-8 items-center justify-center">
+                  <div>
+                    <FileImage className="mx-auto h-12 mb-4 opacity-50 w-12" />
+                    <p className="text-sm">
+                      Upload an image and click Extract Text
+                    </p>
+                  </div>
+                </div>
               )}
             </div>
-          </Card>
-        </div>
+            {extractedText && (
+              <p className="text-xs text-muted-foreground">
+                {extractedText.split(/\s+/).length} words •{" "}
+                {extractedText.length} characters
+              </p>
+            )}
+          </div>
+        </Card>
       </div>
     </ToolLayout>
   );

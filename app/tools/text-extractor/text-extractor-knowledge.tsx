@@ -1,8 +1,13 @@
+import { KnowledgeSection } from "@/components/knowledge-section";
+
 export function TextExtractorKnowledge() {
   return (
-    <div className="space-y-4 text-sm leading-relaxed p-6">
-      <div>
-        <h4 className="font-semibold text-base mb-2">
+    <KnowledgeSection
+      title="Learn about OCR"
+      description="Understanding optical character recognition technology"
+    >
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">
           What is OCR (Optical Character Recognition)?
         </h4>
         <p className="text-muted-foreground">
@@ -13,8 +18,8 @@ export function TextExtractorKnowledge() {
           and extract text characters from images.
         </p>
       </div>
-      <div>
-        <h4 className="font-semibold text-base mb-2">How It Works</h4>
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">How It Works</h4>
         <p className="text-muted-foreground">
           OCR systems analyze the structure of an image, breaking it down into
           lines, words, and individual characters. The software compares these
@@ -24,8 +29,8 @@ export function TextExtractorKnowledge() {
           accuracy.
         </p>
       </div>
-      <div>
-        <h4 className="font-semibold text-base mb-2">Common Use Cases</h4>
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">Common Use Cases</h4>
         <ul className="list-disc space-y-1 text-muted-foreground pl-5">
           <li>
             <strong>Document Digitization:</strong> Convert physical documents
@@ -49,8 +54,8 @@ export function TextExtractorKnowledge() {
           </li>
         </ul>
       </div>
-      <div>
-        <h4 className="font-semibold text-base mb-2">Tips for Best Results</h4>
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">Tips for Best Results</h4>
         <ul className="list-disc space-y-1 text-muted-foreground pl-5">
           <li>
             <strong>High Resolution:</strong> Use images with at least 300 DPI
@@ -91,6 +96,6 @@ export function TextExtractorKnowledge() {
           </li>
         </ul>
       </div>
-    </div>
+    </KnowledgeSection>
   );
 }

@@ -2,7 +2,6 @@
 
 import type React from "react";
 
-import { CommonCollapsible } from "@/components/common-collapsible";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -105,142 +104,133 @@ export default function ImageCompressorPage() {
       description="Compress images without losing quality"
       icon={ImageIcon}
     >
-      <div className="space-y-6">
-        <Card className="border-2 overflow-hidden">
-          <CommonCollapsible
-            title="Learn about image compression"
-            description="Understanding image optimization and compression techniques"
-          >
-            <ImageCompressorKnowledge />
-          </CommonCollapsible>
-        </Card>
+      <ImageCompressorKnowledge />
 
-        <div className="grid gap-6 lg:grid-cols-2">
-          <Card className="p-6">
-            <h2 className="font-semibold text-lg mb-4">Upload Image</h2>
-            <div className="space-y-4">
-              <div className="border-dashed rounded-lg flex bg-muted/5 border-2 border-muted-foreground/25 min-h-[300px] p-8 transition-colors items-center justify-center hover:border-muted-foreground/50">
-                {originalImage ? (
-                  <div className="space-y-4 text-center">
-                    <img
-                      src={originalImage || "/placeholder.svg"}
-                      alt="Original"
-                      className="rounded-lg mx-auto max-h-[250px]"
-                    />
-                    <p className="text-sm text-muted-foreground">
-                      Original Size:{" "}
-                      <span className="font-semibold">
-                        {formatFileSize(originalSize)}
-                      </span>
-                    </p>
-                  </div>
-                ) : (
-                  <label className="cursor-pointer text-center">
-                    <Upload className="mx-auto h-12 text-muted-foreground mb-4 w-12" />
-                    <p className="font-medium text-sm mb-2">
-                      Click to upload an image
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      PNG, JPG, JPEG up to 10MB
-                    </p>
-                    <input
-                      type="file"
-                      className="hidden"
-                      accept="image/*"
-                      onChange={handleFileUpload}
-                    />
-                  </label>
-                )}
-              </div>
-
-              {originalImage && (
-                <>
-                  <div className="space-y-2">
-                    <Label>Quality: {quality[0]}%</Label>
-                    <Slider
-                      value={quality}
-                      onValueChange={setQuality}
-                      min={1}
-                      max={100}
-                      step={1}
-                    />
-                  </div>
-
-                  <Button
-                    onClick={compressImage}
-                    disabled={isCompressing}
-                    className="w-full"
-                    size="lg"
-                  >
-                    {isCompressing ? (
-                      <>
-                        <Loader2 className="h-4 mr-2 animate-spin w-4" />
-                        Compressing...
-                      </>
-                    ) : (
-                      "Compress Image"
-                    )}
-                  </Button>
-
-                  <Button
-                    onClick={clearImage}
-                    variant="outline"
-                    className="w-full"
-                    size="lg"
-                  >
-                    <X className="h-4 mr-2 w-4" />
-                    Clear Image
-                  </Button>
-                </>
+      <div className="grid gap-6 lg:grid-cols-2">
+        <Card className="p-6">
+          <h2 className="font-semibold text-lg mb-4">Upload Image</h2>
+          <div className="space-y-4">
+            <div className="border-dashed rounded-lg flex bg-muted/5 border-2 border-muted-foreground/25 min-h-[300px] p-8 transition-colors items-center justify-center hover:border-muted-foreground/50">
+              {originalImage ? (
+                <div className="space-y-4 text-center">
+                  <img
+                    src={originalImage || "/placeholder.svg"}
+                    alt="Original"
+                    className="rounded-lg mx-auto max-h-[250px]"
+                  />
+                  <p className="text-sm text-muted-foreground">
+                    Original Size:{" "}
+                    <span className="font-semibold">
+                      {formatFileSize(originalSize)}
+                    </span>
+                  </p>
+                </div>
+              ) : (
+                <label className="cursor-pointer text-center">
+                  <Upload className="mx-auto h-12 text-muted-foreground mb-4 w-12" />
+                  <p className="font-medium text-sm mb-2">
+                    Click to upload an image
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    PNG, JPG, JPEG up to 10MB
+                  </p>
+                  <input
+                    type="file"
+                    className="hidden"
+                    accept="image/*"
+                    onChange={handleFileUpload}
+                  />
+                </label>
               )}
             </div>
-          </Card>
 
-          <Card className="p-6">
-            <h2 className="font-semibold text-lg mb-4">Compressed Result</h2>
-            <div className="space-y-4">
-              <div className="rounded-lg flex bg-muted/5 border-2 border-muted-foreground/25 min-h-[300px] p-8 items-center justify-center">
-                {compressedImage ? (
-                  <div className="space-y-4 text-center">
-                    <img
-                      src={compressedImage || "/placeholder.svg"}
-                      alt="Compressed"
-                      className="rounded-lg mx-auto max-h-[250px]"
-                    />
-                    <div className="space-y-1">
-                      <p className="text-sm text-muted-foreground">
-                        Compressed Size:{" "}
-                        <span className="font-semibold text-green-600">
-                          {formatFileSize(compressedSize)}
-                        </span>
-                      </p>
-                      <p className="font-semibold text-sm text-green-600">
-                        Saved {savings}%
-                      </p>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="text-center text-muted-foreground">
-                    <ImageIcon className="mx-auto h-12 mb-4 opacity-50 w-12" />
-                    <p className="text-sm">Compressed image will appear here</p>
-                  </div>
-                )}
-              </div>
+            {originalImage && (
+              <>
+                <div className="space-y-2">
+                  <Label>Quality: {quality[0]}%</Label>
+                  <Slider
+                    value={quality}
+                    onValueChange={setQuality}
+                    min={1}
+                    max={100}
+                    step={1}
+                  />
+                </div>
 
-              {compressedImage && (
                 <Button
-                  onClick={downloadImage}
+                  onClick={compressImage}
+                  disabled={isCompressing}
                   className="w-full"
                   size="lg"
-                  variant="default"
                 >
-                  <Download className="h-4 mr-2 w-4" />
-                  Download Compressed Image
+                  {isCompressing ? (
+                    <>
+                      <Loader2 className="h-4 mr-2 animate-spin w-4" />
+                      Compressing...
+                    </>
+                  ) : (
+                    "Compress Image"
+                  )}
                 </Button>
+
+                <Button
+                  onClick={clearImage}
+                  variant="outline"
+                  className="w-full"
+                  size="lg"
+                >
+                  <X className="h-4 mr-2 w-4" />
+                  Clear Image
+                </Button>
+              </>
+            )}
+          </div>
+        </Card>
+
+        <Card className="p-6">
+          <h2 className="font-semibold text-lg mb-4">Compressed Result</h2>
+          <div className="space-y-4">
+            <div className="rounded-lg flex bg-muted/5 border-2 border-muted-foreground/25 min-h-[300px] p-8 items-center justify-center">
+              {compressedImage ? (
+                <div className="space-y-4 text-center">
+                  <img
+                    src={compressedImage || "/placeholder.svg"}
+                    alt="Compressed"
+                    className="rounded-lg mx-auto max-h-[250px]"
+                  />
+                  <div className="space-y-1">
+                    <p className="text-sm text-muted-foreground">
+                      Compressed Size:{" "}
+                      <span className="font-semibold text-green-600">
+                        {formatFileSize(compressedSize)}
+                      </span>
+                    </p>
+                    <p className="font-semibold text-sm text-green-600">
+                      Saved {savings}%
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="text-center text-muted-foreground">
+                  <ImageIcon className="mx-auto h-12 mb-4 opacity-50 w-12" />
+                  <p className="text-sm">Compressed image will appear here</p>
+                </div>
               )}
             </div>
-          </Card>
-        </div>
+
+            {compressedImage && (
+              <Button
+                onClick={downloadImage}
+                className="w-full"
+                size="lg"
+                variant="default"
+              >
+                <Download className="h-4 mr-2 w-4" />
+                Download Compressed Image
+              </Button>
+            )}
+          </div>
+        </Card>
       </div>
     </ToolLayout>
   );

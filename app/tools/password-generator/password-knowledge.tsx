@@ -1,10 +1,13 @@
+import { KnowledgeSection } from "@/components/knowledge-section";
+
 export function PasswordKnowledge() {
   return (
-    <div className="space-y-4 text-sm leading-relaxed p-6">
-      <div>
-        <h4 className="font-semibold text-base mb-2">
-          Why Strong Passwords Matter
-        </h4>
+    <KnowledgeSection
+      title="Learn about password security"
+      description="Best practices for strong passwords"
+    >
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">Why Strong Passwords Matter</h4>
         <p className="text-muted-foreground">
           Weak passwords are the leading cause of security breaches. A strong
           password acts as your first line of defense against unauthorized
@@ -12,8 +15,8 @@ export function PasswordKnowledge() {
           financial data, and digital identity.
         </p>
       </div>
-      <div>
-        <h4 className="font-semibold text-base mb-2">
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">
           Characteristics of Strong Passwords
         </h4>
         <ul className="list-disc space-y-1 text-muted-foreground pl-5">
@@ -34,10 +37,8 @@ export function PasswordKnowledge() {
           </li>
         </ul>
       </div>
-      <div>
-        <h4 className="font-semibold text-base mb-2">
-          How Hackers Break Passwords
-        </h4>
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">How Hackers Break Passwords</h4>
         <ul className="list-disc space-y-1 text-muted-foreground pl-5">
           <li>
             <strong>Brute Force:</strong> Trying every possible combination
@@ -66,6 +67,6 @@ export function PasswordKnowledge() {
           <li>Never share passwords via email or text message</li>
         </ul>
       </div>
-    </div>
+    </KnowledgeSection>
   );
 }

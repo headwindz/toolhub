@@ -1,6 +1,5 @@
 "use client";
 
-import { CommonCollapsible } from "@/components/common-collapsible";
 import { CopyButton } from "@/components/copy-button";
 import { ToolLayout } from "@/components/tool-layout";
 import { Badge } from "@/components/ui/badge";
@@ -68,14 +67,7 @@ export default function PasswordGeneratorPage() {
         { label: "Offline" },
       ]}
     >
-      <Card className="border-2 overflow-hidden">
-        <CommonCollapsible
-          title="Learn about password security"
-          description="Best practices for strong passwords "
-        >
-          <PasswordKnowledge />
-        </CommonCollapsible>
-      </Card>
+      <PasswordKnowledge />
 
       <Card className="border-2 shadow-xl overflow-hidden">
         <div className="bg-gradient-to-r to-transparent from-primary/10 via-primary/5 p-6">

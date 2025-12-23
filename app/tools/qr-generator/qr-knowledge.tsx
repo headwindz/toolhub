@@ -1,8 +1,13 @@
+import { KnowledgeSection } from "@/components/knowledge-section";
+
 export function QRKnowledge() {
   return (
-    <div className="space-y-4 text-sm leading-relaxed p-6">
-      <div>
-        <h4 className="font-semibold text-base mb-2">What is a QR Code?</h4>
+    <KnowledgeSection
+      title="Learn about QR codes"
+      description="Understanding QR code technology and applications"
+    >
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">What is a QR Code?</h4>
         <p className="text-muted-foreground">
           QR (Quick Response) Code is a two-dimensional barcode invented in 1994
           by Denso Wave. It can store up to 4,296 alphanumeric characters or
@@ -11,8 +16,8 @@ export function QRKnowledge() {
           quickly scanned by smartphones and dedicated readers.
         </p>
       </div>
-      <div>
-        <h4 className="font-semibold text-base mb-2">How QR Codes Work</h4>
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">How QR Codes Work</h4>
         <p className="text-muted-foreground">
           QR codes encode data in a grid of black and white squares. The pattern
           includes position markers (large squares in corners), alignment
@@ -21,8 +26,8 @@ export function QRKnowledge() {
           the code is damaged or obscured.
         </p>
       </div>
-      <div>
-        <h4 className="font-semibold text-base mb-2">Common Use Cases</h4>
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">Common Use Cases</h4>
         <ul className="list-disc space-y-1 text-muted-foreground pl-5">
           <li>
             <strong>Marketing:</strong> Direct customers to websites, product
@@ -46,8 +51,8 @@ export function QRKnowledge() {
           </li>
         </ul>
       </div>
-      <div>
-        <h4 className="font-semibold text-base mb-2">QR Code Types</h4>
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">QR Code Types</h4>
         <ul className="list-disc space-y-1 text-muted-foreground pl-5">
           <li>
             <strong>URL:</strong> Direct links to websites (most common)
@@ -81,6 +86,6 @@ export function QRKnowledge() {
           <li>Add a margin of at least 4 modules around the QR code</li>
         </ul>
       </div>
-    </div>
+    </KnowledgeSection>
   );
 }

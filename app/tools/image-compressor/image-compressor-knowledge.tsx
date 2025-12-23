@@ -1,10 +1,13 @@
+import { KnowledgeSection } from "@/components/knowledge-section";
+
 export function ImageCompressorKnowledge() {
   return (
-    <div className="space-y-4 text-sm leading-relaxed p-6">
-      <div>
-        <h4 className="font-semibold text-base mb-2">
-          What is Image Compression?
-        </h4>
+    <KnowledgeSection
+      title="Learn about image compression"
+      description="Understanding image optimization and compression techniques"
+    >
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">What is Image Compression?</h4>
         <p className="text-muted-foreground">
           Image compression reduces the file size of an image by removing
           redundant data while maintaining acceptable visual quality. This
@@ -12,8 +15,8 @@ export function ImageCompressorKnowledge() {
           faster loading times across devices and networks.
         </p>
       </div>
-      <div>
-        <h4 className="font-semibold text-base mb-2">Types of Compression</h4>
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">Types of Compression</h4>
         <ul className="list-disc space-y-1 text-muted-foreground pl-5">
           <li>
             <strong>Lossy Compression:</strong> Reduces file size significantly
@@ -27,8 +30,8 @@ export function ImageCompressorKnowledge() {
           </li>
         </ul>
       </div>
-      <div>
-        <h4 className="font-semibold text-base mb-2">Why Compress Images?</h4>
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">Why Compress Images?</h4>
         <ul className="list-disc space-y-1 text-muted-foreground pl-5">
           <li>
             <strong>Faster Page Load:</strong> Smaller files download quicker,
@@ -48,11 +51,9 @@ export function ImageCompressorKnowledge() {
           </li>
         </ul>
       </div>
-      <div>
-        <h4 className="font-semibold text-base mb-2">
-          Choosing Quality Settings
-        </h4>
-        <p className="text-muted-foreground mb-2">
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">Choosing Quality Settings</h4>
+        <p className="text-muted-foreground">
           The quality slider controls the balance between file size and visual
           quality:
         </p>
@@ -89,6 +90,6 @@ export function ImageCompressorKnowledge() {
           </li>
         </ul>
       </div>
-    </div>
+    </KnowledgeSection>
   );
 }

@@ -1,8 +1,13 @@
+import { KnowledgeSection } from "@/components/knowledge-section";
+
 export function Base64Knowledge() {
   return (
-    <div className="space-y-4 text-sm leading-relaxed p-6">
-      <div>
-        <h4 className="font-semibold text-base mb-2">What is Base64?</h4>
+    <KnowledgeSection
+      title="Learn about Base64"
+      description="Understanding Base64 encoding and decoding"
+    >
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">What is Base64?</h4>
         <p className="text-muted-foreground">
           Base64 is a binary-to-text encoding scheme that represents binary data
           in an ASCII string format. It uses 64 different ASCII characters (A-Z,
@@ -10,8 +15,8 @@ export function Base64Knowledge() {
           text-based protocols like HTTP, email, or JSON.
         </p>
       </div>
-      <div>
-        <h4 className="font-semibold text-base mb-2">How It Works</h4>
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">How It Works</h4>
         <p className="text-muted-foreground">
           Base64 encoding converts every 3 bytes (24 bits) of binary data into 4
           ASCII characters (6 bits each). If the input length isn't divisible by
@@ -19,8 +24,8 @@ export function Base64Knowledge() {
           encoded output being approximately 33% larger than the original data.
         </p>
       </div>
-      <div>
-        <h4 className="font-semibold text-base mb-2">Common Use Cases</h4>
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">Common Use Cases</h4>
         <ul className="list-disc space-y-1 text-muted-foreground pl-5">
           <li>
             <strong>Email Attachments:</strong> MIME encoding uses Base64 to
@@ -40,8 +45,8 @@ export function Base64Knowledge() {
           </li>
         </ul>
       </div>
-      <div>
-        <h4 className="font-semibold text-base mb-2">Important Notes</h4>
+      <div className="space-y-2">
+        <h4 className="font-semibold text-base">Important Notes</h4>
         <p className="text-muted-foreground">
           Base64 is <strong>not encryption</strong>—it's encoding. Anyone can
           easily decode Base64 strings, so never use it to hide sensitive
@@ -50,6 +55,6 @@ export function Base64Knowledge() {
           like AES or TLS.
         </p>
       </div>
-    </div>
+    </KnowledgeSection>
   );
 }

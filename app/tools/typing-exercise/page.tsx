@@ -1,6 +1,5 @@
 "use client";
 
-import { CommonCollapsible } from "@/components/common-collapsible";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -144,184 +143,173 @@ export default function TypingExercisePage() {
         { label: "PC" },
       ]}
     >
-      <div className="space-y-6">
-        <Card className="border-2 overflow-hidden">
-          <CommonCollapsible
-            title="Learn About Typing Practice"
-            description="Improve your typing skills and productivity"
-          >
-            <TypingKnowledge />
-          </CommonCollapsible>
-        </Card>
+      <TypingKnowledge />
 
-        {/* Difficulty Selection */}
-        <Card className="border-2 p-6">
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <Label className="font-semibold text-base">
-                Select Difficulty
-              </Label>
-              <Button
-                onClick={generateNewText}
-                variant="outline"
-                size="sm"
-                className="gap-2"
-              >
-                <RotateCcw className="h-4 w-4" />
-                New Text
-              </Button>
-            </div>
-
-            <Tabs
-              value={difficulty}
-              onValueChange={(value) => setDifficulty(value as Difficulty)}
+      {/* Difficulty Selection */}
+      <Card className="border-2 p-6">
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <Label className="font-semibold text-base">Select Difficulty</Label>
+            <Button
+              onClick={generateNewText}
+              variant="outline"
+              size="sm"
+              className="gap-2"
             >
-              <TabsList className="w-full grid grid-cols-4">
-                <TabsTrigger value="easy">Easy</TabsTrigger>
-                <TabsTrigger value="medium">Medium</TabsTrigger>
-                <TabsTrigger value="hard">Hard</TabsTrigger>
-                <TabsTrigger value="code">Code</TabsTrigger>
-              </TabsList>
-            </Tabs>
+              <RotateCcw className="h-4 w-4" />
+              New Text
+            </Button>
           </div>
-        </Card>
 
-        {/* Keyboard Guide */}
-        <KeyboardGuide currentKey={currentKey} />
+          <Tabs
+            value={difficulty}
+            onValueChange={(value) => setDifficulty(value as Difficulty)}
+          >
+            <TabsList className="w-full grid grid-cols-4">
+              <TabsTrigger value="easy">Easy</TabsTrigger>
+              <TabsTrigger value="medium">Medium</TabsTrigger>
+              <TabsTrigger value="hard">Hard</TabsTrigger>
+              <TabsTrigger value="code">Code</TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
+      </Card>
 
-        {/* Stats Display */}
-        {isStarted && stats && (
-          <div className="grid gap-4 sm:grid-cols-3">
-            <Card className="border-2 p-4">
-              <div className="flex gap-3 items-center">
-                <div className="rounded-lg bg-blue-500/20 p-3">
-                  <Timer className="h-5 text-blue-500 w-5" />
-                </div>
-                <div>
-                  <div className="text-sm text-muted-foreground">Time</div>
-                  <div className="font-bold text-xl">{stats.timeElapsed}s</div>
-                </div>
+      {/* Keyboard Guide */}
+      <KeyboardGuide currentKey={currentKey} />
+
+      {/* Stats Display */}
+      {isStarted && stats && (
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Card className="border-2 p-4">
+            <div className="flex gap-3 items-center">
+              <div className="rounded-lg bg-blue-500/20 p-3">
+                <Timer className="h-5 text-blue-500 w-5" />
               </div>
-            </Card>
-
-            <Card className="border-2 p-4">
-              <div className="flex gap-3 items-center">
-                <div className="rounded-lg bg-green-500/20 p-3">
-                  <TrendingUp className="h-5 text-green-500 w-5" />
-                </div>
-                <div>
-                  <div className="text-sm text-muted-foreground">WPM</div>
-                  <div className="font-bold text-xl">{stats.wpm}</div>
-                </div>
-              </div>
-            </Card>
-
-            <Card className="border-2 p-4">
-              <div className="flex gap-3 items-center">
-                <div className="rounded-lg bg-purple-500/20 p-3">
-                  <Target className="h-5 text-purple-500 w-5" />
-                </div>
-                <div>
-                  <div className="text-sm text-muted-foreground">Accuracy</div>
-                  <div className="font-bold text-xl">{stats.accuracy}%</div>
-                </div>
-              </div>
-            </Card>
-          </div>
-        )}
-
-        {/* Typing Area */}
-        <Card className="border-2 p-6">
-          <div className="space-y-4">
-            {/* Target Text Display */}
-            <div className="rounded-lg bg-secondary/30 border-2 p-6">
-              <Label className="font-semibold text-sm mb-3 block">
-                Type this text:
-              </Label>
-              <div
-                className={`font-mono text-lg leading-relaxed ${
-                  difficulty === "code" ? "text-base" : ""
-                }`}
-              >
-                {targetText.split("").map((char, index) => (
-                  <span key={index} className={getCharacterClass(index)}>
-                    {char}
-                  </span>
-                ))}
+              <div>
+                <div className="text-sm text-muted-foreground">Time</div>
+                <div className="font-bold text-xl">{stats.timeElapsed}s</div>
               </div>
             </div>
+          </Card>
 
-            {/* Input Area */}
-            <div className="space-y-2">
-              <Label htmlFor="typing-input">Your typing:</Label>
-              <textarea
-                ref={inputRef}
-                id="typing-input"
-                value={userInput}
-                onChange={(e) => handleInputChange(e.target.value)}
-                disabled={isFinished}
-                placeholder="Start typing here..."
-                className={`w-full rounded-lg border-2 bg-background p-4 font-mono text-lg leading-relaxed focus:outline-none focus:ring-2 focus:ring-primary ${
-                  difficulty === "code" ? "text-base" : ""
-                } ${isFinished ? "bg-green-500/5 border-green-500" : ""}`}
-                rows={difficulty === "code" ? 3 : 5}
-                spellCheck={false}
-                autoComplete="off"
-                autoCorrect="off"
-                autoCapitalize="off"
+          <Card className="border-2 p-4">
+            <div className="flex gap-3 items-center">
+              <div className="rounded-lg bg-green-500/20 p-3">
+                <TrendingUp className="h-5 text-green-500 w-5" />
+              </div>
+              <div>
+                <div className="text-sm text-muted-foreground">WPM</div>
+                <div className="font-bold text-xl">{stats.wpm}</div>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="border-2 p-4">
+            <div className="flex gap-3 items-center">
+              <div className="rounded-lg bg-purple-500/20 p-3">
+                <Target className="h-5 text-purple-500 w-5" />
+              </div>
+              <div>
+                <div className="text-sm text-muted-foreground">Accuracy</div>
+                <div className="font-bold text-xl">{stats.accuracy}%</div>
+              </div>
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {/* Typing Area */}
+      <Card className="border-2 p-6">
+        <div className="space-y-4">
+          {/* Target Text Display */}
+          <div className="rounded-lg bg-secondary/30 border-2 p-6">
+            <Label className="font-semibold text-sm mb-3 block">
+              Type this text:
+            </Label>
+            <div
+              className={`font-mono text-lg leading-relaxed ${
+                difficulty === "code" ? "text-base" : ""
+              }`}
+            >
+              {targetText.split("").map((char, index) => (
+                <span key={index} className={getCharacterClass(index)}>
+                  {char}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Input Area */}
+          <div className="space-y-2">
+            <Label htmlFor="typing-input">Your typing:</Label>
+            <textarea
+              ref={inputRef}
+              id="typing-input"
+              value={userInput}
+              onChange={(e) => handleInputChange(e.target.value)}
+              disabled={isFinished}
+              placeholder="Start typing here..."
+              className={`w-full rounded-lg border-2 bg-background p-4 font-mono text-lg leading-relaxed focus:outline-none focus:ring-2 focus:ring-primary ${
+                difficulty === "code" ? "text-base" : ""
+              } ${isFinished ? "bg-green-500/5 border-green-500" : ""}`}
+              rows={difficulty === "code" ? 3 : 5}
+              spellCheck={false}
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="off"
+            />
+          </div>
+
+          {/* Progress */}
+          <div className="space-y-2">
+            <div className="flex text-sm items-center justify-between">
+              <span className="text-muted-foreground">Progress</span>
+              <span className="font-semibold">
+                {userInput.length} / {targetText.length}
+              </span>
+            </div>
+            <div className="bg-secondary rounded-full h-2 overflow-hidden">
+              <div
+                className={`h-full transition-all ${
+                  isFinished ? "bg-green-500" : "bg-primary"
+                }`}
+                style={{
+                  width: `${(userInput.length / targetText.length) * 100}%`,
+                }}
               />
             </div>
-
-            {/* Progress */}
-            <div className="space-y-2">
-              <div className="flex text-sm items-center justify-between">
-                <span className="text-muted-foreground">Progress</span>
-                <span className="font-semibold">
-                  {userInput.length} / {targetText.length}
-                </span>
-              </div>
-              <div className="bg-secondary rounded-full h-2 overflow-hidden">
-                <div
-                  className={`h-full transition-all ${
-                    isFinished ? "bg-green-500" : "bg-primary"
-                  }`}
-                  style={{
-                    width: `${(userInput.length / targetText.length) * 100}%`,
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* Completion Message */}
-            {isFinished && stats && (
-              <Card className="bg-green-500/5 border-2 border-green-500/50 p-6">
-                <div className="flex gap-4 items-start">
-                  <div className="rounded-lg bg-green-500/20 p-3">
-                    <Award className="h-6 text-green-500 w-6" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-bold text-lg mb-2 text-green-600 dark:text-green-400">
-                      Congratulations! 🎉
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      You completed the exercise in {stats.timeElapsed} seconds
-                      with {stats.wpm} WPM and {stats.accuracy}% accuracy!
-                    </p>
-                    <Button
-                      onClick={generateNewText}
-                      className="mt-4 gap-2"
-                      size="sm"
-                    >
-                      <RotateCcw className="h-4 w-4" />
-                      Try Another
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            )}
           </div>
-        </Card>
-      </div>
+
+          {/* Completion Message */}
+          {isFinished && stats && (
+            <Card className="bg-green-500/5 border-2 border-green-500/50 p-6">
+              <div className="flex gap-4 items-start">
+                <div className="rounded-lg bg-green-500/20 p-3">
+                  <Award className="h-6 text-green-500 w-6" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-bold text-lg mb-2 text-green-600 dark:text-green-400">
+                    Congratulations! 🎉
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    You completed the exercise in {stats.timeElapsed} seconds
+                    with {stats.wpm} WPM and {stats.accuracy}% accuracy!
+                  </p>
+                  <Button
+                    onClick={generateNewText}
+                    className="mt-4 gap-2"
+                    size="sm"
+                  >
+                    <RotateCcw className="h-4 w-4" />
+                    Try Another
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          )}
+        </div>
+      </Card>
     </ToolLayout>
   );
 }

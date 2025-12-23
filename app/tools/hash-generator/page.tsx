@@ -70,79 +70,77 @@ export default function HashGeneratorPage() {
       description="Generate cryptographic hashes (SHA-1, SHA-256, SHA-512)"
       icon={Hash}
     >
-      <div className="space-y-6">
-        <HashKnowledge />
-        <div className="grid gap-6 lg:grid-cols-2">
-          <Card className="p-6">
-            <Label htmlFor="input" className="mb-2 block">
-              Enter Text
-            </Label>
-            <Textarea
-              id="input"
-              placeholder="Enter text to generate hash..."
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              className="font-mono text-sm min-h-[120px]"
-            />
-            <Button
-              onClick={handleGenerate}
-              className="mt-4 w-full"
-              size="lg"
-              disabled={!input}
-            >
-              Generate Hashes
-            </Button>
-          </Card>
+      <HashKnowledge />
+      <div className="grid gap-6 lg:grid-cols-2">
+        <Card className="p-6">
+          <Label htmlFor="input" className="mb-2 block">
+            Enter Text
+          </Label>
+          <Textarea
+            id="input"
+            placeholder="Enter text to generate hash..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            className="font-mono text-sm min-h-[120px]"
+          />
+          <Button
+            onClick={handleGenerate}
+            className="mt-4 w-full"
+            size="lg"
+            disabled={!input}
+          >
+            Generate Hashes
+          </Button>
+        </Card>
 
-          <div className="lg:top-20 lg:sticky">
-            <Card className="p-6">
-              <div className="mb-4">
-                <Label className="font-semibold text-base">
-                  Generated Hashes
-                </Label>
-              </div>
-              {hashes.some((h) => h.value) ? (
-                <div className="space-y-4">
-                  {hashes.map(
-                    (hash) =>
-                      hash.value && (
-                        <Card key={hash.type} className="p-4">
-                          <div className="flex gap-4 items-start justify-between">
-                            <div className="space-y-2 flex-1">
-                              <Label className="font-semibold text-sm">
-                                {hash.type}
-                              </Label>
-                              <div className="bg-muted rounded-lg font-mono text-sm p-3 break-all">
-                                {hash.value}
-                              </div>
+        <div className="lg:top-20 lg:sticky">
+          <Card className="p-6">
+            <div className="mb-4">
+              <Label className="font-semibold text-base">
+                Generated Hashes
+              </Label>
+            </div>
+            {hashes.some((h) => h.value) ? (
+              <div className="space-y-4">
+                {hashes.map(
+                  (hash) =>
+                    hash.value && (
+                      <Card key={hash.type} className="p-4">
+                        <div className="flex gap-4 items-start justify-between">
+                          <div className="space-y-2 flex-1">
+                            <Label className="font-semibold text-sm">
+                              {hash.type}
+                            </Label>
+                            <div className="bg-muted rounded-lg font-mono text-sm p-3 break-all">
+                              {hash.value}
                             </div>
-                            <Button
-                              variant="outline"
-                              size="icon"
-                              onClick={() =>
-                                copyToClipboard(hash.value, hash.type)
-                              }
-                              aria-label={`Copy ${hash.type} hash`}
-                            >
-                              {copiedHash === hash.type ? (
-                                <Check className="h-4 text-green-600 w-4" />
-                              ) : (
-                                <Copy className="h-4 w-4" />
-                              )}
-                            </Button>
                           </div>
-                        </Card>
-                      ),
-                  )}
-                </div>
-              ) : (
-                <div className="text-sm text-muted-foreground">
-                  No hashes yet. Enter text on the left and click
-                  <span className="font-medium"> Generate Hashes</span>.
-                </div>
-              )}
-            </Card>
-          </div>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() =>
+                              copyToClipboard(hash.value, hash.type)
+                            }
+                            aria-label={`Copy ${hash.type} hash`}
+                          >
+                            {copiedHash === hash.type ? (
+                              <Check className="h-4 text-green-600 w-4" />
+                            ) : (
+                              <Copy className="h-4 w-4" />
+                            )}
+                          </Button>
+                        </div>
+                      </Card>
+                    ),
+                )}
+              </div>
+            ) : (
+              <div className="text-sm text-muted-foreground">
+                No hashes yet. Enter text on the left and click
+                <span className="font-medium"> Generate Hashes</span>.
+              </div>
+            )}
+          </Card>
         </div>
       </div>
     </ToolLayout>

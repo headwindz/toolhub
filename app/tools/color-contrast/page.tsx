@@ -1,6 +1,5 @@
 "use client";
 
-import { CommonCollapsible } from "@/components/common-collapsible";
 import { ToolLayout } from "@/components/tool-layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Check, Contrast, Copy, RefreshCcw } from "lucide-react";
 import { useMemo, useState } from "react";
+import { ContrastKnowledge } from "./contrast-knowledge";
 
 const defaultFg = "#111827"; // slate-900
 const defaultBg = "#ffffff"; // white
@@ -115,209 +115,149 @@ export default function ColorContrastPage() {
       icon={Contrast}
       badges={[{ label: "WCAG" }, { label: "AA/AAA" }]}
     >
-      <div className="space-y-6">
-        <Card className="border-2 overflow-hidden">
-          <CommonCollapsible
-            title="Learn about contrast"
-            description="WCAG thresholds, large text rules, and practical tips"
-          >
-            <div className="space-y-4 text-sm leading-relaxed p-6">
+      <ContrastKnowledge />
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        <Card className="space-y-4 p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="font-semibold text-lg">Colors</h2>
+              <p className="text-sm text-muted-foreground">
+                Foreground and background inputs
+              </p>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={swapColors}
+              className="gap-2"
+            >
+              <RefreshCcw className="h-4 w-4" /> Swap
+            </Button>
+          </div>
+
+          <div className="space-y-4">
+            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
               <div className="space-y-2">
-                <h3 className="font-semibold text-base">WCAG basics</h3>
-                <ul className="list-disc space-y-1 text-muted-foreground pl-5">
-                  <li>
-                    Contrast ratio ranges from 1:1 (same color) to 21:1 (black
-                    on white).
-                  </li>
-                  <li>AA normal text: ≥ 4.5:1. AAA normal text: ≥ 7:1.</li>
-                  <li>
-                    AA large text: ≥ 3:1. AAA large text: ≥ 4.5:1. Large = 18pt
-                    regular or 14pt bold.
-                  </li>
-                </ul>
+                <Label htmlFor="foreground">Foreground</Label>
+                <div className="flex gap-2 items-center">
+                  <Input
+                    id="foreground"
+                    type="color"
+                    value={foreground}
+                    onChange={(e) => setForeground(e.target.value)}
+                    className="flex-shrink-0 h-9 p-1 w-9"
+                  />
+                  <Input
+                    value={foreground}
+                    onChange={(e) => setForeground(e.target.value)}
+                    className="font-mono"
+                  />
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => copyValue(foreground, "fg")}
+                  >
+                    {copied === "fg" ? (
+                      <Check className="h-4 w-4" />
+                    ) : (
+                      <Copy className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
               </div>
+
               <div className="space-y-2">
-                <h3 className="font-semibold text-base">Practical tips</h3>
-                <ul className="list-disc space-y-1 text-muted-foreground pl-5">
-                  <li>
-                    Avoid pure black on white; slightly softer pairs reduce eye
-                    strain.
-                  </li>
-                  <li>
-                    Test states: focus rings, hovers, disabled, and text over
-                    images.
-                  </li>
-                  <li>
-                    Increase font size or weight if you cannot change brand
-                    colors.
-                  </li>
-                </ul>
-              </div>
-              <div className="space-y-2">
-                <h3 className="font-semibold text-base">Common pitfalls</h3>
-                <ul className="list-disc space-y-1 text-muted-foreground pl-5">
-                  <li>
-                    Light text on gradients can fail in some areas; pick the
-                    darkest/lightest stop for testing.
-                  </li>
-                  <li>
-                    Low-contrast placeholder text harms usability—treat it as
-                    body text.
-                  </li>
-                  <li>
-                    Remember transparent overlays: opacity changes the effective
-                    background.
-                  </li>
-                </ul>
+                <Label htmlFor="background">Background</Label>
+                <div className="flex gap-2 items-center">
+                  <Input
+                    id="background"
+                    type="color"
+                    value={background}
+                    onChange={(e) => setBackground(e.target.value)}
+                    className="flex-shrink-0 h-9 p-1 w-9"
+                  />
+                  <Input
+                    value={background}
+                    onChange={(e) => setBackground(e.target.value)}
+                    className="font-mono"
+                  />
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => copyValue(background, "bg")}
+                  >
+                    {copied === "bg" ? (
+                      <Check className="h-4 w-4" />
+                    ) : (
+                      <Copy className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
               </div>
             </div>
-          </CommonCollapsible>
+
+            <div className="space-y-2">
+              <Label htmlFor="sample">Sample text</Label>
+              <Input
+                id="sample"
+                value={sampleText}
+                onChange={(e) => setSampleText(e.target.value)}
+                placeholder="Accessible contrast preview text"
+              />
+            </div>
+          </div>
         </Card>
 
-        <div className="grid gap-6 lg:grid-cols-2">
-          <Card className="space-y-4 p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="font-semibold text-lg">Colors</h2>
-                <p className="text-sm text-muted-foreground">
-                  Foreground and background inputs
-                </p>
-              </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={swapColors}
-                className="gap-2"
-              >
-                <RefreshCcw className="h-4 w-4" /> Swap
-              </Button>
-            </div>
-
-            <div className="space-y-4">
-              <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="foreground">Foreground</Label>
-                  <div className="flex gap-2 items-center">
-                    <Input
-                      id="foreground"
-                      type="color"
-                      value={foreground}
-                      onChange={(e) => setForeground(e.target.value)}
-                      className="flex-shrink-0 h-9 p-1 w-9"
-                    />
-                    <Input
-                      value={foreground}
-                      onChange={(e) => setForeground(e.target.value)}
-                      className="font-mono"
-                    />
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={() => copyValue(foreground, "fg")}
-                    >
-                      {copied === "fg" ? (
-                        <Check className="h-4 w-4" />
-                      ) : (
-                        <Copy className="h-4 w-4" />
-                      )}
-                    </Button>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="background">Background</Label>
-                  <div className="flex gap-2 items-center">
-                    <Input
-                      id="background"
-                      type="color"
-                      value={background}
-                      onChange={(e) => setBackground(e.target.value)}
-                      className="flex-shrink-0 h-9 p-1 w-9"
-                    />
-                    <Input
-                      value={background}
-                      onChange={(e) => setBackground(e.target.value)}
-                      className="font-mono"
-                    />
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={() => copyValue(background, "bg")}
-                    >
-                      {copied === "bg" ? (
-                        <Check className="h-4 w-4" />
-                      ) : (
-                        <Copy className="h-4 w-4" />
-                      )}
-                    </Button>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="sample">Sample text</Label>
-                <Input
-                  id="sample"
-                  value={sampleText}
-                  onChange={(e) => setSampleText(e.target.value)}
-                  placeholder="Accessible contrast preview text"
-                />
-              </div>
-            </div>
-          </Card>
-
-          <Card className="space-y-4 p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="font-semibold text-lg">Results</h2>
-                <p className="text-sm text-muted-foreground">
-                  WCAG pass/fail for normal and large text
-                </p>
-              </div>
-              {contrast.ratio !== null && (
-                <Badge className="font-semibold text-base">
-                  {contrast.ratio.toFixed(2)} : 1
-                </Badge>
-              )}
-            </div>
-
-            <div
-              className="border rounded-lg overflow-hidden"
-              style={{ backgroundColor: background, color: foreground }}
-            >
-              <div className="space-y-3 p-6">
-                <p className="font-semibold text-lg">
-                  {sampleText || "Sample"}
-                </p>
-                <p className="text-sm opacity-80">Normal text preview</p>
-                <p className="font-semibold text-xl">Large text preview</p>
-              </div>
-            </div>
-
-            <div className="grid gap-3 grid-cols-2">
-              <div className="space-y-2">
-                <p className="text-sm text-muted-foreground">Normal text</p>
-                <div className="flex flex-wrap gap-2">
-                  {statusBadge(!!contrast.ratio && contrast.aaNormal, "AA")}
-                  {statusBadge(!!contrast.ratio && contrast.aaaNormal, "AAA")}
-                </div>
-              </div>
-              <div className="space-y-2">
-                <p className="text-sm text-muted-foreground">Large text</p>
-                <div className="flex flex-wrap gap-2">
-                  {statusBadge(!!contrast.ratio && contrast.aaLarge, "AA")}
-                  {statusBadge(!!contrast.ratio && contrast.aaaLarge, "AAA")}
-                </div>
-              </div>
-            </div>
-
-            {contrast.ratio === null && (
+        <Card className="space-y-4 p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="font-semibold text-lg">Results</h2>
               <p className="text-sm text-muted-foreground">
-                Enter valid HEX colors (e.g., #111827 and #ffffff).
+                WCAG pass/fail for normal and large text
               </p>
+            </div>
+            {contrast.ratio !== null && (
+              <Badge className="font-semibold text-base">
+                {contrast.ratio.toFixed(2)} : 1
+              </Badge>
             )}
-          </Card>
-        </div>
+          </div>
+
+          <div
+            className="border rounded-lg overflow-hidden"
+            style={{ backgroundColor: background, color: foreground }}
+          >
+            <div className="space-y-3 p-6">
+              <p className="font-semibold text-lg">{sampleText || "Sample"}</p>
+              <p className="text-sm opacity-80">Normal text preview</p>
+              <p className="font-semibold text-xl">Large text preview</p>
+            </div>
+          </div>
+
+          <div className="grid gap-3 grid-cols-2">
+            <div className="space-y-2">
+              <p className="text-sm text-muted-foreground">Normal text</p>
+              <div className="flex flex-wrap gap-2">
+                {statusBadge(!!contrast.ratio && contrast.aaNormal, "AA")}
+                {statusBadge(!!contrast.ratio && contrast.aaaNormal, "AAA")}
+              </div>
+            </div>
+            <div className="space-y-2">
+              <p className="text-sm text-muted-foreground">Large text</p>
+              <div className="flex flex-wrap gap-2">
+                {statusBadge(!!contrast.ratio && contrast.aaLarge, "AA")}
+                {statusBadge(!!contrast.ratio && contrast.aaaLarge, "AAA")}
+              </div>
+            </div>
+          </div>
+
+          {contrast.ratio === null && (
+            <p className="text-sm text-muted-foreground">
+              Enter valid HEX colors (e.g., #111827 and #ffffff).
+            </p>
+          )}
+        </Card>
       </div>
     </ToolLayout>
   );

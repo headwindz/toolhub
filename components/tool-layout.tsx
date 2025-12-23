@@ -47,7 +47,7 @@ export function ToolLayout({
         </div>
       </div>
 
-      {children}
+      <div className="space-y-6">{children}</div>
     </div>
   );
 }
