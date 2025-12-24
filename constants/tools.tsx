@@ -5,6 +5,7 @@ import {
   Chrome,
   Code,
   Contrast,
+  Eye,
   FileJson,
   FileText,
   Globe,
@@ -38,6 +39,15 @@ export const tools: Tool[] = [
     color: "bg-blue-500",
     badge: "Popular",
     href: "/json-formatter",
+    category: CategoryId.Developer,
+  },
+  {
+    name: "JSON Viewer",
+    description: "View JSON in interactive tree format",
+    icon: Eye,
+    color: "bg-cyan-500",
+    badge: "New",
+    href: "/json-viewer",
     category: CategoryId.Developer,
   },
   {
