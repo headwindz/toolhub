@@ -1,6 +1,7 @@
 import { CategoryId } from "@/constants/categories";
 import type { LucideIcon } from "lucide-react";
 import {
+  Binary,
   Calculator,
   Chrome,
   Code,
@@ -107,6 +108,15 @@ export const tools: Tool[] = [
     icon: Code,
     color: "bg-indigo-500",
     href: "/base64",
+    category: CategoryId.Developer,
+  },
+  {
+    name: "Number Base Converter",
+    description: "Convert between binary, octal, decimal, hex",
+    icon: Binary,
+    color: "bg-teal-600",
+    badge: "New",
+    href: "/number-base",
     category: CategoryId.Developer,
   },
   {

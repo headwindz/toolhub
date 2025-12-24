@@ -2,7 +2,7 @@ import { KnowledgeSection } from "@/components/knowledge-section";
 
 export function JSONViewerKnowledge() {
   return (
-    <KnowledgeSection 
+    <KnowledgeSection
       title="About JSON Viewer"
       description="Explore and visualize JSON data in an interactive tree view with expand/collapse functionality"
     >
