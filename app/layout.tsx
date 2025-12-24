@@ -13,6 +13,7 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import "./globals.css";
 
+// Used for fonts
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
@@ -66,7 +67,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <title>Toolboxz - Free Online Utility Tools</title>
+        <title>Toolhub - Free Online Utility Tools</title>
         <meta
           name="description"
           content="Collection of free online utility tools for developers and creators"
@@ -74,16 +75,16 @@ export default function RootLayout({
         <meta name="generator" content="v0.app" />
         <link
           rel="icon"
-          href="/icon-light-32x32.png"
+          href="/icon.svg"
           media="(prefers-color-scheme: light)"
         />
         <link
           rel="icon"
-          href="/icon-dark-32x32.png"
+          href="/icon.svg"
           media="(prefers-color-scheme: dark)"
         />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/apple-icon.png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
       </head>
       <body className={`font-sans antialiased`}>
         <ThemeProvider

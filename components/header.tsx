@@ -1,27 +1,27 @@
-"use client"
+"use client";
 
-import { Search, Sparkles, Moon, Sun, Menu } from "lucide-react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { useEffect, useRef, useState } from "react"
-import { useTheme } from "next-themes"
-import { tools } from "@/constants/tools"
-import { useRouter } from "next/navigation"
-import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { tools } from "@/constants/tools";
+import { cn } from "@/lib/utils";
+import { Menu, Moon, Search, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 interface HeaderProps {
-  onMobileMenuToggle?: () => void
+  onMobileMenuToggle?: () => void;
 }
 
 export function Header({ onMobileMenuToggle }: HeaderProps) {
-  const searchInputRef = useRef<HTMLInputElement>(null)
-  const { theme, setTheme } = useTheme()
-  const [searchQuery, setSearchQuery] = useState("")
-  const [isSearchOpen, setIsSearchOpen] = useState(false)
-  const [selectedIndex, setSelectedIndex] = useState(0)
-  const router = useRouter()
-  const searchRef = useRef<HTMLDivElement>(null)
-  const resultRefs = useRef<(HTMLButtonElement | null)[]>([])
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const { theme, setTheme } = useTheme();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const router = useRouter();
+  const searchRef = useRef<HTMLDivElement>(null);
+  const resultRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const filteredTools = searchQuery.trim()
     ? tools.filter(
@@ -29,88 +29,115 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
           tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
           tool.description.toLowerCase().includes(searchQuery.toLowerCase()),
       )
-    : []
+    : [];
 
   useEffect(() => {
-    setSelectedIndex(0)
-    resultRefs.current = []
-  }, [searchQuery])
+    setSelectedIndex(0);
+    resultRefs.current = [];
+  }, [searchQuery]);
 
   useEffect(() => {
     if (selectedIndex >= 0 && resultRefs.current[selectedIndex]) {
       resultRefs.current[selectedIndex]?.scrollIntoView({
         block: "nearest",
         behavior: "smooth",
-      })
+      });
     }
-  }, [selectedIndex])
+  }, [selectedIndex]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-        e.preventDefault()
-        searchInputRef.current?.focus()
+        e.preventDefault();
+        searchInputRef.current?.focus();
       }
       if (e.key === "Escape") {
-        setIsSearchOpen(false)
-        setSearchQuery("")
-        setSelectedIndex(0)
+        setIsSearchOpen(false);
+        setSearchQuery("");
+        setSelectedIndex(0);
       }
 
       if (isSearchOpen && filteredTools.length > 0) {
         if (e.key === "ArrowDown") {
-          e.preventDefault()
-          setSelectedIndex((prev) => (prev < filteredTools.length - 1 ? prev + 1 : prev))
+          e.preventDefault();
+          setSelectedIndex((prev) =>
+            prev < filteredTools.length - 1 ? prev + 1 : prev,
+          );
         } else if (e.key === "ArrowUp") {
-          e.preventDefault()
-          setSelectedIndex((prev) => (prev > 0 ? prev - 1 : 0))
+          e.preventDefault();
+          setSelectedIndex((prev) => (prev > 0 ? prev - 1 : 0));
         } else if (e.key === "Enter") {
-          e.preventDefault()
+          e.preventDefault();
           if (filteredTools[selectedIndex]) {
-            handleToolSelect(filteredTools[selectedIndex].href)
+            handleToolSelect(filteredTools[selectedIndex].href);
           }
         }
       }
-    }
+    };
 
     const handleClickOutside = (e: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
-        setIsSearchOpen(false)
+        setIsSearchOpen(false);
       }
-    }
+    };
 
-    document.addEventListener("keydown", handleKeyDown)
-    document.addEventListener("mousedown", handleClickOutside)
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener("keydown", handleKeyDown)
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [isSearchOpen, filteredTools, selectedIndex])
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isSearchOpen, filteredTools, selectedIndex]);
 
   const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark")
-  }
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
 
   const handleToolSelect = (href: string) => {
-    router.push(`/tools/${href}`)
-    setIsSearchOpen(false)
-    setSearchQuery("")
-    setSelectedIndex(0)
-  }
+    router.push(`/tools/${href}`);
+    setIsSearchOpen(false);
+    setSearchQuery("");
+    setSelectedIndex(0);
+  };
 
   return (
     <header className="border-b bg-background/95 top-0 z-50 sticky backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex h-16 px-4 gap-2 items-center sm:px-6 sm:gap-4 lg:px-8">
-        <Button variant="ghost" size="icon" className="lg:hidden" onClick={onMobileMenuToggle}>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="lg:hidden"
+          onClick={onMobileMenuToggle}
+        >
           <Menu className="h-5 w-5" />
           <span className="sr-only">Toggle menu</span>
         </Button>
 
-        <div className="flex gap-2 items-center">
-          <div className="bg-primary rounded-lg flex h-8 w-8 items-center justify-center">
-            <Sparkles className="h-5 text-primary-foreground w-5" />
+        <div
+          className="cursor-pointer flex gap-2 items-center"
+          onClick={() => router.push("/")}
+        >
+          <div className="rounded-lg flex h-8 w-8 items-center justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-foreground"
+            >
+              <path d="M16 12v4" />
+              <path d="M16 6a2 2 0 0 1 1.414.586l4 4A2 2 0 0 1 22 12v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 .586-1.414l4-4A2 2 0 0 1 8 6z" />
+              <path d="M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+              <path d="M2 14h20" />
+              <path d="M8 12v4" />
+            </svg>
           </div>
-          <h1 className="font-semibold text-xl hidden sm:block">Toolboxz</h1>
+          <h1 className="font-semibold text-xl hidden sm:block">Toolhub</h1>
         </div>
 
         <div className="flex flex-1 gap-2 items-center sm:gap-4 md:ml-8">
@@ -122,15 +149,17 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
               className="pr-10 pl-10 sm:pr-16"
               value={searchQuery}
               onChange={(e) => {
-                setSearchQuery(e.target.value)
-                setIsSearchOpen(true)
+                setSearchQuery(e.target.value);
+                setIsSearchOpen(true);
               }}
               onFocus={() => searchQuery && setIsSearchOpen(true)}
               role="combobox"
               aria-expanded={isSearchOpen && searchQuery ? "true" : "false"}
               aria-controls="search-results"
               aria-activedescendant={
-                isSearchOpen && filteredTools[selectedIndex] ? `search-result-${selectedIndex}` : undefined
+                isSearchOpen && filteredTools[selectedIndex]
+                  ? `search-result-${selectedIndex}`
+                  : undefined
               }
             />
             <kbd className="bg-muted border rounded font-mono font-medium text-xs opacity-100 py-1 px-1.5 top-1/2 right-3 gap-1 -translate-y-1/2 pointer-events-none absolute hidden select-none sm:flex">
@@ -146,12 +175,12 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
                 {filteredTools.length > 0 ? (
                   <div className="max-h-[400px] p-2 overflow-y-auto">
                     {filteredTools.map((tool, index) => {
-                      const Icon = tool.icon
+                      const Icon = tool.icon;
                       return (
                         <button
                           key={tool.name}
                           ref={(el) => {
-                            resultRefs.current[index] = el
+                            resultRefs.current[index] = el;
                           }}
                           id={`search-result-${index}`}
                           role="option"
@@ -160,22 +189,35 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
                           onMouseEnter={() => setSelectedIndex(index)}
                           className={cn(
                             "flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-left transition-colors",
-                            selectedIndex === index ? "bg-accent" : "hover:bg-accent",
+                            selectedIndex === index
+                              ? "bg-accent"
+                              : "hover:bg-accent",
                           )}
                         >
-                          <div className={cn("flex h-10 w-10 items-center justify-center rounded-lg", tool.color)}>
+                          <div
+                            className={cn(
+                              "flex h-10 w-10 items-center justify-center rounded-lg",
+                              tool.color,
+                            )}
+                          >
                             <Icon className="h-5 text-white w-5" />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <div className="font-medium text-sm">{tool.name}</div>
-                            <div className="text-xs text-muted-foreground truncate">{tool.description}</div>
+                            <div className="font-medium text-sm">
+                              {tool.name}
+                            </div>
+                            <div className="text-xs text-muted-foreground truncate">
+                              {tool.description}
+                            </div>
                           </div>
                         </button>
-                      )
+                      );
                     })}
                   </div>
                 ) : (
-                  <div className="text-center text-sm text-muted-foreground p-4">No tools found</div>
+                  <div className="text-center text-sm text-muted-foreground p-4">
+                    No tools found
+                  </div>
                 )}
               </div>
             )}
@@ -189,5 +231,5 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
         </Button>
       </div>
     </header>
-  )
+  );
 }

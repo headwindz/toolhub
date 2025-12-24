@@ -1,6 +1,6 @@
-# Toolboxz
+# Toolhub
 
-[https://toolboxz.vercel.app](https://toolboxz.vercel.app/)
+[toolhub.run](toolhub.run)
 
 ## Attributes
 
