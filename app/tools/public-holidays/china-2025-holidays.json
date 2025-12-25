@@ -1,0 +1,80 @@
+[
+  {
+    "date": "2025-01-01",
+    "localName": "元旦",
+    "name": "New Year's Day",
+    "countryCode": "CN",
+    "fixed": true,
+    "global": true,
+    "counties": null,
+    "launchYear": null,
+    "types": ["Public"],
+    "start": "2025-01-01T00:00:00.000Z",
+    "end": "2025-01-01T23:59:59.999Z"
+  },
+  {
+    "date": "2025-01-29",
+    "localName": "春节",
+    "name": "Spring Festival (Chinese New Year)",
+    "countryCode": "CN",
+    "fixed": false,
+    "global": true,
+    "counties": null,
+    "launchYear": null,
+    "types": ["Public"],
+    "start": "2025-01-28T00:00:00.000Z",
+    "end": "2025-02-04T23:59:59.999Z"
+  },
+  {
+    "date": "2025-04-04",
+    "localName": "清明节",
+    "name": "Tomb Sweeping Day (Qingming Festival)",
+    "countryCode": "CN",
+    "fixed": false,
+    "global": true,
+    "counties": null,
+    "launchYear": null,
+    "types": ["Public"],
+    "start": "2025-04-04T00:00:00.000Z",
+    "end": "2025-04-06T23:59:59.999Z"
+  },
+  {
+    "date": "2025-05-01",
+    "localName": "劳动节",
+    "name": "Labor Day",
+    "countryCode": "CN",
+    "fixed": true,
+    "global": true,
+    "counties": null,
+    "launchYear": null,
+    "types": ["Public"],
+    "start": "2025-05-01T00:00:00.000Z",
+    "end": "2025-05-05T23:59:59.999Z"
+  },
+  {
+    "date": "2025-05-31",
+    "localName": "端午节",
+    "name": "Dragon Boat Festival",
+    "countryCode": "CN",
+    "fixed": false,
+    "global": true,
+    "counties": null,
+    "launchYear": null,
+    "types": ["Public"],
+    "start": "2025-05-31T00:00:00.000Z",
+    "end": "2025-06-02T23:59:59.999Z"
+  },
+  {
+    "date": "2025-10-01",
+    "localName": "国庆节 / 中秋节",
+    "name": "National Day & Mid-Autumn Festival",
+    "countryCode": "CN",
+    "fixed": true,
+    "global": true,
+    "counties": null,
+    "launchYear": 1949,
+    "types": ["Public"],
+    "start": "2025-10-01T00:00:00.000Z",
+    "end": "2025-10-08T23:59:59.999Z"
+  }
+]

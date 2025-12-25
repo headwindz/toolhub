@@ -226,4 +226,13 @@ export const tools: Tool[] = [
     href: "/word-count",
     category: CategoryId.Utility,
   },
+  // {
+  //   name: "Public Holidays",
+  //   description: "Get public holidays for any country",
+  //   icon: Calendar,
+  //   color: "bg-rose-500",
+  //   badge: "New",
+  //   href: "/public-holidays",
+  //   category: CategoryId.Utility,
+  // },
 ];
