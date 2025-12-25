@@ -2,6 +2,7 @@ import type { LucideIcon } from "lucide-react";
 import {
   Calculator,
   Code,
+  Gamepad2,
   Globe,
   Home,
   ImageIcon,
@@ -17,6 +18,7 @@ export enum CategoryId {
   Design = "design",
   Security = "security",
   Utility = "utility",
+  Game = "game",
 }
 
 export type Category = {
@@ -32,5 +34,6 @@ export const categories: Category[] = [
   { id: CategoryId.Developer, name: "Developer", icon: Code },
   { id: CategoryId.Design, name: "Design", icon: Palette },
   { id: CategoryId.Security, name: "Security", icon: Lock },
+  { id: CategoryId.Game, name: "Game", icon: Gamepad2 },
   { id: CategoryId.Utility, name: "Utility", icon: Globe },
 ];

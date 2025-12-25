@@ -9,6 +9,7 @@ import {
   Eye,
   FileJson,
   FileText,
+  Gamepad2,
   Globe,
   Hash,
   ImageIcon,
@@ -197,6 +198,15 @@ export const tools: Tool[] = [
     badge: "Practice",
     href: "/typing-exercise",
     category: CategoryId.Education,
+  },
+  {
+    name: "Snake Game",
+    description: "Classic snake game - eat and grow!",
+    icon: Gamepad2,
+    color: "bg-green-600",
+    badge: "Game",
+    href: "/snake-game",
+    category: CategoryId.Game,
   },
   {
     name: "Country/Region Code Lookup",
