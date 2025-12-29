@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { AlertCircle, Globe, Loader2, Search } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { CountryCard } from "./country-card";
-import { CountryCodeKnowledge } from "./country-code-knowledge";
+import { CountryCodeKnowledge } from "./knowledge";
 
 interface Country {
   name: string;

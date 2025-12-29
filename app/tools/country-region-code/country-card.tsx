@@ -1,68 +1,54 @@
-"use client";
+'use client'
 
-import { Card } from "@/components/ui/card";
-import { Coins, Flag, Phone } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { Card } from '@/components/ui/card'
+import { Coins, Flag, Phone } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { FlagIcon } from '../public-holidays/flag-icon'
+import { InfoSection } from './info-section'
 
 interface Country {
-  name: string;
-  alpha2: string;
-  alpha3: string;
-  numeric: string;
-  calling: string;
-  capital: string;
-  currency: string;
-  currencySymbol: string;
-  continent: string;
-  languages: string;
-  flag: string;
+  name: string
+  alpha2: string
+  alpha3: string
+  numeric: string
+  calling: string
+  capital: string
+  currency: string
+  currencySymbol: string
+  continent: string
+  languages: string
+  flag: string
 }
 
 interface CountryCardProps {
-  country: Country;
-}
-
-interface FieldDisplayProps {
-  label: string;
-  value: string;
-}
-
-function FieldDisplay({ label, value }: FieldDisplayProps) {
-  return (
-    <div>
-      <div className="text-xs text-muted-foreground">{label}</div>
-      <div className="bg-secondary rounded p-2">
-        <span className="text-sm">{value}</span>
-      </div>
-    </div>
-  );
+  country: Country
 }
 
 export function CountryCard({ country }: CountryCardProps) {
-  const [isVisible, setIsVisible] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false)
+  const cardRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setIsVisible(true);
-            observer.disconnect();
+            setIsVisible(true)
+            observer.disconnect()
           }
-        });
+        })
       },
       {
-        rootMargin: "100px", // Load content 100px before it enters viewport
-      },
-    );
+        rootMargin: '100px', // Load content 100px before it enters viewport
+      }
+    )
 
     if (cardRef.current) {
-      observer.observe(cardRef.current);
+      observer.observe(cardRef.current)
     }
 
-    return () => observer.disconnect();
-  }, []);
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <Card ref={cardRef} className="border-2 overflow-hidden">
@@ -73,7 +59,7 @@ export function CountryCard({ country }: CountryCardProps) {
         <>
           <div className="bg-gradient-to-r border-b from-blue-500/5 to-purple-500/5 p-4">
             <div className="flex gap-3 items-center">
-              <span className="text-4xl">{country.flag}</span>
+              <FlagIcon code={country.alpha2} className="h-8 w-12" />
               <div>
                 <h3 className="font-bold text-lg">{country.name}</h3>
                 <p className="text-sm text-muted-foreground">
@@ -85,47 +71,36 @@ export function CountryCard({ country }: CountryCardProps) {
 
           <div className="p-4">
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {/* ISO Codes */}
-              <div className="space-y-3">
-                <div className="flex font-semibold text-sm gap-2 items-center">
-                  <Flag className="h-4 text-primary w-4" />
-                  <span>ISO Codes</span>
-                </div>
-                <div className="space-y-2">
-                  <FieldDisplay label="Alpha-2" value={country.alpha2} />
-                  <FieldDisplay label="Alpha-3" value={country.alpha3} />
-                  <FieldDisplay label="Numeric" value={country.numeric} />
-                </div>
-              </div>
-
-              {/* Currency and Language */}
-              <div className="space-y-3">
-                <div className="flex font-semibold text-sm gap-2 items-center">
-                  <Coins className="h-4 text-primary w-4" />
-                  <span>Currency & Language</span>
-                </div>
-                <div className="space-y-2">
-                  <FieldDisplay label="Code" value={country.currency} />
-                  <FieldDisplay label="Symbol" value={country.currencySymbol} />
-                  <FieldDisplay label="Languages" value={country.languages} />
-                </div>
-              </div>
-
-              {/* Contact Info */}
-              <div className="space-y-3">
-                <div className="flex font-semibold text-sm gap-2 items-center">
-                  <Phone className="h-4 text-primary w-4" />
-                  <span>Contact</span>
-                </div>
-                <div className="space-y-2">
-                  <FieldDisplay label="Calling Code" value={country.calling} />
-                  <FieldDisplay label="Capital" value={country.capital} />
-                </div>
-              </div>
+              <InfoSection
+                icon={Flag}
+                title="ISO Codes"
+                fields={[
+                  { label: 'Alpha-2', value: country.alpha2 },
+                  { label: 'Alpha-3', value: country.alpha3 },
+                  { label: 'Numeric', value: country.numeric },
+                ]}
+              />
+              <InfoSection
+                icon={Coins}
+                title="Currency & Language"
+                fields={[
+                  { label: 'Code', value: country.currency },
+                  { label: 'Symbol', value: country.currencySymbol },
+                  { label: 'Languages', value: country.languages },
+                ]}
+              />
+              <InfoSection
+                icon={Phone}
+                title="Contact"
+                fields={[
+                  { label: 'Calling Code', value: country.calling },
+                  { label: 'Capital', value: country.capital },
+                ]}
+              />
             </div>
           </div>
         </>
       )}
     </Card>
-  );
+  )
 }
