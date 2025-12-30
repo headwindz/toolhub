@@ -5,6 +5,7 @@ import {
   Calculator,
   Chrome,
   Code,
+  CaseSensitive,
   Contrast,
   Eye,
   FileJson,
@@ -110,6 +111,15 @@ export const tools: Tool[] = [
     icon: Code,
     color: 'bg-indigo-500',
     href: '/base64',
+    category: CategoryId.Developer,
+  },
+  {
+    name: 'Variable Case Converter',
+    description: 'Convert text into camelCase, snake_case, and more',
+    icon: CaseSensitive,
+    color: 'bg-fuchsia-600',
+    badge: 'New',
+    href: '/case-converter',
     category: CategoryId.Developer,
   },
   {
