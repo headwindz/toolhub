@@ -1,104 +1,104 @@
-"use client";
+'use client'
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { tools } from "@/constants/tools";
-import { cn } from "@/lib/utils";
-import { Menu, Moon, Search, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
-import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { tools } from '@/constants/tools'
+import { cn } from '@/lib/utils'
+import { Menu, Moon, Search, Sun } from 'lucide-react'
+import { useTheme } from 'next-themes'
+import { useRouter } from 'next/navigation'
+import { useEffect, useRef, useState } from 'react'
 
 interface HeaderProps {
-  onMobileMenuToggle?: () => void;
+  onMobileMenuToggle?: () => void
 }
 
 export function Header({ onMobileMenuToggle }: HeaderProps) {
-  const searchInputRef = useRef<HTMLInputElement>(null);
-  const { theme, setTheme } = useTheme();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const router = useRouter();
-  const searchRef = useRef<HTMLDivElement>(null);
-  const resultRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const searchInputRef = useRef<HTMLInputElement>(null)
+  const { theme, setTheme } = useTheme()
+  const [searchQuery, setSearchQuery] = useState('')
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const router = useRouter()
+  const searchRef = useRef<HTMLDivElement>(null)
+  const resultRefs = useRef<(HTMLButtonElement | null)[]>([])
 
   const filteredTools = searchQuery.trim()
     ? tools.filter(
         (tool) =>
           tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          tool.description.toLowerCase().includes(searchQuery.toLowerCase()),
+          tool.description.toLowerCase().includes(searchQuery.toLowerCase())
       )
-    : [];
+    : []
 
   useEffect(() => {
-    setSelectedIndex(0);
-    resultRefs.current = [];
-  }, [searchQuery]);
+    setSelectedIndex(0)
+    resultRefs.current = []
+  }, [searchQuery])
 
   useEffect(() => {
     if (selectedIndex >= 0 && resultRefs.current[selectedIndex]) {
       resultRefs.current[selectedIndex]?.scrollIntoView({
-        block: "nearest",
-        behavior: "smooth",
-      });
+        block: 'nearest',
+        behavior: 'smooth',
+      })
     }
-  }, [selectedIndex]);
+  }, [selectedIndex])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-        e.preventDefault();
-        searchInputRef.current?.focus();
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        searchInputRef.current?.focus()
       }
-      if (e.key === "Escape") {
-        setIsSearchOpen(false);
-        setSearchQuery("");
-        setSelectedIndex(0);
+      if (e.key === 'Escape') {
+        setIsSearchOpen(false)
+        setSearchQuery('')
+        setSelectedIndex(0)
       }
 
       if (isSearchOpen && filteredTools.length > 0) {
-        if (e.key === "ArrowDown") {
-          e.preventDefault();
+        if (e.key === 'ArrowDown') {
+          e.preventDefault()
           setSelectedIndex((prev) =>
-            prev < filteredTools.length - 1 ? prev + 1 : prev,
-          );
-        } else if (e.key === "ArrowUp") {
-          e.preventDefault();
-          setSelectedIndex((prev) => (prev > 0 ? prev - 1 : 0));
-        } else if (e.key === "Enter") {
-          e.preventDefault();
+            prev < filteredTools.length - 1 ? prev + 1 : prev
+          )
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault()
+          setSelectedIndex((prev) => (prev > 0 ? prev - 1 : 0))
+        } else if (e.key === 'Enter') {
+          e.preventDefault()
           if (filteredTools[selectedIndex]) {
-            handleToolSelect(filteredTools[selectedIndex].href);
+            handleToolSelect(filteredTools[selectedIndex].href)
           }
         }
       }
-    };
+    }
 
     const handleClickOutside = (e: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
-        setIsSearchOpen(false);
+        setIsSearchOpen(false)
       }
-    };
+    }
 
-    document.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown)
+    document.addEventListener('mousedown', handleClickOutside)
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isSearchOpen, filteredTools, selectedIndex]);
+      document.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isSearchOpen, filteredTools, selectedIndex])
 
   const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
+    setTheme(theme === 'dark' ? 'light' : 'dark')
+  }
 
   const handleToolSelect = (href: string) => {
-    router.push(`/tools/${href}`);
-    setIsSearchOpen(false);
-    setSearchQuery("");
-    setSelectedIndex(0);
-  };
+    router.push(`/tools/${href}`)
+    setIsSearchOpen(false)
+    setSearchQuery('')
+    setSelectedIndex(0)
+  }
 
   return (
     <header className="border-b bg-background/95 top-0 z-50 sticky backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -115,9 +115,9 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
 
         <div
           className="cursor-pointer flex gap-2 items-center"
-          onClick={() => router.push("/")}
+          onClick={() => router.push('/')}
         >
-          <div className="rounded-lg flex h-8 w-8 items-center justify-center">
+          <div className="rounded-lg flex h-8 text-[#fcd535] w-8 items-center justify-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -128,7 +128,6 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="text-foreground"
             >
               <path d="M16 12v4" />
               <path d="M16 6a2 2 0 0 1 1.414.586l4 4A2 2 0 0 1 22 12v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 .586-1.414l4-4A2 2 0 0 1 8 6z" />
@@ -149,12 +148,12 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
               className="pr-10 pl-10 sm:pr-16"
               value={searchQuery}
               onChange={(e) => {
-                setSearchQuery(e.target.value);
-                setIsSearchOpen(true);
+                setSearchQuery(e.target.value)
+                setIsSearchOpen(true)
               }}
               onFocus={() => searchQuery && setIsSearchOpen(true)}
               role="combobox"
-              aria-expanded={isSearchOpen && searchQuery ? "true" : "false"}
+              aria-expanded={isSearchOpen && searchQuery ? 'true' : 'false'}
               aria-controls="search-results"
               aria-activedescendant={
                 isSearchOpen && filteredTools[selectedIndex]
@@ -175,12 +174,12 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
                 {filteredTools.length > 0 ? (
                   <div className="max-h-[400px] p-2 overflow-y-auto">
                     {filteredTools.map((tool, index) => {
-                      const Icon = tool.icon;
+                      const Icon = tool.icon
                       return (
                         <button
                           key={tool.name}
                           ref={(el) => {
-                            resultRefs.current[index] = el;
+                            resultRefs.current[index] = el
                           }}
                           id={`search-result-${index}`}
                           role="option"
@@ -188,16 +187,16 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
                           onClick={() => handleToolSelect(tool.href)}
                           onMouseEnter={() => setSelectedIndex(index)}
                           className={cn(
-                            "flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-left transition-colors",
+                            'flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-left transition-colors',
                             selectedIndex === index
-                              ? "bg-accent"
-                              : "hover:bg-accent",
+                              ? 'bg-accent'
+                              : 'hover:bg-accent'
                           )}
                         >
                           <div
                             className={cn(
-                              "flex h-10 w-10 items-center justify-center rounded-lg",
-                              tool.color,
+                              'flex h-10 w-10 items-center justify-center rounded-lg',
+                              tool.color
                             )}
                           >
                             <Icon className="h-5 text-white w-5" />
@@ -211,7 +210,7 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
                             </div>
                           </div>
                         </button>
-                      );
+                      )
                     })}
                   </div>
                 ) : (
@@ -231,5 +230,5 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
         </Button>
       </div>
     </header>
-  );
+  )
 }
