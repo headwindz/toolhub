@@ -88,13 +88,7 @@ export default function HashGeneratorPage() {
           <div className="bg-muted rounded-lg font-mono text-sm p-3 break-all">
             {value}
           </div>
-          <CopyButton
-            text={value}
-            variant="outline"
-            size="icon"
-            showText={false}
-            className="flex-shrink-0"
-          />
+          <CopyButton text={value} className="flex-shrink-0" />
         </div>
       </Card>
     )

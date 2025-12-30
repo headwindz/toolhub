@@ -121,12 +121,7 @@ export default function CaseConverterPage() {
               Copy any style or grab them all at once.
             </p>
           </div>
-          <CopyButton
-            text={combined}
-            variant="outline"
-            size="sm"
-            disabled={cases.length === 0}
-          />
+          <CopyButton text={combined} disabled={cases.length === 0} />
         </div>
 
         {cases.length === 0 ? (

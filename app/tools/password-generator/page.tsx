@@ -1,60 +1,60 @@
-"use client";
+'use client'
 
-import { CopyButton } from "@/components/copy-button";
-import { ToolLayout } from "@/components/tool-layout";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Slider } from "@/components/ui/slider";
-import { Lock, Shield, Zap } from "lucide-react";
-import { useEffect, useState } from "react";
-import { PasswordKnowledge } from "./password-knowledge";
+import { CopyButton } from '@/components/copy-button'
+import { ToolLayout } from '@/components/tool-layout'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Slider } from '@/components/ui/slider'
+import { Lock, Shield, Zap } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { PasswordKnowledge } from './password-knowledge'
 
 export default function PasswordGeneratorPage() {
-  const [password, setPassword] = useState("");
-  const [length, setLength] = useState([16]);
+  const [password, setPassword] = useState('')
+  const [length, setLength] = useState([16])
   const [options, setOptions] = useState({
     uppercase: true,
     lowercase: true,
     numbers: true,
     symbols: true,
-  });
-  const [strength, setStrength] = useState<"weak" | "medium" | "strong">(
-    "medium",
-  );
+  })
+  const [strength, setStrength] = useState<'weak' | 'medium' | 'strong'>(
+    'medium'
+  )
 
   useEffect(() => {
-    if (!password) return;
-    const hasMultipleTypes = Object.values(options).filter(Boolean).length;
-    if (length[0] >= 16 && hasMultipleTypes >= 3) setStrength("strong");
-    else if (length[0] >= 12 && hasMultipleTypes >= 2) setStrength("medium");
-    else setStrength("weak");
-  }, [password, length, options]);
+    if (!password) return
+    const hasMultipleTypes = Object.values(options).filter(Boolean).length
+    if (length[0] >= 16 && hasMultipleTypes >= 3) setStrength('strong')
+    else if (length[0] >= 12 && hasMultipleTypes >= 2) setStrength('medium')
+    else setStrength('weak')
+  }, [password, length, options])
 
   const generatePassword = () => {
-    let chars = "";
-    if (options.uppercase) chars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    if (options.lowercase) chars += "abcdefghijklmnopqrstuvwxyz";
-    if (options.numbers) chars += "0123456789";
-    if (options.symbols) chars += "!@#$%^&*()_+-=[]{}|;:,.<>?";
+    let chars = ''
+    if (options.uppercase) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    if (options.lowercase) chars += 'abcdefghijklmnopqrstuvwxyz'
+    if (options.numbers) chars += '0123456789'
+    if (options.symbols) chars += '!@#$%^&*()_+-=[]{}|;:,.<>?'
 
-    if (chars === "") return;
+    if (chars === '') return
 
-    let result = "";
+    let result = ''
     for (let i = 0; i < length[0]; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
+      result += chars.charAt(Math.floor(Math.random() * chars.length))
     }
-    setPassword(result);
-  };
+    setPassword(result)
+  }
 
   const strengthColor = {
-    weak: "bg-red-500/10 text-red-500 border-red-500/20",
-    medium: "bg-yellow-500/10 text-yellow-500 border-yellow-500/20",
-    strong: "bg-green-500/10 text-green-500 border-green-500/20",
-  };
+    weak: 'bg-red-500/10 text-red-500 border-red-500/20',
+    medium: 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20',
+    strong: 'bg-green-500/10 text-green-500 border-green-500/20',
+  }
 
   return (
     <ToolLayout
@@ -62,9 +62,9 @@ export default function PasswordGeneratorPage() {
       description="Create strong, secure, and random passwords instantly"
       icon={Shield}
       badges={[
-        { label: "Secure", icon: Lock },
-        { label: "Cryptographically Strong" },
-        { label: "Offline" },
+        { label: 'Secure', icon: Lock },
+        { label: 'Cryptographically Strong' },
+        { label: 'Offline' },
       ]}
     >
       <PasswordKnowledge />
@@ -80,9 +80,9 @@ export default function PasswordGeneratorPage() {
             </div>
             {password && (
               <Badge className={strengthColor[strength]}>
-                {strength === "strong" && "💪 Strong"}
-                {strength === "medium" && "⚠️ Medium"}
-                {strength === "weak" && "❌ Weak"}
+                {strength === 'strong' && '💪 Strong'}
+                {strength === 'medium' && '⚠️ Medium'}
+                {strength === 'weak' && '❌ Weak'}
               </Badge>
             )}
           </div>
@@ -105,9 +105,6 @@ export default function PasswordGeneratorPage() {
                 </div>
                 <CopyButton
                   text={password}
-                  variant="outline"
-                  size="icon"
-                  showText={false}
                   disabled={!password}
                   className="bg-transparent h-10 shadow-md w-10"
                 />
@@ -248,5 +245,5 @@ export default function PasswordGeneratorPage() {
         </div>
       </Card>
     </ToolLayout>
-  );
+  )
 }
