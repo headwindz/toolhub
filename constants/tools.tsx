@@ -8,6 +8,7 @@ import {
   CaseSensitive,
   Contrast,
   Eye,
+  FileCode,
   FileJson,
   FileText,
   Gamepad2,
@@ -120,6 +121,15 @@ export const tools: Tool[] = [
     color: 'bg-fuchsia-600',
     badge: 'New',
     href: '/case-converter',
+    category: CategoryId.Developer,
+  },
+  {
+    name: 'Regular Expression Tester',
+    description: 'Test and debug regex patterns with live matching',
+    icon: FileCode,
+    color: 'bg-purple-600',
+    badge: 'New',
+    href: '/regex-tester',
     category: CategoryId.Developer,
   },
   {
