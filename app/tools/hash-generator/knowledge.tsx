@@ -1,6 +1,6 @@
-"use client";
+'use client'
 
-import { KnowledgeSection } from "@/components/knowledge-section";
+import { KnowledgeSection } from '@/components/knowledge-section'
 
 export function HashKnowledge() {
   return (
@@ -12,8 +12,10 @@ export function HashKnowledge() {
         <h3 className="font-semibold text-base">What is a hash?</h3>
         <p className="text-muted-foreground">
           A cryptographic hash is a one-way function that converts data of any
-          size into a fixed-length digest. Good hashes are deterministic, fast
-          to compute, infeasible to invert, and resistant to collisions.
+          size into a fixed-length digest. Hashing is{' '}
+          <strong>irreversible</strong> — you cannot recover the original data
+          from a hash. Good hashes are deterministic, fast to compute,
+          infeasible to invert, and resistant to collisions.
         </p>
       </div>
       <div className="space-y-2">
@@ -67,8 +69,8 @@ export function HashKnowledge() {
           <li>
             <strong>Ethereum:</strong> Uses <em>Keccak‑256</em> (often called
             <em> keccak256</em>), which differs slightly from standardized
-            SHA‑3. Addresses are the last 20 bytes of{" "}
-            <code>keccak256(publicKey)</code>. Checksum casing per{" "}
+            SHA‑3. Addresses are the last 20 bytes of{' '}
+            <code>keccak256(publicKey)</code>. Checksum casing per{' '}
             <strong>EIP‑55</strong>.
           </li>
           <li>
@@ -106,5 +108,5 @@ export function HashKnowledge() {
         </ul>
       </div>
     </KnowledgeSection>
-  );
+  )
 }

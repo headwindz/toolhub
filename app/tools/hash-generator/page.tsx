@@ -1,68 +1,104 @@
-"use client";
+'use client'
 
-import { ToolLayout } from "@/components/tool-layout";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Check, Copy, Hash } from "lucide-react";
-import { useState } from "react";
-import { HashKnowledge } from "./hash-knowledge";
+import { ToolLayout } from '@/components/tool-layout'
+import { CopyButton } from '@/components/copy-button'
+import { Card } from '@/components/ui/card'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { Hash } from 'lucide-react'
+import { useState } from 'react'
+import { HashKnowledge } from './knowledge'
+import { Button } from '@/components/ui/button'
 
 export default function HashGeneratorPage() {
-  const [input, setInput] = useState("");
-  const [copiedHash, setCopiedHash] = useState<string | null>(null);
+  const [input, setInput] = useState('')
 
   const generateHash = async (
     algorithm: string,
-    text: string,
+    text: string
   ): Promise<string> => {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(text);
-    const hashBuffer = await crypto.subtle.digest(algorithm, data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
-  };
+    const encoder = new TextEncoder()
+    const data = encoder.encode(text)
+    const hashBuffer = await crypto.subtle.digest(algorithm, data)
+    const hashArray = Array.from(new Uint8Array(hashBuffer))
+    return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('')
+  }
 
-  const [md5Hash, setMd5Hash] = useState("");
-  const [sha1Hash, setSha1Hash] = useState("");
-  const [sha256Hash, setSha256Hash] = useState("");
-  const [sha512Hash, setSha512Hash] = useState("");
+  const [md5Hash, setMd5Hash] = useState('')
+  const [sha1Hash, setSha1Hash] = useState('')
+  const [sha256Hash, setSha256Hash] = useState('')
+  const [sha512Hash, setSha512Hash] = useState('')
 
   const handleGenerate = async () => {
-    if (!input) return;
+    if (!input) return
 
     // Note: crypto.subtle doesn't support MD5, so we'll use SHA-1 as a placeholder
-    const sha1 = await generateHash("SHA-1", input);
-    const sha256 = await generateHash("SHA-256", input);
-    const sha512 = await generateHash("SHA-512", input);
+    const sha1 = await generateHash('SHA-1', input)
+    const sha256 = await generateHash('SHA-256', input)
+    const sha512 = await generateHash('SHA-512', input)
 
-    setMd5Hash("MD5 not supported in browser - use SHA-256");
-    setSha1Hash(sha1);
-    setSha256Hash(sha256);
-    setSha512Hash(sha512);
-  };
+    setMd5Hash('MD5 not supported in browser - use SHA-256')
+    setSha1Hash(sha1)
+    setSha256Hash(sha256)
+    setSha512Hash(sha512)
+  }
 
   const copyToClipboard = (text: string, type: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedHash(type);
-    setTimeout(() => setCopiedHash(null), 2000);
-  };
+    navigator.clipboard.writeText(text)
+    setTimeout(() => {}, 2000)
+  }
 
   const hashes = [
-    { type: "MD5", value: md5Hash, color: "from-orange-500 to-orange-600" },
-    { type: "SHA-1", value: sha1Hash, color: "from-orange-500 to-orange-600" },
+    { type: 'MD5', value: md5Hash, color: 'from-orange-500 to-orange-600' },
+    { type: 'SHA-1', value: sha1Hash, color: 'from-orange-500 to-orange-600' },
     {
-      type: "SHA-256",
+      type: 'SHA-256',
       value: sha256Hash,
-      color: "from-orange-500 to-orange-600",
+      color: 'from-orange-500 to-orange-600',
     },
     {
-      type: "SHA-512",
+      type: 'SHA-512',
       value: sha512Hash,
-      color: "from-orange-500 to-orange-600",
+      color: 'from-orange-500 to-orange-600',
     },
-  ];
+  ]
+
+  const renderHashes = () => {
+    if (!hashes.some((h) => h.value)) {
+      return (
+        <div className="text-sm text-muted-foreground">
+          No hashes yet. Enter text on the left and click
+          <span className="font-medium"> Generate Hashes</span>.
+        </div>
+      )
+    }
+
+    return (
+      <div className="space-y-4">
+        {hashes.map((hash) => hash.value && renderHash(hash))}
+      </div>
+    )
+  }
+
+  const renderHash = ({ type, value }: (typeof hashes)[0]) => {
+    return (
+      <Card key={type} className="p-4">
+        <Label className="text-sm mb-1 mfont-semibold">{type}</Label>
+        <div className="flex gap-2 items-center">
+          <div className="bg-muted rounded-lg font-mono text-sm p-3 break-all">
+            {value}
+          </div>
+          <CopyButton
+            text={value}
+            variant="outline"
+            size="icon"
+            showText={false}
+            className="flex-shrink-0"
+          />
+        </div>
+      </Card>
+    )
+  }
 
   return (
     <ToolLayout
@@ -100,49 +136,10 @@ export default function HashGeneratorPage() {
                 Generated Hashes
               </Label>
             </div>
-            {hashes.some((h) => h.value) ? (
-              <div className="space-y-4">
-                {hashes.map(
-                  (hash) =>
-                    hash.value && (
-                      <Card key={hash.type} className="p-4">
-                        <div className="flex gap-4 items-start justify-between">
-                          <div className="space-y-2 flex-1">
-                            <Label className="font-semibold text-sm">
-                              {hash.type}
-                            </Label>
-                            <div className="bg-muted rounded-lg font-mono text-sm p-3 break-all">
-                              {hash.value}
-                            </div>
-                          </div>
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={() =>
-                              copyToClipboard(hash.value, hash.type)
-                            }
-                            aria-label={`Copy ${hash.type} hash`}
-                          >
-                            {copiedHash === hash.type ? (
-                              <Check className="h-4 text-green-600 w-4" />
-                            ) : (
-                              <Copy className="h-4 w-4" />
-                            )}
-                          </Button>
-                        </div>
-                      </Card>
-                    ),
-                )}
-              </div>
-            ) : (
-              <div className="text-sm text-muted-foreground">
-                No hashes yet. Enter text on the left and click
-                <span className="font-medium"> Generate Hashes</span>.
-              </div>
-            )}
+            {renderHashes()}
           </Card>
         </div>
       </div>
     </ToolLayout>
-  );
+  )
 }
