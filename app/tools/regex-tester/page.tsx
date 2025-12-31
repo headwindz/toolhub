@@ -1,24 +1,17 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { CopyButton } from '@/components/copy-button'
 import { ToolLayout } from '@/components/tool-layout'
-import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
-import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { FileCode, AlertCircle, CheckCircle2, Wand2 } from 'lucide-react'
-import { RegexTesterKnowledge } from './regex-knowledge'
+import { RegexTesterKnowledge } from './knowledge'
+import { GlobalPatternFlags } from './global-pattern-flags'
+import { Match, IMatch } from './match'
 
-type Match = {
-  text: string
-  index: number
-  groups: string[]
-}
-
-export default function RegexTesterPage() {
+export default function RegexpTester() {
   const [pattern, setPattern] = useState(
     '\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b'
   )
@@ -47,7 +40,7 @@ info@website.net`)
         .join('')
 
       const regex = new RegExp(pattern, flagString)
-      const matches: Match[] = []
+      const matches: IMatch[] = []
 
       if (flags.g) {
         // Global flag: find all matches
@@ -132,15 +125,6 @@ info@website.net`)
     return segments
   }, [testString, regexResult])
 
-  const flagsDescriptions = {
-    g: 'Global - Find all matches',
-    i: 'Case insensitive - Ignore case',
-    m: 'Multiline - ^ and $ match line breaks',
-    s: 'Dot all - . matches newlines',
-    u: 'Unicode - Treat pattern as Unicode',
-    y: 'Sticky - Match from lastIndex only',
-  }
-
   return (
     <ToolLayout
       title="Regular Expression Tester"
@@ -160,7 +144,7 @@ info@website.net`)
               Regular Expression Pattern
             </Label>
             <div className="flex gap-2">
-              <span className="text-2xl text-muted-foreground">/</span>
+              <span className="text-muted-foreground text-2xl">/</span>
               <Input
                 id="regex-pattern"
                 value={pattern}
@@ -168,48 +152,22 @@ info@website.net`)
                 placeholder="Enter regex pattern"
                 className="font-mono flex-1"
               />
-              <span className="text-2xl text-muted-foreground">/</span>
+              <span className="text-muted-foreground text-2xl">/</span>
             </div>
             {regexResult.valid ? (
-              <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
+              <div className="flex text-sm text-green-600 gap-2 items-center dark:text-green-400">
                 <CheckCircle2 className="h-4 w-4" />
                 Valid regex: {regexResult.regex}
               </div>
             ) : (
-              <div className="flex items-center gap-2 text-sm text-red-600 dark:text-red-400">
+              <div className="flex text-sm text-red-600 gap-2 items-center dark:text-red-400">
                 <AlertCircle className="h-4 w-4" />
                 {regexResult.error}
               </div>
             )}
           </div>
 
-          <div className="space-y-2">
-            <Label className="font-semibold">Flags</Label>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              {Object.entries(flagsDescriptions).map(([flag, description]) => (
-                <div key={flag} className="flex items-start space-x-2">
-                  <Checkbox
-                    id={`flag-${flag}`}
-                    checked={flags[flag as keyof typeof flags]}
-                    onCheckedChange={() =>
-                      toggleFlag(flag as keyof typeof flags)
-                    }
-                  />
-                  <div className="grid gap-0.5 leading-none">
-                    <label
-                      htmlFor={`flag-${flag}`}
-                      className="text-sm font-mono font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                    >
-                      {flag}
-                    </label>
-                    <p className="text-xs text-muted-foreground">
-                      {description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <GlobalPatternFlags flags={flags} toggleFlag={toggleFlag} />
         </div>
       </Card>
 
@@ -234,7 +192,7 @@ info@website.net`)
                 Highlighted Matches ({regexResult.matches.length})
               </Label>
             </div>
-            <div className="border rounded-lg p-4 bg-muted/30 font-mono text-sm whitespace-pre-wrap break-all min-h-[150px]">
+            <div className="border rounded-lg font-mono bg-muted/30 text-sm min-h-[150px] p-4 whitespace-pre-wrap break-all">
               {Array.isArray(highlightedText)
                 ? highlightedText.map((segment, i) => (
                     <span
@@ -269,55 +227,7 @@ info@website.net`)
 
           <div className="space-y-3">
             {regexResult.matches.map((match, idx) => (
-              <div
-                key={`${match.index}-${idx}`}
-                className="border rounded-lg p-4 bg-muted/50 space-y-2"
-              >
-                <div className="flex items-start justify-between gap-2">
-                  <div className="space-y-1 flex-1">
-                    <div className="flex items-center gap-2">
-                      <Badge variant="secondary">Match {idx + 1}</Badge>
-                      <span className="text-xs text-muted-foreground">
-                        Position: {match.index}
-                      </span>
-                    </div>
-                    <p className="font-mono text-sm bg-background p-2 rounded border break-all">
-                      {match.text}
-                    </p>
-                  </div>
-                  <CopyButton text={match.text} showText={false} />
-                </div>
-
-                {match.groups.length > 0 && (
-                  <div className="space-y-2 pt-2 border-t">
-                    <p className="text-xs font-semibold text-muted-foreground">
-                      Captured Groups ({match.groups.length})
-                    </p>
-                    <div className="space-y-1">
-                      {match.groups.map((group, groupIdx) => (
-                        <div
-                          key={groupIdx}
-                          className="flex items-center gap-2 text-sm"
-                        >
-                          <Badge variant="outline" className="font-mono">
-                            ${groupIdx + 1}
-                          </Badge>
-                          <code className="font-mono bg-background px-2 py-0.5 rounded border flex-1">
-                            {group || '(empty)'}
-                          </code>
-                          {group && (
-                            <CopyButton
-                              text={group}
-                              showText={false}
-                              size="sm"
-                            />
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
+              <Match key={`${match.index}-${idx}`} match={match} idx={idx} />
             ))}
           </div>
         </Card>
