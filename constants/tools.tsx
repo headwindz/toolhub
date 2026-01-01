@@ -25,6 +25,7 @@ import {
   Shield,
   Calendar,
   Terminal,
+  Link,
 } from 'lucide-react'
 
 export type Tool = {
@@ -149,6 +150,15 @@ export const tools: Tool[] = [
     color: 'bg-orange-600',
     badge: 'New',
     href: '/chmod-generator',
+    category: CategoryId.Developer,
+  },
+  {
+    name: 'URL Parser/Generator',
+    description: 'Parse URLs and build them from components',
+    icon: Link,
+    color: 'bg-sky-600',
+    badge: 'New',
+    href: '/url-parser',
     category: CategoryId.Developer,
   },
   {
