@@ -24,6 +24,7 @@ import {
   ScanText,
   Shield,
   Calendar,
+  Terminal,
 } from 'lucide-react'
 
 export type Tool = {
@@ -139,6 +140,15 @@ export const tools: Tool[] = [
     color: 'bg-teal-600',
     badge: 'New',
     href: '/number-base',
+    category: CategoryId.Developer,
+  },
+  {
+    name: 'Chmod Generator',
+    description: 'Generate chmod commands and understand file permissions',
+    icon: Terminal,
+    color: 'bg-orange-600',
+    badge: 'New',
+    href: '/chmod-generator',
     category: CategoryId.Developer,
   },
   {
