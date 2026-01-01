@@ -26,6 +26,7 @@ import {
   Calendar,
   Terminal,
   Link,
+  ArrowRightLeft,
 } from 'lucide-react'
 
 export type Tool = {
@@ -55,6 +56,15 @@ export const tools: Tool[] = [
     color: 'bg-cyan-500',
     badge: 'New',
     href: '/json-viewer',
+    category: CategoryId.Developer,
+  },
+  {
+    name: 'Data Converter',
+    description: 'Convert between JSON, YAML, TOML, XML, Zod and CSV formats',
+    icon: ArrowRightLeft,
+    color: 'bg-emerald-500',
+    badge: 'New',
+    href: '/data-converter',
     category: CategoryId.Developer,
   },
   {
