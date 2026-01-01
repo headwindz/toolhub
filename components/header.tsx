@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { tools } from '@/constants/tools'
 import { cn } from '@/lib/utils'
-import { Menu, Moon, Search, Sun } from 'lucide-react'
+import { Menu, Moon, Search, Sun, Github } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
@@ -102,7 +102,7 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
 
   return (
     <header className="border-b bg-background/95 top-0 z-50 sticky backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="flex h-16 px-4 gap-2 items-center sm:px-6 sm:gap-4 lg:px-8">
+      <div className="flex h-16 px-4 gap-1 items-center sm:px-6 sm:gap-2 lg:px-8">
         <Button
           variant="ghost"
           size="icon"
@@ -222,6 +222,18 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
             )}
           </div>
         </div>
+
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() =>
+            window.open('https://github.com/headwindz/toolhub', '_blank')
+          }
+          className="hover:bg-accent"
+        >
+          <Github className="h-5 w-5" />
+          <span className="sr-only">GitHub Repository</span>
+        </Button>
 
         <Button variant="ghost" size="icon" onClick={toggleTheme}>
           <Sun className="h-5 transition-all w-5 scale-100 rotate-0 dark:scale-0 dark:-rotate-90" />
