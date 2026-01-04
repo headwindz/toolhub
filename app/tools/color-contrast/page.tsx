@@ -6,12 +6,22 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Check, Contrast, Copy, RefreshCcw } from 'lucide-react'
+import { Contrast, RefreshCcw } from 'lucide-react'
 import { useMemo, useState } from 'react'
-import { ContrastKnowledge } from './contrast-knowledge'
+import { CardHeader } from './card-header'
+import { ColorInput } from './color-input'
+import { ContrastKnowledge } from './knowledge'
+import { StatusSection } from './status-section'
 
 const defaultFg = '#111827' // slate-900
 const defaultBg = '#ffffff' // white
+
+// Normalize hex color to uppercase format for consistent rendering
+const normalizeHex = (hex: string): string => {
+  const trimmed = hex.trim()
+  if (!trimmed.startsWith('#')) return `#${trimmed}`.toUpperCase()
+  return trimmed.toUpperCase()
+}
 
 type ContrastResult = {
   ratio: number | null
@@ -81,32 +91,19 @@ export default function ColorContrastPage() {
   const [sampleText, setSampleText] = useState(
     'Accessible contrast preview text'
   )
-  const [copied, setCopied] = useState<string | null>(null)
+
+  const normalizedFg = normalizeHex(foreground)
+  const normalizedBg = normalizeHex(background)
 
   const contrast = useMemo(
-    () => getContrastRatio(foreground, background),
-    [foreground, background]
+    () => getContrastRatio(normalizedFg, normalizedBg),
+    [normalizedFg, normalizedBg]
   )
 
   const swapColors = () => {
     setForeground(background)
     setBackground(foreground)
   }
-
-  const copyValue = (value: string, label: string) => {
-    navigator.clipboard.writeText(value)
-    setCopied(label)
-    setTimeout(() => setCopied(null), 1600)
-  }
-
-  const statusBadge = (passed: boolean, label: string) => (
-    <Badge
-      variant={passed ? 'default' : 'secondary'}
-      className={passed ? 'bg-green-500 text-white' : ''}
-    >
-      {passed ? 'Pass' : 'Fail'} {label}
-    </Badge>
-  )
 
   return (
     <ToolLayout
@@ -119,82 +116,36 @@ export default function ColorContrastPage() {
 
       <div className="grid gap-6 lg:grid-cols-2">
         <Card className="space-y-4 p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="font-semibold text-lg">Colors</h2>
-              <p className="text-sm text-muted-foreground">
-                Foreground and background inputs
-              </p>
-            </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={swapColors}
-              className="gap-2"
-            >
-              <RefreshCcw className="h-4 w-4" /> Swap
-            </Button>
-          </div>
+          <CardHeader
+            title="Colors"
+            description="Foreground and background inputs"
+            action={
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={swapColors}
+                className="gap-2"
+              >
+                <RefreshCcw className="h-4 w-4" /> Swap
+              </Button>
+            }
+          />
 
           <div className="space-y-4">
             <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
-              <div className="space-y-2">
-                <Label htmlFor="foreground">Foreground</Label>
-                <div className="flex gap-2 items-center">
-                  <Input
-                    id="foreground"
-                    type="color"
-                    value={foreground}
-                    onChange={(e) => setForeground(e.target.value)}
-                    className="flex-shrink-0 h-9 p-1 w-9"
-                  />
-                  <Input
-                    value={foreground}
-                    onChange={(e) => setForeground(e.target.value)}
-                    className="font-mono"
-                  />
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => copyValue(foreground, 'fg')}
-                  >
-                    {copied === 'fg' ? (
-                      <Check className="h-4 w-4" />
-                    ) : (
-                      <Copy className="h-4 w-4" />
-                    )}
-                  </Button>
-                </div>
-              </div>
+              <ColorInput
+                id="foreground"
+                label="Foreground"
+                value={normalizedFg}
+                onChange={(value) => setForeground(normalizeHex(value))}
+              />
 
-              <div className="space-y-2">
-                <Label htmlFor="background">Background</Label>
-                <div className="flex gap-2 items-center">
-                  <Input
-                    id="background"
-                    type="color"
-                    value={background}
-                    onChange={(e) => setBackground(e.target.value)}
-                    className="flex-shrink-0 h-9 p-1 w-9"
-                  />
-                  <Input
-                    value={background}
-                    onChange={(e) => setBackground(e.target.value)}
-                    className="font-mono"
-                  />
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => copyValue(background, 'bg')}
-                  >
-                    {copied === 'bg' ? (
-                      <Check className="h-4 w-4" />
-                    ) : (
-                      <Copy className="h-4 w-4" />
-                    )}
-                  </Button>
-                </div>
-              </div>
+              <ColorInput
+                id="background"
+                label="Background"
+                value={normalizedBg}
+                onChange={(value) => setBackground(normalizeHex(value))}
+              />
             </div>
 
             <div className="space-y-2">
@@ -210,23 +161,21 @@ export default function ColorContrastPage() {
         </Card>
 
         <Card className="space-y-4 p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="font-semibold text-lg">Results</h2>
-              <p className="text-sm text-muted-foreground">
-                WCAG pass/fail for normal and large text
-              </p>
-            </div>
-            {contrast.ratio !== null && (
-              <Badge className="font-semibold text-base">
-                {contrast.ratio.toFixed(2)} : 1
-              </Badge>
-            )}
-          </div>
+          <CardHeader
+            title="Results"
+            description="WCAG pass/fail for normal and large text"
+            action={
+              contrast.ratio !== null ? (
+                <Badge className="font-semibold text-base">
+                  {contrast.ratio.toFixed(2)} : 1
+                </Badge>
+              ) : undefined
+            }
+          />
 
           <div
             className="border rounded-lg overflow-hidden"
-            style={{ backgroundColor: background, color: foreground }}
+            style={{ backgroundColor: normalizedBg, color: normalizedFg }}
           >
             <div className="space-y-3 p-6">
               <p className="font-semibold text-lg">{sampleText || 'Sample'}</p>
@@ -236,20 +185,32 @@ export default function ColorContrastPage() {
           </div>
 
           <div className="grid gap-3 grid-cols-2">
-            <div className="space-y-2">
-              <p className="text-sm text-muted-foreground">Normal text</p>
-              <div className="flex flex-wrap gap-2">
-                {statusBadge(!!contrast.ratio && contrast.aaNormal, 'AA')}
-                {statusBadge(!!contrast.ratio && contrast.aaaNormal, 'AAA')}
-              </div>
-            </div>
-            <div className="space-y-2">
-              <p className="text-sm text-muted-foreground">Large text</p>
-              <div className="flex flex-wrap gap-2">
-                {statusBadge(!!contrast.ratio && contrast.aaLarge, 'AA')}
-                {statusBadge(!!contrast.ratio && contrast.aaaLarge, 'AAA')}
-              </div>
-            </div>
+            <StatusSection
+              label="Normal text"
+              badges={[
+                {
+                  passed: !!contrast.ratio && contrast.aaNormal,
+                  label: 'AA',
+                },
+                {
+                  passed: !!contrast.ratio && contrast.aaaNormal,
+                  label: 'AAA',
+                },
+              ]}
+            />
+            <StatusSection
+              label="Large text"
+              badges={[
+                {
+                  passed: !!contrast.ratio && contrast.aaLarge,
+                  label: 'AA',
+                },
+                {
+                  passed: !!contrast.ratio && contrast.aaaLarge,
+                  label: 'AAA',
+                },
+              ]}
+            />
           </div>
 
           {contrast.ratio === null && (
