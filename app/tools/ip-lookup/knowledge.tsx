@@ -1,4 +1,4 @@
-import { KnowledgeSection } from "@/components/knowledge-section";
+import { KnowledgeSection } from '@/components/knowledge-section'
 
 export function IpKnowledge() {
   return (
@@ -29,7 +29,7 @@ export function IpKnowledge() {
         <h4 className="font-semibold text-base">Common Uses</h4>
         <ul className="list-disc space-y-1 text-muted-foreground pl-5">
           <li>
-            <strong>Content Localization:</strong> Serve content in the user's
+            <strong>Content localization:</strong> Serve content in the user's
             language and region.
           </li>
           <li>
@@ -41,13 +41,13 @@ export function IpKnowledge() {
             patterns.
           </li>
           <li>
-            <strong>Legal Compliance:</strong> Ensure adherence to regional data
+            <strong>Legal compliance:</strong> Ensure adherence to regional data
             protection laws like GDPR.
           </li>
         </ul>
       </div>
       <div className="space-y-2">
-        <h4 className="font-semibold text-base">Important Considerations</h4>
+        <h4 className="font-semibold text-base">Important considerations</h4>
         <p className="text-muted-foreground">
           IP geolocation is not 100% accurate, especially for mobile devices and
           VPN/proxy users. VPNs and proxies mask the actual IP, showing only the
@@ -56,5 +56,5 @@ export function IpKnowledge() {
         </p>
       </div>
     </KnowledgeSection>
-  );
+  )
 }

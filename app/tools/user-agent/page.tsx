@@ -16,7 +16,7 @@ import {
   Tablet,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { UserAgentKnowledge } from "./user-agent-knowledge";
+import { UserAgentKnowledge } from "./knowledge";
 
 interface UAInfo {
   userAgent: string;

@@ -1,4 +1,4 @@
-import { KnowledgeSection } from "@/components/knowledge-section";
+import { KnowledgeSection } from '@/components/knowledge-section'
 
 export function JSONKnowledge() {
   return (
@@ -20,7 +20,7 @@ export function JSONKnowledge() {
         <ul className="list-disc space-y-1 text-muted-foreground pl-5">
           <li>
             <strong>Object:</strong> Unordered collection of key-value pairs
-            enclosed in curly braces{" "}
+            enclosed in curly braces{' '}
             <code className="bg-muted rounded px-1">{`{ }`}</code>
           </li>
           <li>
@@ -28,21 +28,21 @@ export function JSONKnowledge() {
             brackets <code className="bg-muted rounded px-1">[ ]</code>
           </li>
           <li>
-            <strong>String:</strong> Text enclosed in double quotes{" "}
+            <strong>String:</strong> Text enclosed in double quotes{' '}
             <code className="bg-muted rounded px-1">"text"</code>
           </li>
           <li>
-            <strong>Number:</strong> Integer or floating-point{" "}
-            <code className="bg-muted rounded px-1">42</code> or{" "}
+            <strong>Number:</strong> Integer or floating-point{' '}
+            <code className="bg-muted rounded px-1">42</code> or{' '}
             <code className="bg-muted rounded px-1">3.14</code>
           </li>
           <li>
-            <strong>Boolean:</strong> True or false values{" "}
-            <code className="bg-muted rounded px-1">true</code> /{" "}
+            <strong>Boolean:</strong> True or false values{' '}
+            <code className="bg-muted rounded px-1">true</code> /{' '}
             <code className="bg-muted rounded px-1">false</code>
           </li>
           <li>
-            <strong>Null:</strong> Represents empty value{" "}
+            <strong>Null:</strong> Represents empty value{' '}
             <code className="bg-muted rounded px-1">null</code>
           </li>
         </ul>
@@ -83,5 +83,5 @@ export function JSONKnowledge() {
         </pre>
       </div>
     </KnowledgeSection>
-  );
+  )
 }

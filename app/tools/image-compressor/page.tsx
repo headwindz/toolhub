@@ -1,102 +1,102 @@
-"use client";
+'use client'
 
-import type React from "react";
+import type React from 'react'
 
-import { ToolLayout } from "@/components/tool-layout";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Slider } from "@/components/ui/slider";
-import { Download, ImageIcon, Loader2, Upload, X } from "lucide-react";
-import { useCallback, useState } from "react";
-import { ImageCompressorKnowledge } from "./image-compressor-knowledge";
+import { ToolLayout } from '@/components/tool-layout'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Label } from '@/components/ui/label'
+import { Slider } from '@/components/ui/slider'
+import { Download, ImageIcon, Loader2, Upload, X } from 'lucide-react'
+import { useCallback, useState } from 'react'
+import { ImageCompressorKnowledge } from './knowledge'
 
 export default function ImageCompressorPage() {
-  const [originalImage, setOriginalImage] = useState<string | null>(null);
-  const [compressedImage, setCompressedImage] = useState<string | null>(null);
-  const [originalSize, setOriginalSize] = useState<number>(0);
-  const [compressedSize, setCompressedSize] = useState<number>(0);
-  const [quality, setQuality] = useState([80]);
-  const [isCompressing, setIsCompressing] = useState(false);
-  const [fileName, setFileName] = useState("");
+  const [originalImage, setOriginalImage] = useState<string | null>(null)
+  const [compressedImage, setCompressedImage] = useState<string | null>(null)
+  const [originalSize, setOriginalSize] = useState<number>(0)
+  const [compressedSize, setCompressedSize] = useState<number>(0)
+  const [quality, setQuality] = useState([80])
+  const [isCompressing, setIsCompressing] = useState(false)
+  const [fileName, setFileName] = useState('')
 
   const handleFileUpload = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if (file && file.type.startsWith("image/")) {
-        setFileName(file.name);
-        setOriginalSize(file.size);
-        const reader = new FileReader();
+      const file = e.target.files?.[0]
+      if (file && file.type.startsWith('image/')) {
+        setFileName(file.name)
+        setOriginalSize(file.size)
+        const reader = new FileReader()
         reader.onload = (event) => {
-          setOriginalImage(event.target?.result as string);
-          setCompressedImage(null);
-        };
-        reader.readAsDataURL(file);
+          setOriginalImage(event.target?.result as string)
+          setCompressedImage(null)
+        }
+        reader.readAsDataURL(file)
       }
     },
-    [],
-  );
+    []
+  )
 
   const compressImage = useCallback(() => {
-    if (!originalImage) return;
+    if (!originalImage) return
 
-    setIsCompressing(true);
-    const img = new Image();
+    setIsCompressing(true)
+    const img = new Image()
     img.onload = () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = img.width;
-      canvas.height = img.height;
-      const ctx = canvas.getContext("2d");
-      ctx?.drawImage(img, 0, 0);
+      const canvas = document.createElement('canvas')
+      canvas.width = img.width
+      canvas.height = img.height
+      const ctx = canvas.getContext('2d')
+      ctx?.drawImage(img, 0, 0)
 
       canvas.toBlob(
         (blob) => {
           if (blob) {
-            setCompressedSize(blob.size);
-            const reader = new FileReader();
+            setCompressedSize(blob.size)
+            const reader = new FileReader()
             reader.onload = (e) => {
-              setCompressedImage(e.target?.result as string);
-              setIsCompressing(false);
-            };
-            reader.readAsDataURL(blob);
+              setCompressedImage(e.target?.result as string)
+              setIsCompressing(false)
+            }
+            reader.readAsDataURL(blob)
           }
         },
-        "image/jpeg",
-        quality[0] / 100,
-      );
-    };
-    img.src = originalImage;
-  }, [originalImage, quality]);
+        'image/jpeg',
+        quality[0] / 100
+      )
+    }
+    img.src = originalImage
+  }, [originalImage, quality])
 
   const downloadImage = () => {
-    if (!compressedImage) return;
-    const link = document.createElement("a");
-    link.href = compressedImage;
-    link.download = `compressed-${fileName}`;
-    link.click();
-  };
+    if (!compressedImage) return
+    const link = document.createElement('a')
+    link.href = compressedImage
+    link.download = `compressed-${fileName}`
+    link.click()
+  }
 
   const clearImage = () => {
-    setOriginalImage(null);
-    setCompressedImage(null);
-    setOriginalSize(0);
-    setCompressedSize(0);
-    setFileName("");
-    setQuality([80]);
-  };
+    setOriginalImage(null)
+    setCompressedImage(null)
+    setOriginalSize(0)
+    setCompressedSize(0)
+    setFileName('')
+    setQuality([80])
+  }
 
   const formatFileSize = (bytes: number) => {
-    if (bytes === 0) return "0 Bytes";
-    const k = 1024;
-    const sizes = ["Bytes", "KB", "MB", "GB"];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + " " + sizes[i];
-  };
+    if (bytes === 0) return '0 Bytes'
+    const k = 1024
+    const sizes = ['Bytes', 'KB', 'MB', 'GB']
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+    return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i]
+  }
 
   const savings =
     originalSize > 0 && compressedSize > 0
       ? Math.round(((originalSize - compressedSize) / originalSize) * 100)
-      : 0;
+      : 0
 
   return (
     <ToolLayout
@@ -114,12 +114,12 @@ export default function ImageCompressorPage() {
               {originalImage ? (
                 <div className="space-y-4 text-center">
                   <img
-                    src={originalImage || "/placeholder.svg"}
+                    src={originalImage || '/placeholder.svg'}
                     alt="Original"
                     className="rounded-lg mx-auto max-h-[250px]"
                   />
                   <p className="text-sm text-muted-foreground">
-                    Original Size:{" "}
+                    Original Size:{' '}
                     <span className="font-semibold">
                       {formatFileSize(originalSize)}
                     </span>
@@ -169,7 +169,7 @@ export default function ImageCompressorPage() {
                       Compressing...
                     </>
                   ) : (
-                    "Compress Image"
+                    'Compress Image'
                   )}
                 </Button>
 
@@ -194,13 +194,13 @@ export default function ImageCompressorPage() {
               {compressedImage ? (
                 <div className="space-y-4 text-center">
                   <img
-                    src={compressedImage || "/placeholder.svg"}
+                    src={compressedImage || '/placeholder.svg'}
                     alt="Compressed"
                     className="rounded-lg mx-auto max-h-[250px]"
                   />
                   <div className="space-y-1">
                     <p className="text-sm text-muted-foreground">
-                      Compressed Size:{" "}
+                      Compressed Size:{' '}
                       <span className="font-semibold text-green-600">
                         {formatFileSize(compressedSize)}
                       </span>
@@ -233,5 +233,5 @@ export default function ImageCompressorPage() {
         </Card>
       </div>
     </ToolLayout>
-  );
+  )
 }

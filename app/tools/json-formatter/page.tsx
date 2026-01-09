@@ -1,49 +1,49 @@
-"use client";
+'use client'
 
-import { CopyButton } from "@/components/copy-button";
-import { ToolLayout } from "@/components/tool-layout";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
-import { FileJson, Minimize2, Sparkles } from "lucide-react";
-import { useState } from "react";
-import { JSONKnowledge } from "./json-knowledge";
+import { CopyButton } from '@/components/copy-button'
+import { ToolLayout } from '@/components/tool-layout'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Textarea } from '@/components/ui/textarea'
+import { FileJson, Minimize2, Sparkles } from 'lucide-react'
+import { useState } from 'react'
+import { JSONKnowledge } from './knowledge'
 
 export default function JSONFormatterPage() {
-  const [input, setInput] = useState("");
-  const [output, setOutput] = useState("");
-  const [error, setError] = useState("");
+  const [input, setInput] = useState('')
+  const [output, setOutput] = useState('')
+  const [error, setError] = useState('')
 
   const formatJSON = () => {
     try {
-      const parsed = JSON.parse(input);
-      const formatted = JSON.stringify(parsed, null, 2);
-      setOutput(formatted);
-      setError("");
+      const parsed = JSON.parse(input)
+      const formatted = JSON.stringify(parsed, null, 2)
+      setOutput(formatted)
+      setError('')
     } catch (e) {
-      setError("Invalid JSON format");
-      setOutput("");
+      setError('Invalid JSON format')
+      setOutput('')
     }
-  };
+  }
 
   const minifyJSON = () => {
     try {
-      const parsed = JSON.parse(input);
-      const minified = JSON.stringify(parsed);
-      setOutput(minified);
-      setError("");
+      const parsed = JSON.parse(input)
+      const minified = JSON.stringify(parsed)
+      setOutput(minified)
+      setError('')
     } catch (e) {
-      setError("Invalid JSON format");
-      setOutput("");
+      setError('Invalid JSON format')
+      setOutput('')
     }
-  };
+  }
 
   return (
     <ToolLayout
       title="JSON Formatter"
       description="Format, validate, and beautify your JSON data instantly"
       icon={FileJson}
-      badges={[{ label: "Auto Validation", icon: Sparkles }, { label: "Fast" }]}
+      badges={[{ label: 'Auto Validation', icon: Sparkles }, { label: 'Fast' }]}
     >
       <JSONKnowledge />
 
@@ -62,8 +62,8 @@ export default function JSONFormatterPage() {
               onChange={(e) => setInput(e.target.value)}
               className={`font-mono border-2 shadow-inner text-sm min-h-[450px] transition-colors ${
                 error
-                  ? "border-destructive focus:border-destructive focus:ring-2 focus:ring-destructive/40"
-                  : "focus:border-primary"
+                  ? 'border-destructive focus:border-destructive focus:ring-2 focus:ring-destructive/40'
+                  : 'focus:border-primary'
               }`}
             />
             <div className="flex mt-4 gap-2">
@@ -114,5 +114,5 @@ export default function JSONFormatterPage() {
         </Card>
       </div>
     </ToolLayout>
-  );
+  )
 }

@@ -11,7 +11,7 @@ import { Label } from '@/components/ui/label'
 import { Slider } from '@/components/ui/slider'
 import { Lock, Shield, Zap } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { PasswordKnowledge } from './password-knowledge'
+import { PasswordKnowledge } from './knowledge'
 
 export default function PasswordGeneratorPage() {
   const [password, setPassword] = useState('')

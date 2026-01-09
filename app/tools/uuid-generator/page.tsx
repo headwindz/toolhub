@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Check, Copy, Key, RefreshCw } from "lucide-react";
 import { useState } from "react";
-import { UUIDKnowledge } from "./uuid-knowledge";
+import { UUIDKnowledge } from "./knowledge";
 
 export default function UUIDGeneratorPage() {
   const [uuids, setUuids] = useState<string[]>([]);

@@ -1,97 +1,90 @@
-"use client";
+'use client'
 
-import { ToolLayout } from "@/components/tool-layout";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Building2,
-  Clock,
-  Globe,
-  Loader2,
-  MapPin,
-  Network,
-} from "lucide-react";
-import { useEffect, useState } from "react";
-import { InfoCard } from "./info-card";
-import { IpKnowledge } from "./ip-knowledge";
+import { ToolLayout } from '@/components/tool-layout'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Building2, Clock, Globe, Loader2, MapPin, Network } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { InfoCard } from './info-card'
+import { IpKnowledge } from './knowledge'
 
 export default function IpLookupPage() {
-  const [ipAddress, setIpAddress] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<any>(null);
-  const [error, setError] = useState("");
-  const [currentTime, setCurrentTime] = useState("");
+  const [ipAddress, setIpAddress] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [result, setResult] = useState<any>(null)
+  const [error, setError] = useState('')
+  const [currentTime, setCurrentTime] = useState('')
 
   const lookupIp = async () => {
     if (!ipAddress.trim()) {
-      setError("Please enter an IP address");
-      return;
+      setError('Please enter an IP address')
+      return
     }
 
-    setLoading(true);
-    setError("");
-    setResult(null);
+    setLoading(true)
+    setError('')
+    setResult(null)
 
     try {
-      const response = await fetch(`https://ipapi.co/${ipAddress}/json/`);
-      const data = await response.json();
+      const response = await fetch(`https://ipapi.co/${ipAddress}/json/`)
+      const data = await response.json()
 
       if (data.error) {
-        setError(data.reason || "Invalid IP address");
+        setError(data.reason || 'Invalid IP address')
       } else {
-        setResult(data);
+        setResult(data)
       }
     } catch (err) {
-      setError("Failed to lookup IP address");
+      setError('Failed to lookup IP address')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const getCurrentIp = async () => {
-    setLoading(true);
-    setError("");
-    setResult(null);
+    setLoading(true)
+    setError('')
+    setResult(null)
 
     try {
-      const response = await fetch("https://ipapi.co/json/");
-      const data = await response.json();
-      setResult(data);
-      setIpAddress(data.ip);
+      const response = await fetch('https://ipapi.co/json/')
+      const data = await response.json()
+      setResult(data)
+      setIpAddress(data.ip)
     } catch (err) {
-      setError("Failed to get current IP");
+      setError('Failed to get current IP')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   useEffect(() => {
     if (result?.timezone) {
       const updateTime = () => {
-        const time = new Date().toLocaleString("en-US", {
+        const time = new Date().toLocaleString('en-US', {
           timeZone: result.timezone,
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
           hour12: true,
-        });
-        setCurrentTime(time);
-      };
+        })
+        setCurrentTime(time)
+      }
 
-      updateTime();
-      const interval = setInterval(updateTime, 1000);
-      return () => clearInterval(interval);
+      updateTime()
+      const interval = setInterval(updateTime, 1000)
+      return () => clearInterval(interval)
     }
-  }, [result?.timezone]);
+  }, [result?.timezone])
 
   return (
     <ToolLayout
       title="IP Lookup"
       description="Get geolocation information for any IP address"
       icon={Globe}
-      badges={[{ label: "Real-time" }, { label: "Accurate" }]}
+      badges={[{ label: 'Real-time' }, { label: 'Accurate' }]}
     >
       <IpKnowledge />
 
@@ -107,12 +100,12 @@ export default function IpLookupPage() {
                 placeholder="Enter IP address (e.g., 8.8.8.8)"
                 value={ipAddress}
                 onChange={(e) => setIpAddress(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && lookupIp()}
+                onKeyDown={(e) => e.key === 'Enter' && lookupIp()}
                 className="flex-1"
               />
               <Button onClick={lookupIp} disabled={loading} className="gap-2">
                 {loading && <Loader2 className="h-4 animate-spin w-4" />}
-                {loading ? "Looking up..." : "Lookup"}
+                {loading ? 'Looking up...' : 'Lookup'}
               </Button>
             </div>
           </div>
@@ -144,7 +137,7 @@ export default function IpLookupPage() {
                 value={result.country_name}
                 subtitle={
                   result.city &&
-                  `${result.city}${result.region ? `, ${result.region}` : ""}`
+                  `${result.city}${result.region ? `, ${result.region}` : ''}`
                 }
               />
 
@@ -159,7 +152,7 @@ export default function IpLookupPage() {
               <InfoCard
                 icon={Clock}
                 label="Timezone"
-                value={result.timezone || "N/A"}
+                value={result.timezone || 'N/A'}
                 subtitle={
                   currentTime && (
                     <span className="font-mono">{currentTime}</span>
@@ -170,14 +163,14 @@ export default function IpLookupPage() {
               <InfoCard
                 icon={Building2}
                 label="ISP"
-                value={result.org || "N/A"}
+                value={result.org || 'N/A'}
                 valueClassName="break-words"
               />
 
               <InfoCard
                 icon={Network}
                 label="ASN"
-                value={result.asn || "N/A"}
+                value={result.asn || 'N/A'}
                 valueClassName="font-mono"
               />
             </div>
@@ -201,5 +194,5 @@ export default function IpLookupPage() {
         )}
       </Card>
     </ToolLayout>
-  );
+  )
 }

@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Check, Copy, Palette } from "lucide-react";
 import { useState } from "react";
-import { ColorKnowledge } from "./color-knowledge";
+import { ColorKnowledge } from "./knowledge";
 
 export default function ColorPickerPage() {
   const [color, setColor] = useState("#8b5cf6");

@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { FileText } from "lucide-react";
 import { useMemo, useState } from "react";
-import { WordCountKnowledge } from "./word-count-knowledge";
+import { WordCountKnowledge } from "./knowledge";
 
 export default function WordCountPage() {
   const [text, setText] = useState("");

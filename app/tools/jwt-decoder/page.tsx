@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Shield } from "lucide-react";
 import { useState } from "react";
-import { JwtKnowledge } from "./jwt-knowledge";
+import { JwtKnowledge } from "./knowledge";
 
 interface DecodedJWT {
   header: Record<string, unknown>;

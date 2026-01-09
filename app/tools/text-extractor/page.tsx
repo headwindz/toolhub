@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { FileImage, Loader2, ScanText, Upload, X } from "lucide-react";
 import { useCallback, useState } from "react";
-import { TextExtractorKnowledge } from "./text-extractor-knowledge";
+import { TextExtractorKnowledge } from "./knowledge";
 
 export default function TextExtractorPage() {
   const [image, setImage] = useState<string | null>(null);

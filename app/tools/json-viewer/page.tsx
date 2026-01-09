@@ -13,7 +13,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useState } from "react";
-import { JSONViewerKnowledge } from "./json-viewer-knowledge";
+import { JSONViewerKnowledge } from "./knowledge";
 
 type JSONValue = string | number | boolean | null | JSONObject | JSONArray;
 type JSONObject = { [key: string]: JSONValue };

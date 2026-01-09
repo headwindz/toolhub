@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Download, QrCode, Sparkles } from "lucide-react";
 import { useState } from "react";
-import { QRKnowledge } from "./qr-knowledge";
+import { QRKnowledge } from "./knowledge";
 
 export default function QRGeneratorPage() {
   const [text, setText] = useState("");

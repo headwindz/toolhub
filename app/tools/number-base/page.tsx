@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Binary, RefreshCw, Sparkles } from "lucide-react";
 import { useState } from "react";
-import { NumberBaseKnowledge } from "./number-base-knowledge";
+import { NumberBaseKnowledge } from "./knowledge";
 
 export default function NumberBaseConverterPage() {
   const [decimal, setDecimal] = useState("");

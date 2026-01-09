@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { KeyboardGuide } from "./keyboard-guide";
-import { TypingKnowledge } from "./typing-knowledge";
+import { TypingKnowledge } from "./knowledge";
 
 const SAMPLE_TEXTS = {
   easy: [

@@ -1,4 +1,4 @@
-import { KnowledgeSection } from "@/components/knowledge-section";
+import { KnowledgeSection } from '@/components/knowledge-section'
 
 export function WordCountKnowledge() {
   return (
@@ -7,7 +7,7 @@ export function WordCountKnowledge() {
       description="Learn how word counting works and its applications"
     >
       <section>
-        <h3 className="font-semibold mb-2">What is Word Counting?</h3>
+        <h3 className="font-semibold mb-2">What is word counting?</h3>
         <p className="text-muted-foreground">
           Word counting is the process of calculating the number of words,
           characters, sentences, and other text metrics in a document. It's
@@ -17,34 +17,34 @@ export function WordCountKnowledge() {
       </section>
 
       <section>
-        <h3 className="font-semibold mb-2">Key Metrics Explained</h3>
+        <h3 className="font-semibold mb-2">Key metrics explained</h3>
         <ul className="space-y-2 text-muted-foreground">
           <li>
-            <strong className="text-foreground">Words:</strong> Text segments
+            <strong className="text-foreground">Words:</strong> text segments
             separated by spaces or punctuation
           </li>
           <li>
-            <strong className="text-foreground">Characters:</strong> Total
+            <strong className="text-foreground">Characters:</strong> total
             number of letters, numbers, punctuation, and spaces
           </li>
           <li>
-            <strong className="text-foreground">Characters (no spaces):</strong>{" "}
+            <strong className="text-foreground">Characters (no spaces):</strong>{' '}
             Character count excluding whitespace
           </li>
           <li>
-            <strong className="text-foreground">Sentences:</strong> Text
+            <strong className="text-foreground">Sentences:</strong> text
             segments ending with period, question mark, or exclamation point
           </li>
           <li>
-            <strong className="text-foreground">Paragraphs:</strong> Text blocks
+            <strong className="text-foreground">Paragraphs:</strong> text blocks
             separated by blank lines
           </li>
           <li>
-            <strong className="text-foreground">Reading Time:</strong> Estimated
+            <strong className="text-foreground">Reading time:</strong> Estimated
             time based on 200 words per minute (average reading speed)
           </li>
           <li>
-            <strong className="text-foreground">Speaking Time:</strong>{" "}
+            <strong className="text-foreground">Speaking time:</strong>{' '}
             Estimated time based on 130 words per minute (average speaking
             speed)
           </li>
@@ -52,33 +52,33 @@ export function WordCountKnowledge() {
       </section>
 
       <section>
-        <h3 className="font-semibold mb-2">Common Use Cases</h3>
+        <h3 className="font-semibold mb-2">Common use cases</h3>
         <ul className="space-y-2 text-muted-foreground">
           <li>
-            <strong className="text-foreground">Academic Writing:</strong> Meet
+            <strong className="text-foreground">Academic writing:</strong> Meet
             essay and thesis word count requirements
           </li>
           <li>
-            <strong className="text-foreground">Content Creation:</strong>{" "}
+            <strong className="text-foreground">Content creation:</strong>{' '}
             Optimize blog posts and articles for SEO
           </li>
           <li>
-            <strong className="text-foreground">Social Media:</strong> Stay
+            <strong className="text-foreground">Social media:</strong> Stay
             within platform character limits
           </li>
           <li>
-            <strong className="text-foreground">Professional Writing:</strong>{" "}
+            <strong className="text-foreground">Professional writing:</strong>{' '}
             Ensure reports and proposals meet specifications
           </li>
           <li>
-            <strong className="text-foreground">Speech Preparation:</strong>{" "}
+            <strong className="text-foreground">Speech preparation:</strong>{' '}
             Estimate presentation duration
           </li>
         </ul>
       </section>
 
       <section>
-        <h3 className="font-semibold mb-2">Tips for Effective Writing</h3>
+        <h3 className="font-semibold mb-2">Tips for effective writing</h3>
         <ul className="space-y-2 text-muted-foreground">
           <li>• Aim for clear, concise sentences (15-20 words average)</li>
           <li>• Use varied sentence lengths to maintain reader interest</li>
@@ -90,5 +90,5 @@ export function WordCountKnowledge() {
         </ul>
       </section>
     </KnowledgeSection>
-  );
+  )
 }

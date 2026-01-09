@@ -1,4 +1,4 @@
-import { KnowledgeSection } from "@/components/knowledge-section";
+import { KnowledgeSection } from '@/components/knowledge-section'
 
 export function ImageCompressorKnowledge() {
   return (
@@ -7,7 +7,7 @@ export function ImageCompressorKnowledge() {
       description="Understanding image optimization and compression techniques"
     >
       <div className="space-y-2">
-        <h4 className="font-semibold text-base">What is Image Compression?</h4>
+        <h4 className="font-semibold text-base">What is Image compression?</h4>
         <p className="text-muted-foreground">
           Image compression reduces the file size of an image by removing
           redundant data while maintaining acceptable visual quality. This
@@ -16,43 +16,43 @@ export function ImageCompressorKnowledge() {
         </p>
       </div>
       <div className="space-y-2">
-        <h4 className="font-semibold text-base">Types of Compression</h4>
+        <h4 className="font-semibold text-base">Types of compression</h4>
         <ul className="list-disc space-y-1 text-muted-foreground pl-5">
           <li>
-            <strong>Lossy Compression:</strong> Reduces file size significantly
+            <strong>Lossy compression:</strong> Reduces file size significantly
             by discarding some image data. Best for photos and complex images
             where small quality loss is acceptable (JPEG, WebP).
           </li>
           <li>
-            <strong>Lossless Compression:</strong> Reduces file size without any
+            <strong>Lossless compression:</strong> Reduces file size without any
             quality loss. Ideal for graphics, logos, and images requiring pixel
             perfection (PNG, GIF).
           </li>
         </ul>
       </div>
       <div className="space-y-2">
-        <h4 className="font-semibold text-base">Why Compress Images?</h4>
+        <h4 className="font-semibold text-base">Why compress images?</h4>
         <ul className="list-disc space-y-1 text-muted-foreground pl-5">
           <li>
-            <strong>Faster Page Load:</strong> Smaller files download quicker,
+            <strong>Faster page load:</strong> Smaller files download quicker,
             improving user experience and SEO rankings.
           </li>
           <li>
-            <strong>Reduced Bandwidth:</strong> Lower data usage saves costs for
+            <strong>Reduced bandwidth:</strong> Lower data usage saves costs for
             both hosting and mobile users.
           </li>
           <li>
-            <strong>Better Performance:</strong> Compressed images consume less
+            <strong>Better performance:</strong> Compressed images consume less
             memory and process faster.
           </li>
           <li>
-            <strong>Storage Efficiency:</strong> Save significant disk space
+            <strong>Storage efficiency:</strong> Save significant disk space
             when storing large image libraries.
           </li>
         </ul>
       </div>
       <div className="space-y-2">
-        <h4 className="font-semibold text-base">Choosing Quality Settings</h4>
+        <h4 className="font-semibold text-base">Choosing quality settings</h4>
         <p className="text-muted-foreground">
           The quality slider controls the balance between file size and visual
           quality:
@@ -91,5 +91,5 @@ export function ImageCompressorKnowledge() {
         </ul>
       </div>
     </KnowledgeSection>
-  );
+  )
 }

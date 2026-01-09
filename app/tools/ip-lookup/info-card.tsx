@@ -1,13 +1,13 @@
-import { Card } from "@/components/ui/card";
-import { LucideIcon } from "lucide-react";
-import { ReactNode } from "react";
+import { Card } from '@/components/ui/card'
+import { LucideIcon } from 'lucide-react'
+import { ReactNode } from 'react'
 
 interface InfoCardProps {
-  icon: LucideIcon | string;
-  label: string;
-  value: string | ReactNode;
-  subtitle?: string | ReactNode;
-  valueClassName?: string;
+  icon: LucideIcon | string
+  label: string
+  value: string | ReactNode
+  subtitle?: string | ReactNode
+  valueClassName?: string
 }
 
 export function InfoCard({
@@ -25,7 +25,7 @@ export function InfoCard({
           <div className="font-medium text-sm text-muted-foreground">
             {label}
           </div>
-          <div className={`font-semibold mt-1 text-sm ${valueClassName || ""}`}>
+          <div className={`font-semibold mt-1 text-sm ${valueClassName || ''}`}>
             {value}
           </div>
           {subtitle && (
@@ -34,5 +34,5 @@ export function InfoCard({
         </div>
       </div>
     </Card>
-  );
+  )
 }
