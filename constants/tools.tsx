@@ -27,6 +27,7 @@ import {
   Terminal,
   Link,
   ArrowRightLeft,
+  Image,
 } from 'lucide-react'
 
 export type Tool = {
@@ -84,6 +85,15 @@ export const tools: Tool[] = [
     badge: 'AI',
     href: '/text-extractor',
     category: CategoryId.Image,
+  },
+  {
+    name: 'SVG Preview',
+    description: 'Preview, edit, and export SVG files',
+    icon: Image,
+    color: 'bg-indigo-500',
+    badge: 'New',
+    href: '/tools/svg-preview',
+    category: CategoryId.Developer,
   },
   {
     name: 'QR Code Generator',
