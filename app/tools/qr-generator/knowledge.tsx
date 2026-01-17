@@ -1,4 +1,4 @@
-import { KnowledgeSection } from "@/components/knowledge-section";
+import { KnowledgeSection } from '@/components/knowledge-section'
 
 export function QRKnowledge() {
   return (
@@ -7,9 +7,9 @@ export function QRKnowledge() {
       description="Understanding QR code technology and applications"
     >
       <div className="space-y-2">
-        <h4 className="font-semibold text-base">What is a QR Code?</h4>
+        <h4 className="font-semibold text-base">What is a QR code?</h4>
         <p className="text-muted-foreground">
-          QR (Quick Response) Code is a two-dimensional barcode invented in 1994
+          QR (Quick Response) code is a two-dimensional barcode invented in 1994
           by Denso Wave. It can store up to 4,296 alphanumeric characters or
           7,089 numeric characters, making it perfect for encoding URLs, contact
           information, WiFi credentials, and more. QR codes are designed to be
@@ -17,7 +17,7 @@ export function QRKnowledge() {
         </p>
       </div>
       <div className="space-y-2">
-        <h4 className="font-semibold text-base">How QR Codes Work</h4>
+        <h4 className="font-semibold text-base">How QR codes work</h4>
         <p className="text-muted-foreground">
           QR codes encode data in a grid of black and white squares. The pattern
           includes position markers (large squares in corners), alignment
@@ -27,7 +27,7 @@ export function QRKnowledge() {
         </p>
       </div>
       <div className="space-y-2">
-        <h4 className="font-semibold text-base">Common Use Cases</h4>
+        <h4 className="font-semibold text-base">Common use cases</h4>
         <ul className="list-disc space-y-1 text-muted-foreground pl-5">
           <li>
             <strong>Marketing:</strong> Direct customers to websites, product
@@ -42,17 +42,17 @@ export function QRKnowledge() {
             setup and login verification
           </li>
           <li>
-            <strong>Information Sharing:</strong> Share WiFi passwords, contact
+            <strong>Information sharing:</strong> Share WiFi passwords, contact
             details (vCards), or event information
           </li>
           <li>
-            <strong>Asset Tracking:</strong> Inventory management and equipment
+            <strong>Asset tracking:</strong> Inventory management and equipment
             identification
           </li>
         </ul>
       </div>
       <div className="space-y-2">
-        <h4 className="font-semibold text-base">QR Code Types</h4>
+        <h4 className="font-semibold text-base">QR code types</h4>
         <ul className="list-disc space-y-1 text-muted-foreground pl-5">
           <li>
             <strong>URL:</strong> Direct links to websites (most common)
@@ -76,7 +76,7 @@ export function QRKnowledge() {
       </div>
       <div className="border rounded-lg bg-green-500/10 border-green-500/50 p-4">
         <h4 className="font-semibold text-base mb-2 text-green-900 dark:text-green-100">
-          💡 Best Practices
+          💡 Best practices
         </h4>
         <ul className="list-disc space-y-1 text-sm pl-5 text-green-900/80 dark:text-green-100/80">
           <li>Use high resolution (at least 300x300px) for print materials</li>
@@ -87,5 +87,5 @@ export function QRKnowledge() {
         </ul>
       </div>
     </KnowledgeSection>
-  );
+  )
 }
