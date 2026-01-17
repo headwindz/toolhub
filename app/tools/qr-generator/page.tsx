@@ -6,12 +6,66 @@ import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Download, QrCode, Sparkles } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import QRCodeLib from 'qrcode'
 import { Empty } from './empty'
 import { QRKnowledge } from './knowledge'
 
 export default function QRGeneratorPage() {
   const [text, setText] = useState('')
+  const [debouncedText, setDebouncedText] = useState('')
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedText(text)
+    }, 300)
+
+    return () => clearTimeout(timer)
+  }, [text])
+
+  useEffect(() => {
+    if (debouncedText && canvasRef.current) {
+      QRCodeLib.toCanvas(
+        canvasRef.current,
+        debouncedText,
+        {
+          width: 300,
+          margin: 2,
+          color: {
+            dark: '#000000',
+            light: '#FFFFFF',
+          },
+        },
+        (error) => {
+          if (error) console.error(error)
+        }
+      )
+    }
+  }, [debouncedText])
+
+  const handleDownload = async () => {
+    if (!debouncedText) return
+
+    try {
+      // Generate high-quality QR code
+      const url = await QRCodeLib.toDataURL(debouncedText, {
+        width: 1000,
+        margin: 2,
+        errorCorrectionLevel: 'H',
+      })
+
+      // Create download link
+      const link = document.createElement('a')
+      link.href = url
+      link.download = 'qrcode.png'
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    } catch (error) {
+      console.error('Error generating QR code:', error)
+    }
+  }
 
   return (
     <ToolLayout
@@ -47,38 +101,34 @@ export default function QRGeneratorPage() {
             />
           </div>
 
-          {text && (
+          {debouncedText && (
             <Card className="bg-gradient-to-br from-muted/50 to-muted/30 border-2 shadow-inner overflow-hidden">
               <div className="flex flex-col p-10 gap-6 items-center">
                 <div className="relative">
                   <div className="bg-gradient-to-br from-primary/30 to-primary/10 rounded-2xl inset-0 animate-pulse -z-10 absolute blur-xl" />
                   <div className="bg-white border-background border-4 rounded-2xl p-6 shadow-2xl">
-                    <img
-                      src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(text)}`}
-                      alt="QR Code"
+                    <canvas
+                      ref={canvasRef}
                       className="h-64 w-64"
+                      style={{ imageRendering: 'pixelated' }}
                     />
                   </div>
                 </div>
                 <div className="flex gap-3">
-                  <Button asChild size="lg" className="shadow-lg">
-                    <a
-                      href={`https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=${encodeURIComponent(text)}`}
-                      download="qrcode.png"
-                    >
-                      <Download className="h-5 mr-2 w-5" />
-                      Download High Quality
-                    </a>
+                  <Button
+                    size="lg"
+                    className="shadow-lg cursor-pointer"
+                    onClick={handleDownload}
+                  >
+                    <Download className="h-5 mr-2 w-5" />
+                    Download High Quality
                   </Button>
                 </div>
-                <p className="text-center text-sm text-muted-foreground">
-                  1000x1000px PNG format - Perfect for print and digital use
-                </p>
               </div>
             </Card>
           )}
 
-          {!text && <Empty />}
+          {!debouncedText && <Empty />}
         </div>
       </Card>
     </ToolLayout>
