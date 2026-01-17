@@ -104,6 +104,15 @@ export const tools: Tool[] = [
     category: CategoryId.Utility,
   },
   {
+    name: 'QR Code Parser',
+    description: 'Extract text and URLs from QR code images',
+    icon: QrCode,
+    color: 'bg-emerald-500',
+    badge: 'New',
+    href: '/qr-parser',
+    category: CategoryId.Utility,
+  },
+  {
     name: 'Hash Generator',
     description: 'Generate MD5, SHA1, SHA256 hashes',
     icon: Hash,
