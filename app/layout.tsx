@@ -1,68 +1,68 @@
-"use client";
+'use client'
 
-import { Header } from "@/components/header";
-import { MagicCursor } from "@/components/magic-cursor";
-import { Sidebar } from "@/components/sidebar";
-import { ThemeProvider } from "@/components/theme-provider";
-import { CategoryId } from "@/constants/categories";
-import { tools } from "@/constants/tools";
-import { Analytics } from "@vercel/analytics/next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { usePathname, useRouter } from "next/navigation";
-import type React from "react";
-import { useEffect, useState } from "react";
-import "./globals.css";
+import { Header } from '@/components/header'
+import { MagicCursor } from '@/components/magic-cursor'
+import { Sidebar } from '@/components/sidebar'
+import { ThemeProvider } from '@/components/theme-provider'
+import { CategoryId } from '@/constants/categories'
+import { tools } from '@/constants/tools'
+import { Analytics } from '@vercel/analytics/next'
+import { Geist, Geist_Mono } from 'next/font/google'
+import { usePathname, useRouter } from 'next/navigation'
+import type React from 'react'
+import { useEffect, useState } from 'react'
+import './globals.css'
 
 // Used for fonts
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const _geist = Geist({ subsets: ['latin'] })
+const _geistMono = Geist_Mono({ subsets: ['latin'] })
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const router = useRouter();
-  const pathname = usePathname();
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const router = useRouter()
+  const pathname = usePathname()
 
   // Calculate initial active category based on pathname
   const getInitialCategory = (): CategoryId => {
-    if (pathname === "/") {
-      return CategoryId.All;
-    } else if (pathname.startsWith("/category/")) {
-      const category = pathname.split("/category/")[1] as CategoryId;
+    if (pathname === '/') {
+      return CategoryId.All
+    } else if (pathname.startsWith('/category/')) {
+      const category = pathname.split('/category/')[1] as CategoryId
       if (Object.values(CategoryId).includes(category)) {
-        return category;
+        return category
       }
-    } else if (pathname.startsWith("/tools/")) {
-      const slug = pathname.replace("/tools", ""); // tools hrefs begin with "/"
-      const match = tools.find((t) => t.href === slug);
+    } else if (pathname.startsWith('/tools/')) {
+      const slug = pathname.replace('/tools', '') // tools hrefs begin with "/"
+      const match = tools.find((t) => t.href === slug)
       if (match) {
-        return match.category;
+        return match.category
       }
     }
-    return CategoryId.All;
-  };
+    return CategoryId.All
+  }
 
   const [activeCategory, setActiveCategory] =
-    useState<CategoryId>(getInitialCategory());
+    useState<CategoryId>(getInitialCategory())
 
   // Update active category based on pathname changes
   useEffect(() => {
-    const newCategory = getInitialCategory();
-    setActiveCategory(newCategory);
-  }, [pathname]);
+    const newCategory = getInitialCategory()
+    setActiveCategory(newCategory)
+  }, [pathname])
 
   const handleCategoryChange = (category: CategoryId) => {
-    setActiveCategory(category);
+    setActiveCategory(category)
     if (category === CategoryId.All) {
-      router.push("/");
+      router.push('/')
     } else {
-      router.push(`/category/${category}`);
+      router.push(`/category/${category}`)
     }
-  };
+  }
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -96,17 +96,22 @@ export default function RootLayout({
           <div className="flex flex-col min-h-screen">
             <Header
               onMobileMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              pathname={pathname}
             />
             <div className="flex flex-1 min-h-0">
-              <Sidebar
-                isCollapsed={isSidebarCollapsed}
-                onToggle={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-                isMobileOpen={isMobileMenuOpen}
-                onMobileClose={() => setIsMobileMenuOpen(false)}
-                activeCategory={activeCategory}
-                onCategoryChange={handleCategoryChange}
-              />
-              <main className="flex-1 p-4 overflow-y-auto sm:p-6 lg:p-8">
+              {pathname !== '/' && (
+                <Sidebar
+                  isCollapsed={isSidebarCollapsed}
+                  onToggle={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+                  isMobileOpen={isMobileMenuOpen}
+                  onMobileClose={() => setIsMobileMenuOpen(false)}
+                  activeCategory={activeCategory}
+                  onCategoryChange={handleCategoryChange}
+                />
+              )}
+              <main
+                className={`flex-1 overflow-y-auto ${pathname === '/' ? '' : 'p-4 sm:p-6 lg:p-8'}`}
+              >
                 {children}
               </main>
             </div>
@@ -116,5 +121,5 @@ export default function RootLayout({
         <Analytics />
       </body>
     </html>
-  );
+  )
 }

@@ -11,9 +11,10 @@ import { useEffect, useRef, useState } from 'react'
 
 interface HeaderProps {
   onMobileMenuToggle?: () => void
+  pathname?: string
 }
 
-export function Header({ onMobileMenuToggle }: HeaderProps) {
+export function Header({ onMobileMenuToggle, pathname }: HeaderProps) {
   const searchInputRef = useRef<HTMLInputElement>(null)
   const { theme, setTheme } = useTheme()
   const [searchQuery, setSearchQuery] = useState('')
@@ -103,15 +104,17 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
   return (
     <header className="border-b bg-background/95 top-0 z-50 sticky backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex h-16 px-4 gap-1 items-center sm:px-6 sm:gap-2 lg:px-8">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="lg:hidden"
-          onClick={onMobileMenuToggle}
-        >
-          <Menu className="h-5 w-5" />
-          <span className="sr-only">Toggle menu</span>
-        </Button>
+        {pathname !== '/' && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="lg:hidden"
+            onClick={onMobileMenuToggle}
+          >
+            <Menu className="h-5 w-5" />
+            <span className="sr-only">Toggle menu</span>
+          </Button>
+        )}
 
         <div
           className="cursor-pointer flex gap-2 items-center"
