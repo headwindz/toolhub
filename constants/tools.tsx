@@ -198,7 +198,7 @@ export const tools: Tool[] = [
     color: 'bg-violet-600',
     badge: 'New',
     href: '/jwt-decoder',
-    category: CategoryId.Developer,
+    category: CategoryId.Security,
   },
   {
     name: 'UUID Generator',
