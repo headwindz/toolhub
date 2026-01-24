@@ -28,6 +28,7 @@ import {
   Link,
   ArrowRightLeft,
   Image,
+  Activity,
 } from 'lucide-react'
 
 export type Tool = {
@@ -223,6 +224,15 @@ export const tools: Tool[] = [
     color: 'bg-cyan-600',
     badge: 'New',
     href: '/user-agent',
+    category: CategoryId.Developer,
+  },
+  {
+    name: 'HTTP Status Code',
+    description: 'Reference guide for HTTP status codes',
+    icon: Activity,
+    color: 'bg-violet-500',
+    badge: 'Reference',
+    href: '/http-status-code',
     category: CategoryId.Developer,
   },
   // {
