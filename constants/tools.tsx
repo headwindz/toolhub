@@ -29,6 +29,7 @@ import {
   ArrowRightLeft,
   Image,
   Activity,
+  ShieldAlert,
 } from 'lucide-react'
 
 export type Tool = {
@@ -234,6 +235,15 @@ export const tools: Tool[] = [
     badge: 'Reference',
     href: '/http-status-code',
     category: CategoryId.Developer,
+  },
+  {
+    name: 'Will it CORS?',
+    description: 'Analyze CORS issues and get solutions',
+    icon: ShieldAlert,
+    color: 'bg-rose-600',
+    badge: 'New',
+    href: '/will-it-cors',
+    category: CategoryId.Security,
   },
   // {
   //   name: "World Clock",
