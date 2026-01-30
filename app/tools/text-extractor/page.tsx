@@ -1,143 +1,144 @@
-"use client";
+'use client'
 
-import type React from "react";
+import type React from 'react'
 
-import { CopyButton } from "@/components/copy-button";
-import { ToolLayout } from "@/components/tool-layout";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { FileImage, Loader2, ScanText, Upload, X } from "lucide-react";
-import { useCallback, useState } from "react";
-import { TextExtractorKnowledge } from "./knowledge";
+import { CopyButton } from '@/components/copy-button'
+import { ToolLayout } from '@/components/tool-layout'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { FileImage, Loader2, ScanText, Upload, X } from 'lucide-react'
+import { useCallback, useState } from 'react'
+import { TextExtractorKnowledge } from './knowledge'
 
 export default function TextExtractorPage() {
-  const [image, setImage] = useState<string | null>(null);
-  const [extractedText, setExtractedText] = useState("");
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [fileName, setFileName] = useState("");
-  const [error, setError] = useState("");
+  const [image, setImage] = useState<string | null>(null)
+  const [extractedText, setExtractedText] = useState('')
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [fileName, setFileName] = useState('')
+  const [error, setError] = useState('')
 
   const handleFileUpload = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if (file && file.type.startsWith("image/")) {
-        setFileName(file.name);
-        setError("");
-        const reader = new FileReader();
+      const file = e.target.files?.[0]
+      if (file && file.type.startsWith('image/')) {
+        setFileName(file.name)
+        setError('')
+        const reader = new FileReader()
         reader.onload = (event) => {
-          setImage(event.target?.result as string);
-          setExtractedText("");
-        };
-        reader.readAsDataURL(file);
+          setImage(event.target?.result as string)
+          setExtractedText('')
+        }
+        reader.readAsDataURL(file)
       } else {
-        setError("Please select a valid image file");
+        setError('Please select a valid image file')
       }
     },
-    [],
-  );
+    []
+  )
 
   const extractText = async () => {
-    if (!image) return;
+    if (!image) return
 
-    setIsProcessing(true);
-    setError("");
+    setIsProcessing(true)
+    setError('')
 
     try {
       // Preprocess image for better OCR accuracy
-      const processedImage = await preprocessImage(image);
+      const processedImage = await preprocessImage(image)
 
-      const { createWorker } = await import("tesseract.js");
-      const worker = await createWorker("eng", 1, {
+      const { createWorker } = await import('tesseract.js')
+      const worker = await createWorker('eng', 1, {
         logger: (m) => {
-          if (m.status === "recognizing text") {
-            console.log(`Progress: ${Math.round(m.progress * 100)}%`);
+          if (m.status === 'recognizing text') {
+            console.log(`Progress: ${Math.round(m.progress * 100)}%`)
           }
         },
-      });
+      })
 
       // Configure Tesseract for better accuracy
       await worker.setParameters({
-        tessedit_char_whitelist: "", // Allow all characters
-        preserve_interword_spaces: "1",
-      });
+        tessedit_char_whitelist: '', // Allow all characters
+        preserve_interword_spaces: '1',
+      })
 
       const {
         data: { text },
-      } = await worker.recognize(processedImage);
-      await worker.terminate();
+      } = await worker.recognize(processedImage)
+      await worker.terminate()
 
-      setExtractedText(text.trim());
+      setExtractedText(text.trim())
     } catch (err) {
-      setError("Failed to extract text from image. Please try again.");
-      console.error(err);
+      setError('Failed to extract text from image. Please try again.')
+      console.error(err)
     } finally {
-      setIsProcessing(false);
+      setIsProcessing(false)
     }
-  };
+  }
 
   // Preprocess image to improve OCR accuracy
   const preprocessImage = async (imageData: string): Promise<string> => {
     return new Promise((resolve) => {
-      const img = new Image();
+      const img = new Image()
       img.onload = () => {
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
+        const canvas = document.createElement('canvas')
+        const ctx = canvas.getContext('2d')
         if (!ctx) {
-          resolve(imageData);
-          return;
+          // @ts-ignore
+          resolve(imageData)
+          return
         }
 
         // Set canvas size to image size (upscale if needed)
-        const scaleFactor = img.width < 1000 ? 2 : 1;
-        canvas.width = img.width * scaleFactor;
-        canvas.height = img.height * scaleFactor;
+        const scaleFactor = img.width < 1000 ? 2 : 1
+        canvas.width = img.width * scaleFactor
+        canvas.height = img.height * scaleFactor
 
         // Draw image with better rendering
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = "high";
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        ctx.imageSmoothingEnabled = true
+        ctx.imageSmoothingQuality = 'high'
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
 
         // Get image data for processing
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const data = imageData.data;
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+        const data = imageData.data
 
         // Convert to grayscale and increase contrast
         for (let i = 0; i < data.length; i += 4) {
           // Grayscale conversion
           const gray =
-            0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+            0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]
 
           // Increase contrast (simple threshold)
-          const threshold = 128;
-          const contrast = gray > threshold ? 255 : 0;
+          const threshold = 128
+          const contrast = gray > threshold ? 255 : 0
 
-          data[i] = contrast; // R
-          data[i + 1] = contrast; // G
-          data[i + 2] = contrast; // B
+          data[i] = contrast // R
+          data[i + 1] = contrast // G
+          data[i + 2] = contrast // B
         }
 
-        ctx.putImageData(imageData, 0, 0);
-        resolve(canvas.toDataURL("image/png"));
-      };
-      img.src = imageData;
-    });
-  };
+        ctx.putImageData(imageData, 0, 0)
+        resolve(canvas.toDataURL('image/png'))
+      }
+      img.src = imageData
+    })
+  }
 
   const clearImage = () => {
-    setImage(null);
-    setExtractedText("");
-    setFileName("");
-    setError("");
-  };
+    setImage(null)
+    setExtractedText('')
+    setFileName('')
+    setError('')
+  }
 
   return (
     <ToolLayout
       title="Text Extractor (OCR)"
       description="Extract text from images using OCR technology"
       icon={ScanText}
-      badges={[{ label: "AI-Powered" }, { label: "Offline" }]}
+      badges={[{ label: 'AI-Powered' }, { label: 'Offline' }]}
     >
       <TextExtractorKnowledge />
 
@@ -242,7 +243,7 @@ export default function TextExtractorPage() {
             </div>
             {extractedText && (
               <p className="text-xs text-muted-foreground">
-                {extractedText.split(/\s+/).length} words •{" "}
+                {extractedText.split(/\s+/).length} words •{' '}
                 {extractedText.length} characters
               </p>
             )}
@@ -250,5 +251,5 @@ export default function TextExtractorPage() {
         </Card>
       </div>
     </ToolLayout>
-  );
+  )
 }

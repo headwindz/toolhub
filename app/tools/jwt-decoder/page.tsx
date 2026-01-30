@@ -1,54 +1,54 @@
-"use client";
+'use client'
 
-import { CopyButton } from "@/components/copy-button";
-import { ToolLayout } from "@/components/tool-layout";
-import { Card } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Shield } from "lucide-react";
-import { useState } from "react";
-import { JwtKnowledge } from "./knowledge";
+import { CopyButton } from '@/components/copy-button'
+import { ToolLayout } from '@/components/tool-layout'
+import { Card } from '@/components/ui/card'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { Shield } from 'lucide-react'
+import { useState } from 'react'
+import { JwtKnowledge } from './knowledge'
 
 interface DecodedJWT {
-  header: Record<string, unknown>;
-  payload: Record<string, unknown>;
-  signature: string;
-  headerRaw: string;
-  payloadRaw: string;
+  header: Record<string, any>
+  payload: Record<string, any>
+  signature: string
+  headerRaw: string
+  payloadRaw: string
 }
 
 export default function JwtDecoderPage() {
-  const [token, setToken] = useState("");
-  const [decoded, setDecoded] = useState<DecodedJWT | null>(null);
-  const [error, setError] = useState("");
+  const [token, setToken] = useState('')
+  const [decoded, setDecoded] = useState<DecodedJWT | null>(null)
+  const [error, setError] = useState('')
 
   const decodeJWT = (jwt: string) => {
-    setError("");
-    setDecoded(null);
+    setError('')
+    setDecoded(null)
 
-    const trimmedJwt = jwt.trim();
+    const trimmedJwt = jwt.trim()
     if (!trimmedJwt) {
-      return;
+      return
     }
 
     try {
-      const parts = trimmedJwt.split(".");
+      const parts = trimmedJwt.split('.')
       if (parts.length !== 3) {
         setError(
-          "Invalid JWT format. JWT should have 3 parts separated by dots.",
-        );
-        return;
+          'Invalid JWT format. JWT should have 3 parts separated by dots.'
+        )
+        return
       }
 
-      const [headerB64, payloadB64, signature] = parts;
+      const [headerB64, payloadB64, signature] = parts
 
       // Decode header
-      const headerRaw = base64UrlDecode(headerB64);
-      const header = JSON.parse(headerRaw);
+      const headerRaw = base64UrlDecode(headerB64)
+      const header = JSON.parse(headerRaw)
 
       // Decode payload
-      const payloadRaw = base64UrlDecode(payloadB64);
-      const payload = JSON.parse(payloadRaw);
+      const payloadRaw = base64UrlDecode(payloadB64)
+      const payload = JSON.parse(payloadRaw)
 
       setDecoded({
         header,
@@ -56,55 +56,55 @@ export default function JwtDecoderPage() {
         signature,
         headerRaw,
         payloadRaw,
-      });
+      })
     } catch (err) {
       setError(
-        "Error decoding JWT: " +
-          (err instanceof Error ? err.message : "Invalid JWT"),
-      );
+        'Error decoding JWT: ' +
+          (err instanceof Error ? err.message : 'Invalid JWT')
+      )
     }
-  };
+  }
 
   const base64UrlDecode = (str: string): string => {
     // Replace URL-safe characters
-    let base64 = str.replace(/-/g, "+").replace(/_/g, "/");
+    let base64 = str.replace(/-/g, '+').replace(/_/g, '/')
 
     // Add padding if needed
-    const padding = base64.length % 4;
+    const padding = base64.length % 4
     if (padding) {
-      base64 += "=".repeat(4 - padding);
+      base64 += '='.repeat(4 - padding)
     }
 
     try {
       // Decode base64
-      const decoded = atob(base64);
+      const decoded = atob(base64)
       // Convert to UTF-8
       return decodeURIComponent(
         decoded
-          .split("")
-          .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-          .join(""),
-      );
+          .split('')
+          .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+          .join('')
+      )
     } catch (e) {
-      throw new Error("Invalid Base64 encoding");
+      throw new Error('Invalid Base64 encoding')
     }
-  };
+  }
 
   const formatTimestamp = (timestamp: number) => {
-    return new Date(timestamp * 1000).toLocaleString();
-  };
+    return new Date(timestamp * 1000).toLocaleString()
+  }
 
   const handleTokenChange = (value: string) => {
-    setToken(value);
-    decodeJWT(value);
-  };
+    setToken(value)
+    decodeJWT(value)
+  }
 
   return (
     <ToolLayout
       title="JWT Decoder"
       description="Decode and analyze JSON Web Tokens"
       icon={Shield}
-      badges={[{ label: "Instant" }, { label: "Secure" }]}
+      badges={[{ label: 'Instant' }, { label: 'Secure' }]}
     >
       <JwtKnowledge />
 
@@ -215,7 +215,7 @@ export default function JwtDecoderPage() {
                       </span>
                       <span className="font-mono text-sm">
                         {Array.isArray(decoded.payload.aud)
-                          ? decoded.payload.aud.join(", ")
+                          ? decoded.payload.aud.join(', ')
                           : (decoded.payload.aud as string)}
                       </span>
                     </div>
@@ -277,5 +277,5 @@ export default function JwtDecoderPage() {
         </>
       )}
     </ToolLayout>
-  );
+  )
 }
