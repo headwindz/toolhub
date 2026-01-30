@@ -1,6 +1,6 @@
 # Toolhub
 
-[toolhub.run](toolhub.run)
+[toolhub.run](https://toolhub.run/)
 
 ## Attributes
 
