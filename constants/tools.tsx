@@ -94,7 +94,7 @@ export const tools: Tool[] = [
     icon: Image,
     color: 'bg-indigo-500',
     badge: 'New',
-    href: '/tools/svg-preview',
+    href: '/svg-preview',
     category: CategoryId.Developer,
   },
   {
